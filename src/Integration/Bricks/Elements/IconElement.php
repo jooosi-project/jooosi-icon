@@ -73,7 +73,7 @@ class IconElement extends Element
     public function render()
     {
         $settings = $this->settings;
-        $icon_name = $settings['iconName'] ?? '';
+        $icon_name = bricks_render_dynamic_data((string) ($settings['iconName'] ?? ''), $this->post_id);
         // Show placeholder if no icon name is set
         if (empty($icon_name)) {
             return $this->render_element_placeholder(['title' => esc_html__('No icon selected.', 'omni-icon'), 'description' => esc_html__('Enter an icon name in the format: prefix:name', 'omni-icon')]);
