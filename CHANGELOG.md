@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.19] - 2026-07-24
+
 ### Fixed
 - Resolve dynamic data tags in the Bricks Omni Icon element's Icon Name setting ([WordPress.org support thread](https://wordpress.org/support/topic/returning-dynamic-icon-name-in-bricks-builder/))
 
@@ -99,7 +101,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🐣 Initial release.
 
-[unreleased]: https://github.com/nabasa-dev/omni-icon/compare/1.0.18...HEAD
+[unreleased]: https://github.com/nabasa-dev/omni-icon/compare/1.0.19...HEAD
+[1.0.19]: https://github.com/nabasa-dev/omni-icon/compare/1.0.18...1.0.19
 [1.0.18]: https://github.com/nabasa-dev/omni-icon/compare/1.0.17...1.0.18
 [1.0.17]: https://github.com/nabasa-dev/omni-icon/compare/1.0.16...1.0.17
 [1.0.16]: https://github.com/nabasa-dev/omni-icon/compare/1.0.15...1.0.16
