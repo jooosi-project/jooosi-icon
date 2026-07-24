@@ -113,7 +113,10 @@ class IconElement extends Element
     public function render()
     {
         $settings = $this->settings;
-        $icon_name = $settings['iconName'] ?? '';
+        $icon_name = bricks_render_dynamic_data(
+            (string) ($settings['iconName'] ?? ''),
+            $this->post_id
+        );
 
         // Show placeholder if no icon name is set
         if (empty($icon_name)) {
