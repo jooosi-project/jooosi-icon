@@ -28,7 +28,7 @@ class BreakdanceService
      * Uses the unofficial action hook to ensure assets are loaded in Breakdance builder
      * @see wp-content/plugins/breakdance/plugin/loader/loader.php
      */
-    #[Hook('unofficial_i_am_kevin_geary_master_of_all_things_css_and_html', priority: 1_000_001)]
+    #[Hook('breakdance_builder_footer', priority: 1_000_001)]
     public function editor_assets(): void
     {
         // Check if we're in Breakdance builder mode

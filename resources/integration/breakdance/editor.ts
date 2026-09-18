@@ -5,22 +5,37 @@
  * This monitors the UI and hooks into the Browse button to open the icon picker.
  */
 import { openIconPicker, closeIconPicker, renderModal } from './editor-app';
+// The picker renders <jooosi-icon> elements in the Breakdance UI document.
+// Breakdance loads the web component in its canvas iframe, so register it in
+// the parent builder document as well.
+import '../../webcomponents/jooosi-icon';
 import './editor.scss';
 
 
 (async () => {
-	// Wait for Breakdance Vue app to be ready
-	while (!(document.querySelector('#app') as any)?.__vue__) {
+	// Breakdance 2.x uses Vue 3/Pinia. Older versions exposed the Vue 2
+	// instance as `__vue__`, so support both app shapes here.
+	let appElement: any;
+	while (true) {
+		appElement = document.querySelector('#app') as any;
+		if (appElement?.__vue__ || appElement?.__vue_app__) {
+			break;
+		}
+
 		await new Promise(resolve => setTimeout(resolve, 100));
 	}
-
 
 	// Initialize modal container
 	renderModal();
 
-	// Get Vue instance
-	const vueApp = (document.querySelector('#app') as any).__vue__;
-	const vueStore = vueApp.$store;
+	const vueStore = appElement.__vue__?.$store;
+	const pinia = appElement.__vue_app__?.config?.globalProperties?.$pinia;
+	const uiStore = pinia?._s?.get('ui');
+	const documentStore = pinia?._s?.get('document');
+
+	function getActiveElement() {
+		return vueStore?.getters?.['ui/activeElement'] || uiStore?.activeElement;
+	}
 
 	// Expose API to window
 	(window as any).jooosiIconPicker = {
@@ -33,13 +48,14 @@ import './editor.scss';
 
 	// Handle browse button click
 	function handleBrowseClick() {
-		const activeElement = vueStore.getters['ui/activeElement'];
+		const activeElement = getActiveElement();
 		if (!activeElement) {
 			return;
 		}
 
 		// Get current icon name value
-		const currentIconName = activeElement.data?.properties?.content?.icon?.name || '';
+		const currentIconName = activeElement.data?.properties?.content?.icon?.name ||
+			(document.querySelector('div[data-test-id="control-content-icon-name"] input') as HTMLInputElement)?.value || '';
 
 
 		// Open icon picker
@@ -50,34 +66,42 @@ import './editor.scss';
 
 	// Update icon name in Breakdance
 	function updateIconName(iconName: string) {
-		// Find the input field and update it directly
+		const activeElement = getActiveElement();
+		if (activeElement) {
+			// Use Breakdance's document action when available so the change is
+			// reactive and participates in Breakdance's undo/save flow.
+			if (typeof documentStore?.throttledPropertyChanged === 'function' && activeElement.id !== undefined) {
+				documentStore.throttledPropertyChanged({
+					elementId: activeElement.id,
+					path: 'content.icon.name',
+					value: iconName,
+					meta: { snapshotLabel: 'Select icon' },
+				});
+			} else {
+				// Fallback for older Breakdance versions.
+				activeElement.data ||= {};
+				activeElement.data.properties ||= {};
+				activeElement.data.properties.content ||= {};
+				activeElement.data.properties.content.icon ||= {};
+				activeElement.data.properties.content.icon.name = iconName;
+			}
+		}
+
+		// Keep the visible control in sync for both Vue 2 and Vue 3 controls.
 		const input = document.querySelector('div[data-test-id="control-content-icon-name"] input') as HTMLInputElement;
 		if (input) {
 			input.value = iconName;
-			// Trigger input and change events to notify Vue
 			input.dispatchEvent(new Event('input', { bubbles: true }));
 			input.dispatchEvent(new Event('change', { bubbles: true }));
-		}
-
-		// Also try to update via Vue store if available
-		const activeElement = vueStore.getters['ui/activeElement'];
-		if (activeElement) {
-			// Ensure the path exists
-			if (!activeElement.data.properties.content) {
-				activeElement.data.properties.content = {};
-			}
-			if (!activeElement.data.properties.content.icon) {
-				activeElement.data.properties.content.icon = {};
-			}
-
-			// Update the value
-			activeElement.data.properties.content.icon.name = iconName;
 		}
 	}
 
 	// Monitor button clicks using event delegation
 	document.addEventListener('click', (event) => {
-		const target = event.target as HTMLElement;
+		const target = event.target instanceof Element ? event.target : null;
+		if (!target) {
+			return;
+		}
 
 		// Check if the click is on the browse button or its children
 		const isInsideIconPicker = target.closest('div[data-test-id="control-content-icon-icon_picker"]');
