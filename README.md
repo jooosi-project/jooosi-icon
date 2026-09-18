@@ -35,7 +35,7 @@
     <img src="https://img.shields.io/github/v/release/jooosi-project/jooosi-icon.svg?logo=github" alt="GitHub Release" />
     </picture>
   </a>
-  <a href="https://github.com/jooosi-project/jooosi-icon/blob/master/LICENSE">
+  <a href="https://github.com/jooosi-project/jooosi-icon/blob/main/LICENSE">
     <picture>
     <img src="https://img.shields.io/github/license/jooosi-project/jooosi-icon.svg" alt="GPL License" />
     </picture>

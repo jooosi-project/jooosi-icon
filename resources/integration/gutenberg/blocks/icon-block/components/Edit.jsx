@@ -21,10 +21,15 @@ const Edit = ({ attributes, setAttributes }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const blockProps = useBlockProps({});
+	const hasDimension = (value) => value !== undefined && value !== null && value !== '';
+	const parseDimension = (value) => {
+		const parsed = Number.parseInt(value, 10);
+		return Number.isNaN(parsed) ? undefined : parsed;
+	};
 
 	// Normalize dimensions for display: if one is undefined, use the other
-	const displayWidth = width || height;
-	const displayHeight = height || width;
+	const displayWidth = hasDimension(width) ? width : height;
+	const displayHeight = hasDimension(height) ? height : width;
 
 	return (
 		<>
@@ -126,9 +131,9 @@ const Edit = ({ attributes, setAttributes }) => {
 											<div className="oiib-card-header">
 												<h4>{__('Dimensions', 'jooosi-icon')}</h4>
 												<button
-													className={`oiib-reset-btn ${(!width && !height) ? 'jooosi-reset-btn-disabled' : ''}`}
+													className={`oiib-reset-btn ${(!hasDimension(width) && !hasDimension(height)) ? 'jooosi-reset-btn-disabled' : ''}`}
 													onClick={() => setAttributes({ width: undefined, height: undefined })}
-													disabled={!width && !height}
+													disabled={!hasDimension(width) && !hasDimension(height)}
 												>
 													{__('Reset', 'jooosi-icon')}
 												</button>
@@ -145,26 +150,26 @@ const Edit = ({ attributes, setAttributes }) => {
 																<input
 																	type="number"
 																	className="oiib-dimension-input"
-																	value={parseInt(width) || ''}
+																	value={hasDimension(width) ? width : ''}
 																	onChange={(e) => {
-																		const val = parseInt(e.target.value);
-																		if (!isNaN(val) && val >= 16 && val <= 256) {
+																		const val = parseDimension(e.target.value);
+																		if (val !== undefined && val >= 0 && val <= 256) {
 																			setAttributes({ width: e.target.value });
 																		} else if (e.target.value === '') {
 																			setAttributes({ width: undefined });
 																		}
 																	}}
-																	min="16"
+																	min="0"
 																	max="256"
 																	placeholder="auto"
 																/>
 																<span className="oiib-dimension-unit">px</span>
 															</div>
 															<button
-																className={`oiib-clear-btn ${!width ? 'oiib-clear-btn-disabled' : ''}`}
+																className={`oiib-clear-btn ${!hasDimension(width) ? 'oiib-clear-btn-disabled' : ''}`}
 																onClick={() => setAttributes({ width: undefined })}
 																title={__('Reset to original', 'jooosi-icon')}
-																disabled={!width}
+																disabled={!hasDimension(width)}
 															>
 																<IconX />
 															</button>
@@ -174,9 +179,9 @@ const Edit = ({ attributes, setAttributes }) => {
 														<input
 															type="range"
 															className="oiib-slider"
-															value={parseInt(width) || parseInt(height) || 24}
+															value={hasDimension(width) ? parseDimension(width) : (parseDimension(height) ?? 24)}
 															onChange={(e) => setAttributes({ width: e.target.value })}
-															min="16"
+															min="0"
 															max="256"
 														/>
 													</div>
@@ -193,26 +198,26 @@ const Edit = ({ attributes, setAttributes }) => {
 																<input
 																	type="number"
 																	className="oiib-dimension-input"
-																	value={parseInt(height) || ''}
+																	value={hasDimension(height) ? height : ''}
 																	onChange={(e) => {
-																		const val = parseInt(e.target.value);
-																		if (!isNaN(val) && val >= 16 && val <= 256) {
+																		const val = parseDimension(e.target.value);
+																		if (val !== undefined && val >= 0 && val <= 256) {
 																			setAttributes({ height: e.target.value });
 																		} else if (e.target.value === '') {
 																			setAttributes({ height: undefined });
 																		}
 																	}}
-																	min="16"
+																	min="0"
 																	max="256"
 																	placeholder="auto"
 																/>
 																<span className="oiib-dimension-unit">px</span>
 															</div>
 															<button
-																className={`oiib-clear-btn ${!height ? 'oiib-clear-btn-disabled' : ''}`}
+																className={`oiib-clear-btn ${!hasDimension(height) ? 'oiib-clear-btn-disabled' : ''}`}
 																onClick={() => setAttributes({ height: undefined })}
 																title={__('Reset to original', 'jooosi-icon')}
-																disabled={!height}
+																disabled={!hasDimension(height)}
 															>
 																<IconX />
 															</button>
@@ -222,9 +227,9 @@ const Edit = ({ attributes, setAttributes }) => {
 														<input
 															type="range"
 															className="oiib-slider"
-															value={parseInt(height) || parseInt(width) || 24}
+															value={hasDimension(height) ? parseDimension(height) : (parseDimension(width) ?? 24)}
 															onChange={(e) => setAttributes({ height: e.target.value })}
-															min="16"
+															min="0"
 															max="256"
 														/>
 													</div>
@@ -297,8 +302,8 @@ const Edit = ({ attributes, setAttributes }) => {
 				) : (
 					<jooosi-icon
 						name={name}
-						{...(displayWidth && { width: displayWidth })}
-						{...(displayHeight && { height: displayHeight })}
+						{...(hasDimension(displayWidth) ? { width: displayWidth } : {})}
+						{...(hasDimension(displayHeight) ? { height: displayHeight } : {})}
 						{...(color && { color })}
 					/>
 				)}

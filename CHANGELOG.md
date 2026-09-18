@@ -7,16 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-- Rebrand the plugin, PHP namespace, assets, integrations, and web component to Jooosi Icon.
-- Move canonical uploaded-icon storage to `wp-content/uploads/jooosi-icon/` with automatic migration and a legacy-directory fallback.
-
 ### Added
 - Add the `jooosi-icon/service/icon:sources` filter for third-party icon sources.
+
+### Changed
+- Update WordPress compatibility to WordPress 7.1.
+- Rebrand the plugin, PHP namespace, assets, integrations, and web component to Jooosi Icon.
+- Move canonical uploaded-icon storage to `wp-content/uploads/jooosi-icon/` with automatic migration and a legacy-directory fallback.
 
 ### Deprecated
 - Forward pre-rebrand filters and actions through WordPress deprecated-hook APIs.
 - Keep the former `omni:` icon prefix and `<omni-icon>` markup as compatibility aliases.
+
+### Fixed
+- Fix Gutenberg icon rendering and CSS loading in the editor canvas [#5](https://github.com/jooosi-project/jooosi-icon/issues/5) [#8](https://github.com/jooosi-project/jooosi-icon/discussions/8)
 
 ## [1.0.19] - 2026-07-24
 

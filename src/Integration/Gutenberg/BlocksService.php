@@ -18,6 +18,18 @@ use JooosiIcon\Services\ViteService;
 #[Service]
 class BlocksService
 {
+    /**
+     * Handles registered for the Gutenberg block and its iframe assets.
+     *
+     * @var array{view_scripts: list<string>, iframe_scripts: list<string>, styles: list<string>, editor_styles: list<string>}
+     */
+    private array $registered_block_assets = [
+        'view_scripts' => [],
+        'iframe_scripts' => [],
+        'styles' => [],
+        'editor_styles' => [],
+    ];
+
     public function __construct(
         private IconService $iconService,
         private ViteService $viteService,
@@ -29,86 +41,150 @@ class BlocksService
     #[Hook('init', priority: 10)]
     public function register_blocks(): void
     {
+        $block_assets = $this->register_block_assets();
+        $this->registered_block_assets = $block_assets;
+
         $path = $this->viteService->is_development()
             ? $this->viteService->generate_development_asset_path('resources/integration/gutenberg/blocks/icon-block/block.json')
             : $this->viteService->get_manifest_dir() . '/integration/gutenberg/blocks/icon-block/block.json';
 
+        $args = [
+            'render_callback' => $this->render_icon_block(...),
+        ];
+
+        if (!empty($block_assets['styles'])) {
+            $args['style'] = $block_assets['styles'];
+        }
+
+        if (!empty($block_assets['view_scripts'])) {
+            $args['viewScript'] = $block_assets['view_scripts'];
+        }
+
+        $editor_styles = array_merge(
+            $block_assets['styles'],
+            $block_assets['editor_styles'],
+        );
+
+        if (!empty($editor_styles)) {
+            $args['editorStyle'] = array_values(array_unique($editor_styles));
+        }
+
+        // Register the editor bundle as a block asset so WordPress can load it
+        // through the block editor asset pipeline, including its iframe-aware
+        // style handling in WordPress 7.1+.
+        $editor_assets = $this->viteService->register_asset(
+            'resources/integration/gutenberg/blocks/icon-block/index.jsx',
+            [
+                'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block',
+                'dependencies' => [
+                    'wp-blocks',
+                    'wp-element',
+                    'wp-editor',
+                    'wp-components',
+                    'wp-block-editor',
+                    'wp-hooks',
+                    'wp-i18n',
+                    'wp-plugins',
+                    'wp-data',
+                    'react',
+                    'react-dom',
+                ],
+                'in_footer' => true,
+            ]
+        );
+
+        if (is_array($editor_assets)) {
+            if (!empty($editor_assets['scripts'][0])) {
+                // register_block_type_from_metadata() expects the camelCase
+                // metadata key when overriding block.json asset metadata.
+                $args['editorScript'] = $editor_assets['scripts'][0];
+            }
+
+            if (!empty($editor_assets['styles'])) {
+                $args['editorStyle'] = array_values(array_unique(array_merge(
+                    $args['editorStyle'] ?? [],
+                    $editor_assets['styles'],
+                )));
+
+                $this->registered_block_assets['editor_styles'] = array_values(array_unique(array_merge(
+                    $this->registered_block_assets['editor_styles'],
+                    $editor_assets['styles'],
+                )));
+            }
+        }
+
         register_block_type(
             $path,
-            [
-                'render_callback' => $this->render_icon_block(...),
-            ],
+            $args,
         );
     }
 
     /**
-     * Enqueue block editor assets
+     * Ensure the block's scripts and styles are available in the Gutenberg iframe.
+     *
+     * WordPress 7.1 builds the iframe asset document by running this hook with
+     * temporary script and style registries. Enqueueing the handles here keeps
+     * the canvas working when a theme or editor integration changes the default
+     * block asset loading mode.
      */
-    #[Hook('enqueue_block_editor_assets', priority: 10)]
-    public function enqueue_block_editor_assets(): void
+    #[Hook('enqueue_block_assets', priority: 10)]
+    public function enqueue_editor_iframe_assets(): void
     {
-        $screen = get_current_screen();
-        if (is_admin() && $screen->is_block_editor()) {
-            add_action('admin_head', fn() => $this->admin_head(), 10);
-            
-            // Enqueue webcomponent for block editor
-            $this->enqueue_webcomponent_for_editor();
+        if (!is_admin()) {
+            return;
+        }
 
-            // Enqueue iframe asset for block editor
-            $this->enqueue_iframe_asset_for_editor();
+        foreach ($this->registered_block_assets['iframe_scripts'] as $handle) {
+            wp_enqueue_script($handle);
+        }
+
+        foreach (array_merge(
+            $this->registered_block_assets['styles'],
+            $this->registered_block_assets['editor_styles'],
+        ) as $handle) {
+            wp_enqueue_style($handle);
         }
     }
-    
+
     /**
-     * Enqueue webcomponent scripts for the block editor
+     * Register the block's frontend and Gutenberg iframe assets separately.
+     *
+     * @return array{view_scripts: list<string>, iframe_scripts: list<string>, styles: list<string>, editor_styles: list<string>}
      */
-    private function enqueue_webcomponent_for_editor(): void
+    private function register_block_assets(): array
     {
-        // Enqueue the Jooosi Icon web component (including the legacy alias).
-        $this->viteService->enqueue_asset(
+        $webcomponent_assets = $this->viteService->register_asset(
             'resources/webcomponents/jooosi-icon.ts',
             [
                 'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':web-component:jooosi-icon',
                 'dependencies' => [
                     // JOOOSI_ICON::TEXT_DOMAIN . ':web-component-module:error-handler-editor',
                 ],
-                'in_footer' => true,
+                'in_footer' => false,
             ]
         );
-    }
 
-    /**
-     * Enqueue iframe asset for the block editor
-     */
-    private function enqueue_iframe_asset_for_editor(): void
-    {
-        $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/iframe.ts', [
-            'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block:iframe'
-        ]);
-    }
+        $iframe_assets = $this->viteService->register_asset(
+            'resources/integration/gutenberg/blocks/icon-block/iframe.ts',
+            [
+                'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block:iframe',
+            ]
+        );
 
-    /**
-     * Enqueue assets in admin head for block editor
-     */
-    public function admin_head(): void
-    {
-        $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/index.jsx', [
-            'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block',
-            'dependencies' => [
-                'wp-blocks',
-                'wp-element',
-                'wp-editor',
-                'wp-components',
-                'wp-block-editor',
-                'wp-hooks',
-                'wp-i18n',
-                'wp-plugins',
-                'wp-data',
-                'react',
-                'react-dom',
-            ],
-            'in_footer' => true,
-        ]);
+        return [
+            'view_scripts' => is_array($webcomponent_assets) && is_array($webcomponent_assets['scripts'] ?? null)
+                ? $webcomponent_assets['scripts']
+                : [],
+            'iframe_scripts' => is_array($iframe_assets) && is_array($iframe_assets['scripts'] ?? null)
+                ? $iframe_assets['scripts']
+                : [],
+            'styles' => is_array($webcomponent_assets) && is_array($webcomponent_assets['styles'] ?? null)
+                ? $webcomponent_assets['styles']
+                : [],
+            'editor_styles' => is_array($iframe_assets) && is_array($iframe_assets['styles'] ?? null)
+                ? $iframe_assets['styles']
+                : [],
+        ];
     }
 
     /**

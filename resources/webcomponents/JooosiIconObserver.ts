@@ -80,10 +80,10 @@ const observer = new MutationObserver((mutations) => {
 
 /**
  * Scan the existing document and begin observing it once a body is available.
- * The web component can be loaded in the document head, including in the
- * Gutenberg editor, where document.body has not been created yet.
+ * The web component can be loaded in the document head before
+ * document.body has been created.
  */
-function initializeObserver(): void {
+export function initializeObserver(): void {
     const root = document.body;
 
     if (!root) {
@@ -97,11 +97,7 @@ function initializeObserver(): void {
     });
 }
 
-if (document.body) {
-    initializeObserver();
-} else {
-    document.addEventListener('DOMContentLoaded', initializeObserver, { once: true });
-}
+initializeObserver();
 
 /**
  * Get the current renderer instance (may be null if not yet loaded)

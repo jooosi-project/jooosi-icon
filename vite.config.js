@@ -50,11 +50,13 @@ export default defineConfig({
 			targets: [
 				{
 					src: 'resources/integration/gutenberg/blocks/icon-block/block.json',
-					dest: 'integration/gutenberg/blocks/icon-block/'
+					dest: 'integration/gutenberg/blocks/icon-block/',
+					rename: { stripBase: true },
 				},
 				{
 					src: 'resources/integration/divi/module.json',
-					dest: 'integration/divi/'
+					dest: 'integration/divi/',
+					rename: { stripBase: true },
 				},
 				// {
 				//     src: 'assets/integration/gutenberg/common-block/block.json',
