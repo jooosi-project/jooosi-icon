@@ -9,24 +9,24 @@
 </p>
 
 <p align="center">
-  <a href="https://downloads.wordpress.org/plugin/jooosi-icon.zip">
+  <a href="https://downloads.wordpress.org/plugin/omni-icon.zip">
     <picture>
-    <img src="https://img.shields.io/wordpress/plugin/v/jooosi-icon.svg?logo=wordpress&label=version" alt="WordPress plugin version" />
+    <img src="https://img.shields.io/wordpress/plugin/v/omni-icon.svg?logo=wordpress&label=version" alt="WordPress plugin version" />
     </picture>
   </a>
-  <a href="https://wordpress.org/plugins/jooosi-icon/advanced/">
+  <a href="https://wordpress.org/plugins/omni-icon/advanced/">
     <picture>
-    <img src="https://img.shields.io/wordpress/plugin/dt/jooosi-icon.svg?logo=wordpress" alt="WordPress plugin downloads" />
+    <img src="https://img.shields.io/wordpress/plugin/dt/omni-icon.svg?logo=wordpress" alt="WordPress plugin downloads" />
     </picture>
   </a>
-  <a href="https://wordpress.org/plugins/jooosi-icon/">
+  <a href="https://wordpress.org/plugins/omni-icon/">
     <picture>
-    <img src="https://img.shields.io/wordpress/plugin/installs/jooosi-icon.svg?logo=wordpress" alt="WordPress plugin active installs" />
+    <img src="https://img.shields.io/wordpress/plugin/installs/omni-icon.svg?logo=wordpress" alt="WordPress plugin active installs" />
     </picture>
   </a>
-  <a href="https://wordpress.org/support/plugin/jooosi-icon/reviews/?filter=5/#new-post">
+  <a href="https://wordpress.org/support/plugin/omni-icon/reviews/?filter=5/#new-post">
     <picture>
-    <img src="https://img.shields.io/wordpress/plugin/stars/jooosi-icon.svg?logo=wordpress" alt="WordPress plugin rating" />
+    <img src="https://img.shields.io/wordpress/plugin/stars/omni-icon.svg?logo=wordpress" alt="WordPress plugin rating" />
     </picture>
   </a>
   <br />

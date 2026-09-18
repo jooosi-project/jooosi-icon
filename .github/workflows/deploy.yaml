@@ -225,7 +225,7 @@ jobs:
         env:
           SVN_USERNAME: ${{ secrets.WORDPRESS_ORG_SVN_USERNAME || secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.WORDPRESS_ORG_SVN_PASSWORD || secrets.SVN_PASSWORD }}
-          SLUG: jooosi-icon
+          SLUG: omni-icon
           BUILD_DIR: jooosi-icon-free-prefixed
           VERSION: ${{ steps.versions.outputs.free }}
           ASSETS_DIR: .wordpress-org
