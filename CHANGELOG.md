@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix Gutenberg icon rendering and CSS loading in the editor canvas [#5](https://github.com/jooosi-project/jooosi-icon/issues/5) [#8](https://github.com/jooosi-project/jooosi-icon/discussions/8)
+- Preserve uploaded SVG presentation attributes during client-side rendering [#12](https://github.com/jooosi-project/jooosi-icon/issues/12)
 
 ## [1.0.19] - 2026-07-24
 

@@ -23,12 +23,13 @@ export interface IconRendererState {
 	originalWidth: string | null;
 	originalHeight: string | null;
 	cachedSvgElement: SVGSVGElement | null;
+	sourceSvgAttributes: Map<string, string>;
+	mirroredSvgAttributes: Set<string>;
 }
 
 /** Renders canonical and legacy Jooosi Icon custom elements. */
 export class JooosiIconRenderer {
 	private static readonly RESERVED_ATTRS = new Set(['name', 'id', 'role', 'aria-expanded', 'tabindex']);
-	private static readonly SVG_ATTRS = new Set(['xmlns', 'viewBox', 'aria-hidden', 'focusable']);
 	private static readonly CLEANUP_ATTRS = ['data-oiwc-state', 'data-oiwc-error-type', 'data-oiwc-original-icon', 'data-oiwc-expanded', 'role', 'aria-expanded', 'tabindex'];
 
 	private states = new WeakMap<Element, IconRendererState>();
@@ -49,6 +50,8 @@ export class JooosiIconRenderer {
 				originalWidth: null,
 				originalHeight: null,
 				cachedSvgElement: null,
+				sourceSvgAttributes: new Map(),
+				mirroredSvgAttributes: new Set(),
 			};
 			this.states.set(element, state);
 		}
@@ -79,6 +82,8 @@ export class JooosiIconRenderer {
 		state.originalWidth = null;
 		state.originalHeight = null;
 		state.cachedSvgElement = null;
+		state.sourceSvgAttributes.clear();
+		state.mirroredSvgAttributes.clear();
 
 		if (state.mutationObserver) {
 			state.mutationObserver.disconnect();
@@ -256,6 +261,11 @@ export class JooosiIconRenderer {
 	}
 
 	private renderLoading(element: Element, config: IconConfig): void {
+		const state = this.getState(element);
+		state.cachedSvgElement = null;
+		state.sourceSvgAttributes.clear();
+		state.mirroredSvgAttributes.clear();
+
 		element.setAttribute('data-oiwc-state', 'loading');
 		['data-oiwc-error-type', 'data-oiwc-original-icon', 'data-oiwc-expanded'].forEach(attr => element.removeAttribute(attr));
 		if (config.width) (element as HTMLElement).style.width = this.toCssLength(config.width);
@@ -281,7 +291,12 @@ export class JooosiIconRenderer {
 
 			state.cachedSvgElement.setAttribute('aria-hidden', 'true');
 			state.cachedSvgElement.setAttribute('focusable', 'false');
-			this.passAttributesToSvg(element, state.cachedSvgElement);
+			state.sourceSvgAttributes = this.snapshotSvgAttributes(state.cachedSvgElement);
+			state.mirroredSvgAttributes.clear();
+			this.updateSvgAttributes(element);
+		} else {
+			state.sourceSvgAttributes.clear();
+			state.mirroredSvgAttributes.clear();
 		}
 
 		state.renderStatus = 'rendered';
@@ -333,9 +348,16 @@ export class JooosiIconRenderer {
 			element.innerHTML = fallbackSvg;
 			const svgElement = element.querySelector('svg');
 			if (svgElement) {
+				state.cachedSvgElement = svgElement;
 				svgElement.setAttribute('aria-hidden', 'true');
 				svgElement.setAttribute('focusable', 'false');
-				this.passAttributesToSvg(element, svgElement);
+				state.sourceSvgAttributes = this.snapshotSvgAttributes(svgElement);
+				state.mirroredSvgAttributes.clear();
+				this.updateSvgAttributes(element);
+			} else {
+				state.cachedSvgElement = null;
+				state.sourceSvgAttributes.clear();
+				state.mirroredSvgAttributes.clear();
 			}
 		} catch {
 			if (signal?.aborted) {
@@ -343,6 +365,9 @@ export class JooosiIconRenderer {
 			}
 
 			element.innerHTML = '';
+			state.cachedSvgElement = null;
+			state.sourceSvgAttributes.clear();
+			state.mirroredSvgAttributes.clear();
 		}
 
 		// Lazy load ErrorObserver on first error
@@ -383,12 +408,34 @@ export class JooosiIconRenderer {
 		return /^-?\d+(?:\.\d+)?$/.test(value) ? `${value}px` : value;
 	}
 
-	private passAttributesToSvg(element: Element, svgElement: SVGSVGElement): void {
-		Array.from(element.attributes).forEach((attr) => {
-			if (!this.shouldSkipAttribute(attr.name)) {
-				svgElement.setAttribute(attr.name, attr.value);
-			}
+	private snapshotSvgAttributes(svgElement: SVGSVGElement): Map<string, string> {
+		const attributes = new Map<string, string>();
+
+		Array.from(svgElement.attributes).forEach((attr) => {
+			attributes.set(attr.name, attr.value);
 		});
+
+		return attributes;
+	}
+
+	private getHostAttributes(element: Element): Map<string, string> {
+		const hostAttrs = new Map<string, string>();
+
+		Array.from(element.attributes).forEach((attr) => {
+			if (this.shouldSkipAttribute(attr.name)) {
+				return;
+			}
+
+			// Renderer-owned inline dimensions are cleared after rendering. An empty
+			// style attribute should not overwrite a source SVG style attribute.
+			if (attr.name === 'style' && attr.value === '') {
+				return;
+			}
+
+			hostAttrs.set(attr.name, attr.value);
+		});
+
+		return hostAttrs;
 	}
 
 	private updateSvgAttributes(element: Element): void {
@@ -400,29 +447,29 @@ export class JooosiIconRenderer {
 		}
 		state.cachedSvgElement = svgElement;
 
-		// Get current attributes on the jooosi-icon element
-		const hostAttrs = new Map<string, string>();
-		Array.from(element.attributes).forEach((attr) => {
-			if (!this.shouldSkipAttribute(attr.name)) {
-				hostAttrs.set(attr.name, attr.value);
-			}
-		});
+		const hostAttrs = this.getHostAttributes(element);
 
-		// Remove attributes from SVG that are no longer on the host
-		Array.from(svgElement.attributes).forEach((attr) => {
-			const attrName = attr.name;
-			// Skip SVG-specific attributes
-			if (!JooosiIconRenderer.SVG_ATTRS.has(attrName) &&
-				!JooosiIconRenderer.RESERVED_ATTRS.has(attrName) &&
-				!hostAttrs.has(attrName)) {
+		// Remove only attributes that were previously mirrored from the host.
+		// Source SVG attributes must remain untouched.
+		state.mirroredSvgAttributes.forEach((attrName) => {
+			if (hostAttrs.has(attrName)) {
+				return;
+			}
+
+			const sourceValue = state.sourceSvgAttributes.get(attrName);
+			if (sourceValue === undefined) {
 				svgElement.removeAttribute(attrName);
+			} else {
+				svgElement.setAttribute(attrName, sourceValue);
 			}
 		});
 
-		// Add/update attributes from host to SVG
+		// Add/update current attributes from the host.
 		hostAttrs.forEach((value, name) => {
 			svgElement.setAttribute(name, value);
 		});
+
+		state.mirroredSvgAttributes = new Set(hostAttrs.keys());
 	}
 
 	private async fetchIcon(iconName: string, signal?: AbortSignal, priority = 0): Promise<string> {
