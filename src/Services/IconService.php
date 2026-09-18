@@ -40,6 +40,9 @@ class IconService
     ) {
         // Initialize SVG sanitizer for render-time sanitization
         $this->sanitizer = new Sanitizer();
+        // SVG is embedded as HTML, so do not emit an XML declaration that
+        // browsers would turn into a bogus comment during client rendering.
+        $this->sanitizer->removeXMLTag(true);
     }
 
     /**

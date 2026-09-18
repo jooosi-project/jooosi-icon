@@ -44,6 +44,9 @@ class LocalIconService
     public function __construct()
     {
         $this->sanitizer = new Sanitizer();
+        // SVG is embedded as HTML, so an XML declaration would be parsed as a
+        // bogus comment when the markup is inserted with innerHTML.
+        $this->sanitizer->removeXMLTag(true);
         
         // Set up local upload directory
         $wp_upload_dir = wp_upload_dir();
