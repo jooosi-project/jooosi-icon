@@ -51,7 +51,7 @@ function openIconPicker(initialValue, callback) {
 			callback,
 		});
 	} else {
-		console.error('[Omni Icon] Divi picker modal state manager is not initialized');
+		console.error('[Jooosi Icon] Divi picker modal state manager is not initialized');
 	}
 }
 

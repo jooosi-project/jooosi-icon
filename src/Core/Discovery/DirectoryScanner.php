@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -102,7 +102,7 @@ final class DirectoryScanner
             }
 
             // Pass to discoveries
-            if ($classReflector instanceof \OmniIcon\Core\Discovery\ClassReflector) {
+            if ($classReflector instanceof \JooosiIcon\Core\Discovery\ClassReflector) {
                 foreach ($this->discoveries as $discovery) {
                     $discovery->discover($discoveryLocation, $classReflector);
                 }

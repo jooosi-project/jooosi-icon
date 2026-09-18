@@ -65,7 +65,7 @@ const IconItem = memo(({
 				</div>
 			)}
 			<div className="oiib-icon-preview">
-				<omni-icon
+				<jooosi-icon
 					name={icon.name}
 					width="32"
 					height="32"

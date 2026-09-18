@@ -149,9 +149,9 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 				const collectionName = selectedCollection === 'all' 
 					? '' 
 					: ` in ${collections[selectedCollection]?.name || selectedCollection}`;
-				return __(`Searching for "${searchQuery}"${collectionName}...`, 'omni-icon');
+				return __(`Searching for "${searchQuery}"${collectionName}...`, 'jooosi-icon');
 			}
-			return __('Loading icons...', 'omni-icon');
+			return __('Loading icons...', 'jooosi-icon');
 		}
 		
 		if (debouncedSearchQuery) {
@@ -160,25 +160,25 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 				: ` in ${collections[selectedCollection]?.name || selectedCollection}`;
 			
 			return totalCount > 0
-				? __(`Found ${totalCount} icons for "${debouncedSearchQuery}"${collectionName}`, 'omni-icon')
-				: __(`No icons found for "${debouncedSearchQuery}"${collectionName}`, 'omni-icon');
+				? __(`Found ${totalCount} icons for "${debouncedSearchQuery}"${collectionName}`, 'jooosi-icon')
+				: __(`No icons found for "${debouncedSearchQuery}"${collectionName}`, 'jooosi-icon');
 		}
 		
 		return selectedCollection === 'all'
-			? __('Showing sample icons from all collections', 'omni-icon')
-			: __(`Showing sample icons from ${collections[selectedCollection]?.name || selectedCollection}`, 'omni-icon');
+			? __('Showing sample icons from all collections', 'jooosi-icon')
+			: __(`Showing sample icons from ${collections[selectedCollection]?.name || selectedCollection}`, 'jooosi-icon');
 	}, [isLoading, searchQuery, debouncedSearchQuery, selectedCollection, totalCount, collections]);
 
 	return (
 		<>
 			{isOpen && (
 				<Modal
-					title={__('Omni Icon — Icon Picker', 'omni-icon')}
+					title={__('Jooosi Icon — Icon Picker', 'jooosi-icon')}
 					onRequestClose={onClose}
 					className="oiib-icon-picker-modal"
 					size="large"
 					onKeyDown={handleKeyDown}
-					aria-label={__('Icon Picker', 'omni-icon')}
+					aria-label={__('Icon Picker', 'jooosi-icon')}
 				>
 					<div className="oiib-icon-picker-content">
 						{/* Search Bar */}
@@ -190,15 +190,15 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 									className="oiib-search-input"
 									value={searchQuery}
 									onChange={(e) => setSearchQuery(e.target.value)}
-									placeholder={__('Search icons... (e.g., home, mdi:heart, lucide:star)', 'omni-icon')}
+									placeholder={__('Search icons... (e.g., home, mdi:heart, lucide:star)', 'jooosi-icon')}
 									autoFocus
-									aria-label={__('Search icons', 'omni-icon')}
+									aria-label={__('Search icons', 'jooosi-icon')}
 								/>
 								{searchQuery && (
 									<button
 										className="oiib-search-clear"
 										onClick={handleClearSearch}
-										aria-label={__('Clear search', 'omni-icon')}
+										aria-label={__('Clear search', 'jooosi-icon')}
 									>
 										<IconX />
 									</button>
@@ -208,8 +208,8 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 								className="oiib-search-refresh"
 								onClick={refreshCollections}
 								disabled={isRefreshing}
-								aria-label={__('Refresh icon collections', 'omni-icon')}
-								title={__('Refresh icon collections', 'omni-icon')}
+								aria-label={__('Refresh icon collections', 'jooosi-icon')}
+								title={__('Refresh icon collections', 'jooosi-icon')}
 							>
 								<IconRefresh className={isRefreshing ? 'is-spinning' : ''} />
 							</button>
@@ -217,16 +217,16 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 
 						{/* Collection Filter */}
 						{Object.keys(collections).length > 0 && (
-							<div className="oiib-collection-filter" role="tablist" aria-label={__('Filter by collection', 'omni-icon')}>
+							<div className="oiib-collection-filter" role="tablist" aria-label={__('Filter by collection', 'jooosi-icon')}>
 								<div className="oiib-collection-filter-wrapper">
 									<button
 										className={`oiib-collection-chip ${selectedCollection === 'all' ? 'is-active' : ''}`}
 										onClick={() => handleCollectionFilter('all')}
 										role="tab"
 										aria-selected={selectedCollection === 'all'}
-										aria-label={__('All collections', 'omni-icon')}
+										aria-label={__('All collections', 'jooosi-icon')}
 									>
-										{__('All', 'omni-icon')}
+										{__('All', 'jooosi-icon')}
 										<span className="oiib-collection-count" aria-label={`${allIcons.length} icons`}>
 											{allIcons.length}
 										</span>
@@ -267,23 +267,23 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 						
 						{/* Pagination Controls */}
 						{!isLoading && debouncedSearchQuery && totalPages > 1 && (
-							<div className="oiib-pagination" role="navigation" aria-label={__('Icon pagination', 'omni-icon')}>
+							<div className="oiib-pagination" role="navigation" aria-label={__('Icon pagination', 'jooosi-icon')}>
 								<button
 									className="oiib-pagination-btn"
 									onClick={handlePrevPage}
 									disabled={currentPage === 1}
-									aria-label={__('Previous page', 'omni-icon')}
+									aria-label={__('Previous page', 'jooosi-icon')}
 								>
 									<IconChevronLeft />
 								</button>
 								<span className="oiib-pagination-info" aria-live="polite">
-									{__(`Page ${currentPage} of ${totalPages}`, 'omni-icon')}
+									{__(`Page ${currentPage} of ${totalPages}`, 'jooosi-icon')}
 								</span>
 								<button
 									className="oiib-pagination-btn"
 									onClick={handleNextPage}
 									disabled={currentPage === totalPages}
-									aria-label={__('Next page', 'omni-icon')}
+									aria-label={__('Next page', 'jooosi-icon')}
 								>
 									<IconChevronRight />
 								</button>
@@ -297,7 +297,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 						{isLoading && (
 							<div className="oiib-icon-picker-loading" role="status" aria-live="polite">
 								<Spinner />
-								<p>{__('Loading icons...', 'omni-icon')}</p>
+								<p>{__('Loading icons...', 'jooosi-icon')}</p>
 							</div>
 						)}
 
@@ -314,7 +314,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 								className="oiib-icon-picker-grid" 
 								ref={gridRef}
 								role="grid"
-								aria-label={__('Icon grid', 'omni-icon')}
+								aria-label={__('Icon grid', 'jooosi-icon')}
 							>
 								{paginatedIcons.map((icon, index) => (
 									<IconItem
@@ -333,8 +333,8 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 						{!isLoading && !error && paginatedIcons.length === 0 && debouncedSearchQuery && (
 							<div className="oiib-icon-picker-empty" role="status">
 								<IconSearch style={{ width: '48px', height: '48px' }} aria-hidden="true" />
-								<h3>{__('No icons found', 'omni-icon')}</h3>
-								<p>{__('Try a different search term or icon prefix', 'omni-icon')}</p>
+								<h3>{__('No icons found', 'jooosi-icon')}</h3>
+								<p>{__('Try a different search term or icon prefix', 'jooosi-icon')}</p>
 							</div>
 						)}
 					</div>
@@ -345,20 +345,20 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 							<div className="oiib-selected-icon-preview">
 								{tempSelectedIcon ? (
 									<div className="oiib-selected-icon-display">
-										<omni-icon
+										<jooosi-icon
 											name={tempSelectedIcon}
 											width="32"
 											height="32"
 										/>
 										<div className="oiib-selected-icon-info">
-											<span className="oiib-selected-icon-label">{__('Selected:', 'omni-icon')}</span>
+											<span className="oiib-selected-icon-label">{__('Selected:', 'jooosi-icon')}</span>
 											<span className="oiib-selected-icon-name">{tempSelectedIcon}</span>
 										</div>
 									</div>
 								) : (
 									<div className="oiib-selected-icon-display">
 										<div className="oiib-selected-icon-info">
-											<span className="oiib-selected-icon-label">{__('Icon will be removed', 'omni-icon')}</span>
+											<span className="oiib-selected-icon-label">{__('Icon will be removed', 'jooosi-icon')}</span>
 										</div>
 									</div>
 								)}
@@ -366,16 +366,16 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 									<button
 										className="oiib-btn oiib-btn-secondary"
 										onClick={handleCancelSelection}
-										aria-label={__('Cancel', 'omni-icon')}
+										aria-label={__('Cancel', 'jooosi-icon')}
 									>
-										{__('Cancel', 'omni-icon')}
+										{__('Cancel', 'jooosi-icon')}
 									</button>
 									<button
 										className="oiib-btn oiib-btn-primary"
 										onClick={handleConfirmSelection}
-										aria-label={__('Confirm selection', 'omni-icon')}
+										aria-label={__('Confirm selection', 'jooosi-icon')}
 									>
-										{__('Confirm', 'omni-icon')}
+										{__('Confirm', 'jooosi-icon')}
 									</button>
 								</div>
 							</div>

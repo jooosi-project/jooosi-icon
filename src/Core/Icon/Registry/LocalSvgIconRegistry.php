@@ -10,14 +10,14 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Modified for OmniIcon WordPress plugin.
+ * Modified for JooosiIcon WordPress plugin.
  */
 
-namespace OmniIcon\Core\Icon\Registry;
+namespace JooosiIcon\Core\Icon\Registry;
 
-use OmniIcon\Core\Icon\Exception\IconNotFoundException;
-use OmniIcon\Core\Icon\Icon;
-use OmniIcon\Core\Icon\IconRegistryInterface;
+use JooosiIcon\Core\Icon\Exception\IconNotFoundException;
+use JooosiIcon\Core\Icon\Icon;
+use JooosiIcon\Core\Icon\IconRegistryInterface;
 
 /**
  * Icon registry for local SVG files with support for icon sets via directory structure.
@@ -28,15 +28,19 @@ final class LocalSvgIconRegistry implements IconRegistryInterface
 {
     /**
      * @param array<string, string> $iconSetPaths
+     * @param array<string, string> $iconAliases Full icon-name aliases.
      */
     public function __construct(
         private readonly string $iconDir,
         private readonly array $iconSetPaths = [],
+        private readonly array $iconAliases = [],
     ) {
     }
 
     public function get(string $name): Icon
     {
+        $name = $this->iconAliases[$name] ?? $name;
+
         if (str_contains($name, ':')) {
             [$prefix, $icon] = explode(':', $name, 2) + ['', ''];
             if ('' === $prefix || '' === $icon) {

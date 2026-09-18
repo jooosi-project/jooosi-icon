@@ -5,7 +5,7 @@ import './admin-app.scss';
 
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', () => {
-	const container = document.getElementById('omni-icon-app');
+	const container = document.getElementById('jooosi-icon-app');
 	
 	if (container) {
 		const root = ReactDOM.createRoot(container);

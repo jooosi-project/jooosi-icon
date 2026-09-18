@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Api\Admin;
+namespace JooosiIcon\Api\Admin;
 
-use OmniIcon\Core\Discovery\Attributes\Controller;
-use OmniIcon\Core\Discovery\Attributes\Route;
-use OmniIcon\Services\LocalIconService;
+use JooosiIcon\Core\Discovery\Attributes\Controller;
+use JooosiIcon\Core\Discovery\Attributes\Route;
+use JooosiIcon\Services\LocalIconService;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_Error;
 
-#[Controller(namespace: 'omni-icon/v1', prefix: 'admin/local-icon')]
+#[Controller(namespace: 'jooosi-icon/v1', prefix: 'admin/local-icon')]
 final class LocalIconController
 {
     /**
@@ -41,7 +41,7 @@ final class LocalIconController
         if (empty($files)) {
             return new WP_Error(
                 'no_file',
-                __('No file uploaded', 'omni-icon'),
+                __('No file uploaded', 'jooosi-icon'),
                 ['status' => 400]
             );
         }
@@ -79,7 +79,7 @@ final class LocalIconController
                 if ($mime_type !== 'image/svg+xml') {
                     $errors[] = [
                         'filename' => $file['name'],
-                        'message' => __('Invalid file type. Only SVG files are allowed.', 'omni-icon'),
+                        'message' => __('Invalid file type. Only SVG files are allowed.', 'jooosi-icon'),
                     ];
                     continue;
                 }
@@ -102,7 +102,7 @@ final class LocalIconController
             return new WP_REST_Response([
                 'success' => $uploaded_count > 0,
                 'message' => sprintf(
-                    __('%d of %d icons uploaded successfully', 'omni-icon'),
+                    __('%d of %d icons uploaded successfully', 'jooosi-icon'),
                     $uploaded_count,
                     $total_files
                 ),
@@ -127,7 +127,7 @@ final class LocalIconController
             if ($mime_type !== 'image/svg+xml') {
                 return new WP_Error(
                     'invalid_file_type',
-                    __('Invalid file type. Only SVG files are allowed.', 'omni-icon'),
+                    __('Invalid file type. Only SVG files are allowed.', 'jooosi-icon'),
                     ['status' => 400]
                 );
             }
@@ -218,7 +218,7 @@ final class LocalIconController
         if (empty($icon_name)) {
             return new WP_Error(
                 'missing_icon_name',
-                __('Icon name is required', 'omni-icon'),
+                __('Icon name is required', 'jooosi-icon'),
                 ['status' => 400]
             );
         }
@@ -250,7 +250,7 @@ final class LocalIconController
         if (empty($set_name)) {
             return new WP_Error(
                 'missing_set_name',
-                __('Set name is required', 'omni-icon'),
+                __('Set name is required', 'jooosi-icon'),
                 ['status' => 400]
             );
         }
@@ -283,7 +283,7 @@ final class LocalIconController
         if (empty($new_name)) {
             return new WP_Error(
                 'missing_new_name',
-                __('New name is required', 'omni-icon'),
+                __('New name is required', 'jooosi-icon'),
                 ['status' => 400]
             );
         }
@@ -314,7 +314,7 @@ final class LocalIconController
 
         return new WP_REST_Response([
             'success' => true,
-            'message' => __('Cache cleared successfully', 'omni-icon'),
+            'message' => __('Cache cleared successfully', 'jooosi-icon'),
         ]);
     }
 

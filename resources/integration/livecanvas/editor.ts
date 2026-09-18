@@ -1,5 +1,5 @@
 /**
- * Omni Icon Picker Integration for LiveCanvas
+ * Jooosi Icon Picker Integration for LiveCanvas
  * 
  * Main entry point that initializes the icon picker integration for LiveCanvas editor.
  */
@@ -20,7 +20,7 @@ import './editor.scss';
 	renderModal();
 
 	// Expose API to window for LiveCanvas panel to use
-	(window as any).omniIconPicker = {
+	(window as any).jooosiIconPicker = {
 		open: (initialValue?: string, callback?: (iconName: string) => void) => {
 			openIconPicker(initialValue || '', callback);
 		},

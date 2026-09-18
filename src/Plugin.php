@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon;
+namespace JooosiIcon;
 
 defined('ABSPATH') || exit;
 
 use Exception;
-use OMNI_ICON;
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Discovery\CommandDiscovery;
-use OmniIcon\Core\Discovery\DiscoveryManager;
-use OmniIcon\Core\Discovery\HookDiscovery;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Discovery\CommandDiscovery;
+use JooosiIcon\Core\Discovery\DiscoveryManager;
+use JooosiIcon\Core\Discovery\HookDiscovery;
 use RuntimeException;
 
 final class Plugin
@@ -56,7 +56,13 @@ final class Plugin
         $this->register_hooks();
         $this->booted = true;
 
-        do_action('omni-icon/core:plugin.booted', $this);
+        do_action('jooosi-icon/core:plugin.booted', $this);
+        do_action_deprecated(
+            'omni-icon/core:plugin.booted',
+            [$this],
+            JOOOSI_ICON::VERSION,
+            'jooosi-icon/core:plugin.booted',
+        );
     }
 
     public function container(): Container
@@ -70,9 +76,15 @@ final class Plugin
 
     public function init(): void
     {
-        // load_plugin_textdomain(OMNI_ICON::TEXT_DOMAIN, false, dirname(plugin_basename(OMNI_ICON::FILE)) . '/languages');
+        // load_plugin_textdomain(JOOOSI_ICON::TEXT_DOMAIN, false, dirname(plugin_basename(JOOOSI_ICON::FILE)) . '/languages');
 
-        do_action('omni-icon/core:init', $this);
+        do_action('jooosi-icon/core:init', $this);
+        do_action_deprecated(
+            'omni-icon/core:init',
+            [$this],
+            JOOOSI_ICON::VERSION,
+            'jooosi-icon/core:init',
+        );
     }
 
     public function plugins_loaded(): void
@@ -81,16 +93,22 @@ final class Plugin
             return;
         }
 
-        do_action('omni-icon/core:plugins-loaded', $this);
+        do_action('jooosi-icon/core:plugins-loaded', $this);
+        do_action_deprecated(
+            'omni-icon/core:plugins-loaded',
+            [$this],
+            JOOOSI_ICON::VERSION,
+            'jooosi-icon/core:plugins-loaded',
+        );
     }
 
     public function activate(): void
     {
         if (! $this->check_dependencies()) {
-            deactivate_plugins(plugin_basename(OMNI_ICON::FILE));
+            deactivate_plugins(plugin_basename(JOOOSI_ICON::FILE));
             wp_die(
-                esc_html__('Omni Icon requires WordPress 6.0+ and PHP 8.1+', 'omni-icon'),
-                esc_html__('Plugin Activation Error', 'omni-icon'),
+                esc_html__('Jooosi Icon requires WordPress 6.0+ and PHP 8.1+', 'jooosi-icon'),
+                esc_html__('Plugin Activation Error', 'jooosi-icon'),
                 [
                     'back_link' => true,
                 ]
@@ -98,7 +116,7 @@ final class Plugin
         }
 
         // Set plugin version option
-        update_option('omni_icon_version', OMNI_ICON::VERSION);
+        update_option('jooosi_icon_version', JOOOSI_ICON::VERSION);
 
         // Ensure the plugin is booted
         if (! $this->booted) {
@@ -112,14 +130,26 @@ final class Plugin
             // Discovery manager might not be available yet
         }
 
-        do_action('omni-icon/core:activate', $this);
+        do_action('jooosi-icon/core:activate', $this);
+        do_action_deprecated(
+            'omni-icon/core:activate',
+            [$this],
+            JOOOSI_ICON::VERSION,
+            'jooosi-icon/core:activate',
+        );
 
         flush_rewrite_rules();
     }
 
     public function deactivate(): void
     {
-        do_action('omni-icon/core:deactivate', $this);
+        do_action('jooosi-icon/core:deactivate', $this);
+        do_action_deprecated(
+            'omni-icon/core:deactivate',
+            [$this],
+            JOOOSI_ICON::VERSION,
+            'jooosi-icon/core:deactivate',
+        );
 
         flush_rewrite_rules();
     }
@@ -165,8 +195,8 @@ final class Plugin
         add_action('init', $this->init(...));
         add_action('plugins_loaded', $this->plugins_loaded(...));
 
-        register_activation_hook(OMNI_ICON::FILE, $this->activate(...));
-        register_deactivation_hook(OMNI_ICON::FILE, $this->deactivate(...));
+        register_activation_hook(JOOOSI_ICON::FILE, $this->activate(...));
+        register_deactivation_hook(JOOOSI_ICON::FILE, $this->deactivate(...));
     }
 
     private function check_dependencies(): bool

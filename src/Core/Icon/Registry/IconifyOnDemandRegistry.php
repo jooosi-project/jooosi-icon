@@ -10,16 +10,16 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Modified for OmniIcon WordPress plugin.
+ * Modified for JooosiIcon WordPress plugin.
  */
 
-namespace OmniIcon\Core\Icon\Registry;
+namespace JooosiIcon\Core\Icon\Registry;
 
-use OmniIcon\Core\Icon\Exception\HttpClientNotInstalledException;
-use OmniIcon\Core\Icon\Exception\IconNotFoundException;
-use OmniIcon\Core\Icon\Icon;
-use OmniIcon\Core\Icon\Iconify;
-use OmniIcon\Core\Icon\IconRegistryInterface;
+use JooosiIcon\Core\Icon\Exception\HttpClientNotInstalledException;
+use JooosiIcon\Core\Icon\Exception\IconNotFoundException;
+use JooosiIcon\Core\Icon\Icon;
+use JooosiIcon\Core\Icon\Iconify;
+use JooosiIcon\Core\Icon\IconRegistryInterface;
 
 /**
  * Icon registry for fetching icons from Iconify API on demand.

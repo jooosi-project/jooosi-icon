@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Integration\ACF\Fields;
+namespace JooosiIcon\Integration\ACF\Fields;
 
 use acf_field;
-use OmniIcon\Plugin;
-use OmniIcon\Services\IconService;
+use JooosiIcon\Plugin;
+use JooosiIcon\Services\IconService;
 
 use function acf_get_url;
 
 /**
- * Omni Icon field type for ACF
+ * Jooosi Icon field type for ACF
  *
- * Allows users to select icons from the Omni Icon library in ACF field groups.
+ * Allows users to select icons from the Jooosi Icon library in ACF field groups.
  * Supports 200,000+ icons from Iconify, custom uploads, and bundled icons.
  *
  * @see https://www.advancedcustomfields.com/resources/creating-a-new-field-type/
@@ -21,12 +21,12 @@ use function acf_get_url;
 class IconField extends acf_field
 {
     public function initialize() {
-        $this->name = 'omni_icon';
-        $this->label = __('Omni Icon', 'omni-icon');
+        $this->name = 'jooosi_icon';
+        $this->label = __('Jooosi Icon', 'jooosi-icon');
         $this->public = true;
         $this->show_in_rest = true;
         $this->category = 'advanced';
-        $this->description = __('Select from 200,000+ icons including custom uploads and Iconify collections', 'omni-icon');
+        $this->description = __('Select from 200,000+ icons including custom uploads and Iconify collections', 'jooosi-icon');
         $this->preview_image = acf_get_url() . '/assets/images/field-type-previews/field-preview-icon-picker.png';
 
         /**
@@ -41,9 +41,9 @@ class IconField extends acf_field
          * Strings used in JavaScript code.
          */
         $this->l10n = array(
-            'browse' => __('Browse Icons', 'omni-icon'),
-            'select' => __('Select Icon', 'omni-icon'),
-            'remove' => __('Remove Icon', 'omni-icon'),
+            'browse' => __('Browse Icons', 'jooosi-icon'),
+            'select' => __('Select Icon', 'jooosi-icon'),
+            'remove' => __('Remove Icon', 'jooosi-icon'),
         );
     }
 
@@ -59,8 +59,8 @@ class IconField extends acf_field
         acf_render_field_setting(
             $field,
             array(
-                'label' => __('Default Icon', 'omni-icon'),
-                'instructions' => __('Appears when creating a new post (optional)', 'omni-icon'),
+                'label' => __('Default Icon', 'jooosi-icon'),
+                'instructions' => __('Appears when creating a new post (optional)', 'jooosi-icon'),
                 'type' => 'text',
                 'name' => 'default_icon',
                 'placeholder' => 'mdi:home',
@@ -71,15 +71,15 @@ class IconField extends acf_field
         acf_render_field_setting(
             $field,
             array(
-                'label' => __('Return Format', 'omni-icon'),
-                'instructions' => __('Specify the value returned', 'omni-icon'),
+                'label' => __('Return Format', 'jooosi-icon'),
+                'instructions' => __('Specify the value returned', 'jooosi-icon'),
                 'type' => 'radio',
                 'name' => 'return_format',
                 'layout' => 'horizontal',
                 'choices' => array(
-                    'string' => __('Icon Name (e.g., mdi:home)', 'omni-icon'),
-                    'array' => __('Icon Array (name, prefix, svg)', 'omni-icon'),
-                    'html' => __('HTML (omni-icon element)', 'omni-icon'),
+                    'string' => __('Icon Name (e.g., mdi:home)', 'jooosi-icon'),
+                    'array' => __('Icon Array (name, prefix, svg)', 'jooosi-icon'),
+                    'html' => __('HTML (jooosi-icon element)', 'jooosi-icon'),
                 ),
             )
         );
@@ -97,11 +97,11 @@ class IconField extends acf_field
         $field_name = esc_attr($field['name']);
         $field_id = esc_attr($field['id']);
         ?>
-        <div class="acf-omni-icon-field" data-field-key="<?php echo esc_attr($field['key']); ?>">
-            <div class="acf-omni-icon-controls">
+        <div class="acf-jooosi-icon-field" data-field-key="<?php echo esc_attr($field['key']); ?>">
+            <div class="acf-jooosi-icon-controls">
                 <input 
                     type="hidden" 
-                    class="acf-omni-icon-input" 
+                    class="acf-jooosi-icon-input"
                     name="<?php echo $field_name; ?>" 
                     id="<?php echo $field_id; ?>"
                     value="<?php echo esc_attr($value); ?>" 
@@ -109,7 +109,7 @@ class IconField extends acf_field
                 
                 <button 
                     type="button" 
-                    class="button button-primary acf-omni-icon-browse"
+                    class="button button-primary acf-jooosi-icon-browse"
                     data-action="browse"
                 >
                     <?php echo esc_html($this->l10n['browse']); ?>
@@ -118,7 +118,7 @@ class IconField extends acf_field
                 <?php if (!empty($value)): ?>
                 <button 
                     type="button" 
-                    class="button acf-omni-icon-remove"
+                    class="button acf-jooosi-icon-remove"
                     data-action="remove"
                 >
                     <?php echo esc_html($this->l10n['remove']); ?>
@@ -126,9 +126,9 @@ class IconField extends acf_field
                 <?php endif; ?>
             </div>
             
-            <div class="acf-omni-icon-preview">
+            <div class="acf-jooosi-icon-preview">
                 <?php if (!empty($value)): ?>
-                <div class="acf-omni-icon-display">
+                <div class="acf-jooosi-icon-display">
                     <?php
                     // Get the IconService to fetch SVG for preview
                     $container = Plugin::get_instance()->container();
@@ -141,18 +141,18 @@ class IconField extends acf_field
                          * We use render-time sanitization for defense-in-depth security.
                          */
                         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG sanitized by enshrined/svg-sanitize
-                        echo sprintf('<omni-icon data-prerendered name="%s" width="32" height="32">%s</omni-icon>', esc_attr($value), $svg);
+                        echo sprintf('<jooosi-icon data-prerendered name="%s" width="32" height="32">%s</jooosi-icon>', esc_attr($value), $svg);
                     } else {
-                        echo sprintf('<omni-icon name="%s" width="32" height="32"></omni-icon>', esc_attr($value));
+                        echo sprintf('<jooosi-icon name="%s" width="32" height="32"></jooosi-icon>', esc_attr($value));
                     }
                     ?>
-                    <div class="acf-omni-icon-name">
+                    <div class="acf-jooosi-icon-name">
                         <code><?php echo esc_html($value); ?></code>
                     </div>
                 </div>
                 <?php else: ?>
-                <div class="acf-omni-icon-placeholder">
-                    <p><?php echo esc_html__('No icon selected', 'omni-icon'); ?></p>
+                <div class="acf-jooosi-icon-placeholder">
+                    <p><?php echo esc_html__('No icon selected', 'jooosi-icon'); ?></p>
                 </div>
                 <?php endif; ?>
             </div>
@@ -224,7 +224,7 @@ class IconField extends acf_field
                 );
 
             case 'html':
-                // Return as HTML omni-icon element
+                // Return as HTML jooosi-icon element
                 $container = Plugin::get_instance()->container();
                 $iconService = $container->get(IconService::class);
                 $svg = $iconService->get_icon($value);
@@ -234,9 +234,9 @@ class IconField extends acf_field
                      * Security: SVG content is sanitized by IconService->get_icon() using enshrined/svg-sanitize library.
                      */
                     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG sanitized by enshrined/svg-sanitize
-                    return sprintf('<omni-icon data-prerendered name="%s">%s</omni-icon>', esc_attr($value), $svg);
+                    return sprintf('<jooosi-icon data-prerendered name="%s">%s</jooosi-icon>', esc_attr($value), $svg);
                 }
-                return sprintf('<omni-icon name="%s"></omni-icon>', esc_attr($value));
+                return sprintf('<jooosi-icon name="%s"></jooosi-icon>', esc_attr($value));
 
             case 'string':
             default:
@@ -263,7 +263,7 @@ class IconField extends acf_field
 
         // Validate icon name format (should be prefix:name)
         if (!preg_match('/^[a-z0-9-]+:[a-z0-9-]+$/i', $value)) {
-            return __('Please select a valid icon in the format prefix:name', 'omni-icon');
+            return __('Please select a valid icon in the format prefix:name', 'jooosi-icon');
         }
 
         return $valid;

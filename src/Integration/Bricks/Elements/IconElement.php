@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Integration\Bricks\Elements;
+namespace JooosiIcon\Integration\Bricks\Elements;
 
 use Bricks\Element;
-use OMNI_ICON;
-use OmniIcon\Plugin;
-use OmniIcon\Services\IconService;
+use JOOOSI_ICON;
+use JooosiIcon\Plugin;
+use JooosiIcon\Services\IconService;
 
 use function bricks_render_dynamic_data;
 
 /**
- * Omni Icon element for Bricks Builder
+ * Jooosi Icon element for Bricks Builder
  *
  * Has feature parity with the Gutenberg Icon Block, supporting:
  * - Icon selection via prefix:name format (e.g., mdi:home, fa:github, lucide:star) and Icon Picker Modal / UI
@@ -20,7 +20,7 @@ use function bricks_render_dynamic_data;
  * - Custom color styling
  *
  * The element extends Bricks' base Element class and renders icons using the
- * omni-icon web component.
+ * jooosi-icon web component.
  *
  * @see https://academy.bricksbuilder.io/article/create-your-own-elements/
  */
@@ -30,16 +30,16 @@ class IconElement extends Element
      * Element properties
      */
     public $category = 'general';
-    public $name = 'omni-icon';
+    public $name = 'jooosi-icon';
     public $icon = 'ti-star';
-    public $scripts = ['omniIcon'];
+    public $scripts = ['jooosiIcon'];
 
     /**
      * Return localized element label
      */
     public function get_label()
     {
-        return esc_html__('Omni Icon', 'omni-icon');
+        return esc_html__('Jooosi Icon', 'jooosi-icon');
     }
 
     /**
@@ -47,7 +47,7 @@ class IconElement extends Element
      */
     public function get_keywords()
     {
-        return ['icon', 'iconify', 'svg', 'omni', 'symbol'];
+        return ['icon', 'iconify', 'svg', 'jooosi', 'symbol'];
     }
 
     /**
@@ -58,11 +58,11 @@ class IconElement extends Element
         // Icon name control
         $this->controls['iconName'] = [
             'tab' => 'content',
-            'label' => esc_html__('Icon Name', 'omni-icon'),
+            'label' => esc_html__('Icon Name', 'jooosi-icon'),
             'type' => 'text',
             // 'inline' => true,
             'placeholder' => 'mdi:home',
-            'description' => esc_html__('Format: prefix:name (e.g., mdi:home, fa:github, lucide:star)', 'omni-icon'),
+            'description' => esc_html__('Format: prefix:name (e.g., mdi:home, fa:github, lucide:star)', 'jooosi-icon'),
         ];
         
         // Browse icons button
@@ -70,15 +70,15 @@ class IconElement extends Element
             'tab' => 'content',
             'type' => 'info',
             'content' => sprintf(
-                '<button type="button" class="oibb-icon-picker-button" onclick="if (window.omniIconPicker) { window.omniIconPicker.open(); }">%s</button>',
-                esc_html__('Browse Icons', 'omni-icon')
+                '<button type="button" class="oibb-icon-picker-button" onclick="if (window.jooosiIconPicker) { window.jooosiIconPicker.open(); }">%s</button>',
+                esc_html__('Browse Icons', 'jooosi-icon')
             ),
         ];
 
         // Icon color control
         $this->controls['iconColor'] = [
             'tab' => 'content',
-            'label' => esc_html__('Color', 'omni-icon'),
+            'label' => esc_html__('Color', 'jooosi-icon'),
             'type' => 'color',
             'inline' => true,
             'default' => 'currentColor',
@@ -87,7 +87,7 @@ class IconElement extends Element
         // Width control
         $this->controls['iconWidth'] = [
             'tab' => 'content',
-            'label' => esc_html__('Width', 'omni-icon'),
+            'label' => esc_html__('Width', 'jooosi-icon'),
             'type' => 'number',
             'units' => true,
             'min' => 16,
@@ -98,7 +98,7 @@ class IconElement extends Element
         // Height control
         $this->controls['iconHeight'] = [
             'tab' => 'content',
-            'label' => esc_html__('Height', 'omni-icon'),
+            'label' => esc_html__('Height', 'jooosi-icon'),
             'type' => 'number',
             'units' => true,
             'min' => 16,
@@ -121,8 +121,8 @@ class IconElement extends Element
         // Show placeholder if no icon name is set
         if (empty($icon_name)) {
             return $this->render_element_placeholder([
-                'title' => esc_html__('No icon selected.', 'omni-icon'),
-                'description' => esc_html__('Enter an icon name in the format: prefix:name', 'omni-icon'),
+                'title' => esc_html__('No icon selected.', 'jooosi-icon'),
+                'description' => esc_html__('Enter an icon name in the format: prefix:name', 'jooosi-icon'),
             ]);
         }
 
@@ -184,7 +184,7 @@ class IconElement extends Element
             }
         }
 
-        // Render omni-icon with SSR support
+        // Render jooosi-icon with SSR support
         if ($svg !== null) {
             /*
              * Security: SVG content is sanitized by IconService->get_icon() using enshrined/svg-sanitize library.
@@ -192,10 +192,10 @@ class IconElement extends Element
              * esc_html() as it would break the SVG markup. We use render-time sanitization for defense-in-depth security.
              */
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG sanitized by enshrined/svg-sanitize, attributes escaped by Bricks
-            echo sprintf('<omni-icon data-prerendered %s>%s</omni-icon>', $this->render_attributes('_root'), $svg);
+            echo sprintf('<jooosi-icon data-prerendered %s>%s</jooosi-icon>', $this->render_attributes('_root'), $svg);
         } else {
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Attributes are escaped by Bricks render_attributes()
-            echo sprintf('<omni-icon %s></omni-icon>', $this->render_attributes('_root'));
+            echo sprintf('<jooosi-icon %s></jooosi-icon>', $this->render_attributes('_root'));
         }
     }
 }

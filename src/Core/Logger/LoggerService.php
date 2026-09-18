@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Logger;
+namespace JooosiIcon\Core\Logger;
 
-use OmniIcon\Core\Discovery\Attributes\Service;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Service;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Stringable;
 use Throwable;
 
 /**
- * PSR-3 compatible logger service for OmniIcon plugin
+ * PSR-3 compatible logger service for JooosiIcon plugin
  * 
  * Provides centralized logging with support for different log levels,
  * context data, exception handling, and WordPress debug mode awareness.
@@ -42,8 +43,17 @@ final class LoggerService extends AbstractLogger
 
     public function __construct()
     {
-        $this->enabled = apply_filters('omni-icon/service/logger:enabled', defined('WP_DEBUG') && WP_DEBUG);
-        $this->prefix = 'OmniIcon';
+        $enabled = apply_filters(
+            'jooosi-icon/service/logger:enabled',
+            defined('WP_DEBUG') && WP_DEBUG,
+        );
+        $this->enabled = (bool) apply_filters_deprecated(
+            'omni-icon/service/logger:enabled',
+            [$enabled],
+            JOOOSI_ICON::VERSION,
+            'jooosi-icon/service/logger:enabled',
+        );
+        $this->prefix = 'JooosiIcon';
     }
 
     /**

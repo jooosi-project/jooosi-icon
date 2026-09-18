@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
 defined('ABSPATH') || exit;
 
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
 
 final class HookDiscovery implements Discovery
 {

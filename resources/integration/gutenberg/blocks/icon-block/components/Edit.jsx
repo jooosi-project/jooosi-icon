@@ -11,7 +11,7 @@ import IconX from '~icons/tabler/x';
 import IconSearch from '~icons/tabler/search';
 
 // Import plugin icon
-import OmniIconSvg from '~/omni-icon.svg?react';
+import JooosiIconSvg from '~/jooosi-icon.svg?react';
 
 // Import IconPickerModal
 import IconPickerModal from './IconPickerModal';
@@ -45,20 +45,20 @@ const Edit = ({ attributes, setAttributes }) => {
 								title: (
 									<span className="oiib-tab-title">
 										<IconSettings />
-										{__('General', 'omni-icon')}
+										{__('General', 'jooosi-icon')}
 									</span>
 								),
-								className: 'omni-tab-general',
+								className: 'jooosi-tab-general',
 							},
 							{
 								name: 'style',
 								title: (
 									<span className="oiib-tab-title">
 										<IconPalette />
-										{__('Style', 'omni-icon')}
+										{__('Style', 'jooosi-icon')}
 									</span>
 								),
-								className: 'omni-tab-style',
+								className: 'jooosi-tab-style',
 							},
 						]}
 					>
@@ -69,12 +69,12 @@ const Edit = ({ attributes, setAttributes }) => {
 									{/* Icon Selection Card */}
 									<div className="oiib-card">
 										<div className="oiib-card-header">
-											<h4>{__('Icon', 'omni-icon')}</h4>
+											<h4>{__('Icon', 'jooosi-icon')}</h4>
 										</div>
 										<div className="oiib-card-body">
 											<div className="oiib-form-group">
 												<label className="oiib-label">
-													{__('Icon Name', 'omni-icon')} <span className="oiib-required">*</span>
+													{__('Icon Name', 'jooosi-icon')} <span className="oiib-required">*</span>
 												</label>
 													<div className="oiib-input-wrapper">
 														<input
@@ -87,14 +87,14 @@ const Edit = ({ attributes, setAttributes }) => {
 														<button
 															className="oiib-input-icon-search"
 															onClick={() => setIsModalOpen(true)}
-															title={__('Browse icons', 'omni-icon')}
+															title={__('Browse icons', 'jooosi-icon')}
 														>
 															<IconSearch style={{ width: '20px', height: '20px' }} />
 														</button>
 													</div>
 													<p className="oiib-help-text">
 														<IconBulb />
-														{__('Format: prefix:name (e.g., mdi:home, fa:github, lucide:star)', 'omni-icon')}
+														{__('Format: prefix:name (e.g., mdi:home, fa:github, lucide:star)', 'jooosi-icon')}
 													</p>
 												</div>
 
@@ -102,7 +102,7 @@ const Edit = ({ attributes, setAttributes }) => {
 												{name && (
 													<div className="oiib-preview-card">
 														<div className="oiib-preview-content">
-															<omni-icon
+															<jooosi-icon
 																name={name}
 																width="48"
 																height="48"
@@ -124,13 +124,13 @@ const Edit = ({ attributes, setAttributes }) => {
 										{/* Size Card */}
 										<div className="oiib-card">
 											<div className="oiib-card-header">
-												<h4>{__('Dimensions', 'omni-icon')}</h4>
+												<h4>{__('Dimensions', 'jooosi-icon')}</h4>
 												<button
-													className={`oiib-reset-btn ${(!width && !height) ? 'omni-reset-btn-disabled' : ''}`}
+													className={`oiib-reset-btn ${(!width && !height) ? 'jooosi-reset-btn-disabled' : ''}`}
 													onClick={() => setAttributes({ width: undefined, height: undefined })}
 													disabled={!width && !height}
 												>
-													{__('Reset', 'omni-icon')}
+													{__('Reset', 'jooosi-icon')}
 												</button>
 											</div>
 											<div className="oiib-card-body">
@@ -138,7 +138,7 @@ const Edit = ({ attributes, setAttributes }) => {
 												<div className="oiib-form-group">
 													<div className="oiib-label-row">
 														<label className="oiib-label">
-															{__('Width', 'omni-icon')}
+															{__('Width', 'jooosi-icon')}
 														</label>
 														<div className="oiib-label-row-actions">
 															<div className="oiib-dimension-wrapper">
@@ -163,7 +163,7 @@ const Edit = ({ attributes, setAttributes }) => {
 															<button
 																className={`oiib-clear-btn ${!width ? 'oiib-clear-btn-disabled' : ''}`}
 																onClick={() => setAttributes({ width: undefined })}
-																title={__('Reset to original', 'omni-icon')}
+																title={__('Reset to original', 'jooosi-icon')}
 																disabled={!width}
 															>
 																<IconX />
@@ -186,7 +186,7 @@ const Edit = ({ attributes, setAttributes }) => {
 												<div className="oiib-form-group">
 													<div className="oiib-label-row">
 														<label className="oiib-label">
-															{__('Height', 'omni-icon')}
+															{__('Height', 'jooosi-icon')}
 														</label>
 														<div className="oiib-label-row-actions">
 															<div className="oiib-dimension-wrapper">
@@ -211,7 +211,7 @@ const Edit = ({ attributes, setAttributes }) => {
 															<button
 																className={`oiib-clear-btn ${!height ? 'oiib-clear-btn-disabled' : ''}`}
 																onClick={() => setAttributes({ height: undefined })}
-																title={__('Reset to original', 'omni-icon')}
+																title={__('Reset to original', 'jooosi-icon')}
 																disabled={!height}
 															>
 																<IconX />
@@ -235,13 +235,13 @@ const Edit = ({ attributes, setAttributes }) => {
 										{/* Color Card */}
 										<div className="oiib-card">
 											<div className="oiib-card-header">
-												<h4>{__('Color', 'omni-icon')}</h4>
+												<h4>{__('Color', 'jooosi-icon')}</h4>
 												<button
-													className={`oiib-reset-btn ${(!color || color === 'currentColor') ? 'omni-reset-btn-disabled' : ''}`}
+													className={`oiib-reset-btn ${(!color || color === 'currentColor') ? 'jooosi-reset-btn-disabled' : ''}`}
 													onClick={() => setAttributes({ color: 'currentColor' })}
 													disabled={!color || color === 'currentColor'}
 												>
-													{__('Reset', 'omni-icon')}
+													{__('Reset', 'jooosi-icon')}
 												</button>
 											</div>
 											<div className="oiib-card-body">
@@ -252,7 +252,7 @@ const Edit = ({ attributes, setAttributes }) => {
 															className="oiib-color-swatch-picker"
 															value={color && color !== 'currentColor' ? color : '#000000'}
 															onChange={(e) => setAttributes({ color: e.target.value })}
-															title={__('Pick a color', 'omni-icon')}
+															title={__('Pick a color', 'jooosi-icon')}
 														/>
 														<div
 															className="oiib-color-swatch"
@@ -281,21 +281,21 @@ const Edit = ({ attributes, setAttributes }) => {
 				{!name ? (
 					<div className="oiib-placeholder" onClick={() => setIsModalOpen(true)} style={{ cursor: 'pointer' }}>
 						<div className="oiib-placeholder-icon">
-							<OmniIconSvg width={40} height={40} aria-hidden="true" focusable="false" />
+							<JooosiIconSvg width={40} height={40} aria-hidden="true" focusable="false" />
 						</div>
 						<div className="oiib-placeholder-content">
-							<h4>{__('Omni Icon', 'omni-icon')}</h4>
-							<p>{__('Click to browse icons or use the sidebar to configure', 'omni-icon')}</p>
+							<h4>{__('Jooosi Icon', 'jooosi-icon')}</h4>
+							<p>{__('Click to browse icons or use the sidebar to configure', 'jooosi-icon')}</p>
 						</div>
 						<div className="oiib-placeholder-footer">
 							<span className="oiib-placeholder-hint">
 								<IconBulb style={{ width: '14px', height: '14px' }} />
-								{__('Format: prefix:name (e.g., mdi:home)', 'omni-icon')}
+								{__('Format: prefix:name (e.g., mdi:home)', 'jooosi-icon')}
 							</span>
 						</div>
 					</div>
 				) : (
-					<omni-icon
+					<jooosi-icon
 						name={name}
 						{...(displayWidth && { width: displayWidth })}
 						{...(displayHeight && { height: displayHeight })}

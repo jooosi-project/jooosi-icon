@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Services;
+namespace JooosiIcon\Services;
 
 use Exception;
 use Nabasa\VitePlus\Assets;
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Service;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Service;
 
 use function Nabasa\VitePlus\assets as vite_assets;
 use function Nabasa\VitePlus\development_asset_src as vite_generate_development_asset_src;
@@ -20,7 +20,7 @@ use function Nabasa\VitePlus\get_manifest as vite_get_manifest;
 class ViteService
 {
     public const BUILD_DIR = 'dist';
-    public const MANIFEST_DIR = OMNI_ICON::DIR . self::BUILD_DIR;
+    public const MANIFEST_DIR = JOOOSI_ICON::DIR . self::BUILD_DIR;
 
     private Assets $assets;
 
@@ -68,7 +68,7 @@ class ViteService
         $manifest = $this->get_manifest();
 
         if (! $manifest->is_dev || ! is_object($manifest->data)) {
-            return OMNI_ICON::DIR . ltrim($asset_path, '/');
+            return JOOOSI_ICON::DIR . ltrim($asset_path, '/');
         }
 
         $asset_src = vite_generate_development_asset_src($manifest, $asset_path);
@@ -80,7 +80,7 @@ class ViteService
 
         $relative_path = preg_replace('#^(?:\./)+#', '', ltrim($asset_src, '/'));
 
-        return OMNI_ICON::DIR . $relative_path;
+        return JOOOSI_ICON::DIR . $relative_path;
     }
 
     public function get_manifest_dir(): string

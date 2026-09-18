@@ -14,5 +14,5 @@ headers: []
 method: GET
 name: Single Item - OK
 sortPriority: 1000.0
-url: ${[ WP_URL ]}/omni-icon/v1/icon/item/local/windpress
+url: ${[ WP_URL ]}/jooosi-icon/v1/icon/item/local/windpress
 urlParameters: []

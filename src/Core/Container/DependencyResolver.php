@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Container;
+namespace JooosiIcon\Core\Container;
 
 use ReflectionClass;
 use ReflectionNamedType;

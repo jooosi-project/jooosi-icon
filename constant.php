@@ -8,12 +8,12 @@
 
 declare(strict_types=1);
 
-class OMNI_ICON
+class JOOOSI_ICON
 {
     /**
      * @var string
      */
-    public const FILE = __DIR__ . '/omni-icon.php';
+    public const FILE = __DIR__ . '/jooosi-icon.php';
 
     /**
      * @var string
@@ -33,30 +33,70 @@ class OMNI_ICON
     /**
      * @var string
      */
-    public const WP_OPTION_PREFIX = 'omniicon_';
+    public const WP_OPTION_PREFIX = 'jooosiicon_';
 
     /**
      * @var string
      */
-    public const DB_TABLE_PREFIX = 'omniicon_';
+    public const DB_TABLE_PREFIX = 'jooosiicon_';
+
+    public const TEXT_DOMAIN = 'jooosi-icon';
 
     /**
-     * The text domain should use the literal string 'omni-icon' as the text domain.
-     * This constant is used for reference only and should not be used as the actual text domain.
+     * @var string
+     */
+    public const REST_NAMESPACE = 'jooosi-icon/v1';
+
+    /**
+     * @var string
+     */
+    public const UPLOAD_DIR = '/jooosi-icon/';
+
+    public const CACHE_DIR = '/jooosi-icon/cache/';
+
+    public const LEGACY_UPLOAD_DIR = '/omni-icon/';
+
+    /**
+     * Resolve the writable uploads location and migrate the legacy directory.
      *
-     * @var string
+     * If the canonical directory is absent and the legacy directory exists, the
+     * legacy directory is renamed in place. When that rename is not possible,
+     * the legacy directory remains the active fallback so existing icons are not
+     * lost or hidden.
+     *
+     * @param array<string, mixed>|null $uploads Result from wp_upload_dir().
+     * @return array{basedir: string, baseurl: string, relative: string, migrated: bool, legacy: bool}
      */
-    public const TEXT_DOMAIN = 'omni-icon';
+    public static function resolve_upload_location(?array $uploads = null): array
+    {
+        $uploads ??= wp_upload_dir();
 
-    /**
-     * @var string
-     */
-    public const REST_NAMESPACE = 'omni-icon/v1';
+        $base_dir = rtrim((string) ($uploads['basedir'] ?? ''), '/\\');
+        $base_url = rtrim((string) ($uploads['baseurl'] ?? ''), '/');
+        $canonical_dir = $base_dir . self::UPLOAD_DIR;
+        $legacy_dir = $base_dir . self::LEGACY_UPLOAD_DIR;
+        $migrated = false;
 
-    /**
-     * @var string
-     */
-    public const UPLOAD_DIR = '/omni-icon/';
+        if (!is_dir($canonical_dir) && is_dir($legacy_dir)) {
+            $migrated = @rename(rtrim($legacy_dir, '/'), rtrim($canonical_dir, '/'));
+        }
 
-    public const CACHE_DIR = '/omni-icon/cache/';
+        if (is_dir($canonical_dir) || $migrated || !is_dir($legacy_dir)) {
+            return [
+                'basedir' => $canonical_dir,
+                'baseurl' => $base_url . self::UPLOAD_DIR,
+                'relative' => self::UPLOAD_DIR,
+                'migrated' => $migrated,
+                'legacy' => false,
+            ];
+        }
+
+        return [
+            'basedir' => $legacy_dir,
+            'baseurl' => $base_url . self::LEGACY_UPLOAD_DIR,
+            'relative' => self::LEGACY_UPLOAD_DIR,
+            'migrated' => false,
+            'legacy' => true,
+        ];
+    }
 }

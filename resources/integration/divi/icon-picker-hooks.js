@@ -52,7 +52,7 @@ export const useIconCollections = (isOpen) => {
 				setError(null);
 
 				const cacheBuster = refreshTrigger > 0 ? `?_=${Date.now()}` : '';
-				const response = await fetch(`/wp-json/omni-icon/v1/icon/collections${cacheBuster}`, {
+				const response = await fetch(`/wp-json/jooosi-icon/v1/icon/collections${cacheBuster}`, {
 					headers: { Accept: 'application/json' },
 					signal: abortController.signal,
 				});
@@ -68,7 +68,7 @@ export const useIconCollections = (isOpen) => {
 					return;
 				}
 
-				setError(__('Failed to load icon collections', 'omni-icon'));
+				setError(__('Failed to load icon collections', 'jooosi-icon'));
 				console.error('Error fetching collections:', error);
 			} finally {
 				if (abortControllerRef.current === abortController) {
@@ -117,7 +117,7 @@ export const useIconSearch = (query, isOpen) => {
 				setError(null);
 
 				const response = await fetch(
-					`/wp-json/omni-icon/v1/icon/search?query=${encodeURIComponent(query)}`,
+					`/wp-json/jooosi-icon/v1/icon/search?query=${encodeURIComponent(query)}`,
 					{
 						headers: { Accept: 'application/json' },
 						signal: abortController.signal,
@@ -142,7 +142,7 @@ export const useIconSearch = (query, isOpen) => {
 					return;
 				}
 
-				setError(`${__('Failed to search icons', 'omni-icon')}: ${error.message || 'Unknown error'}`);
+				setError(`${__('Failed to search icons', 'jooosi-icon')}: ${error.message || 'Unknown error'}`);
 				console.error('Error searching icons:', error);
 			} finally {
 				if (abortControllerRef.current === abortController) {

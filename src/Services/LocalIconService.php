@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Services;
+namespace JooosiIcon\Services;
 
 use enshrined\svgSanitize\Sanitizer;
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Service;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Service;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Mime\MimeTypes;
 use Symfony\Contracts\Cache\ItemInterface;
-use OmniIcon\Core\Icon\Exception\IconNotFoundException;
-use OmniIcon\Core\Icon\Registry\LocalSvgIconRegistry;
-use OmniIcon\Core\Icon\IconRegistryInterface;
+use JooosiIcon\Core\Icon\Exception\IconNotFoundException;
+use JooosiIcon\Core\Icon\Registry\LocalSvgIconRegistry;
+use JooosiIcon\Core\Icon\IconRegistryInterface;
 
 /**
  * Service for managing local uploaded SVG icons.
@@ -22,7 +22,7 @@ use OmniIcon\Core\Icon\IconRegistryInterface;
  * - Icons in subdirectories use subdirectory name as prefix (e.g., brand:logo)
  * 
  * Directory structure:
- * wp-content/uploads/omni-icon/local/
+ * wp-content/uploads/jooosi-icon/local/
  * ├── icon1.svg              -> local:icon1
  * ├── icon2.svg              -> local:icon2
  * ├── brand/
@@ -47,14 +47,15 @@ class LocalIconService
         
         // Set up local upload directory
         $wp_upload_dir = wp_upload_dir();
-        $this->upload_dir = $wp_upload_dir['basedir'] . OMNI_ICON::UPLOAD_DIR . 'local';
-        $this->upload_url = $wp_upload_dir['baseurl'] . OMNI_ICON::UPLOAD_DIR . 'local';
+        $storage = JOOOSI_ICON::resolve_upload_location($wp_upload_dir);
+        $this->upload_dir = $storage['basedir'] . 'local';
+        $this->upload_url = $storage['baseurl'] . 'local';
         
         // Ensure the directory exists
         $this->ensure_directory_exists($this->upload_dir);
 
         // Initialize cache
-        $cache_dir = $wp_upload_dir['basedir'] . OMNI_ICON::UPLOAD_DIR . 'cache';
+        $cache_dir = $storage['basedir'] . 'cache';
         wp_mkdir_p($cache_dir);
         $this->cache = new FilesystemAdapter('local_icons', 300, $cache_dir);
 
@@ -154,7 +155,7 @@ class LocalIconService
         if (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
             return [
                 'success' => false,
-                'message' => __('Invalid file upload', 'omni-icon'),
+                'message' => __('Invalid file upload', 'jooosi-icon'),
             ];
         }
 
@@ -165,7 +166,7 @@ class LocalIconService
         if ($file_ext !== 'svg') {
             return [
                 'success' => false,
-                'message' => __('Only SVG files are allowed', 'omni-icon'),
+                'message' => __('Only SVG files are allowed', 'jooosi-icon'),
             ];
         }
 
@@ -174,7 +175,7 @@ class LocalIconService
         if (isset($file['size']) && $file['size'] > $max_size) {
             return [
                 'success' => false,
-                'message' => __('File size exceeds maximum allowed size (1MB)', 'omni-icon'),
+                'message' => __('File size exceeds maximum allowed size (1MB)', 'jooosi-icon'),
             ];
         }
 
@@ -184,7 +185,7 @@ class LocalIconService
         if ($svg_content === false) {
             return [
                 'success' => false,
-                'message' => __('Failed to read file content', 'omni-icon'),
+                'message' => __('Failed to read file content', 'jooosi-icon'),
             ];
         }
 
@@ -194,7 +195,7 @@ class LocalIconService
         if ($clean_svg === false || empty($clean_svg)) {
             return [
                 'success' => false,
-                'message' => __('Invalid or malicious SVG content detected', 'omni-icon'),
+                'message' => __('Invalid or malicious SVG content detected', 'jooosi-icon'),
             ];
         }
 
@@ -214,7 +215,7 @@ class LocalIconService
         if (file_put_contents($file_path, $clean_svg) === false) {
             return [
                 'success' => false,
-                'message' => __('Failed to save file', 'omni-icon'),
+                'message' => __('Failed to save file', 'jooosi-icon'),
             ];
         }
 
@@ -227,7 +228,7 @@ class LocalIconService
 
         return [
             'success' => true,
-            'message' => __('Icon uploaded successfully', 'omni-icon'),
+            'message' => __('Icon uploaded successfully', 'jooosi-icon'),
             'filename' => $safe_filename,
             'url' => $this->get_icon_url($safe_filename, $icon_set),
             'path' => $file_path,
@@ -529,14 +530,14 @@ class LocalIconService
         if (!file_exists($file_path)) {
             return [
                 'success' => false,
-                'message' => __('Icon not found', 'omni-icon'),
+                'message' => __('Icon not found', 'jooosi-icon'),
             ];
         }
         
         if (!wp_delete_file($file_path)) {
             return [
                 'success' => false,
-                'message' => __('Failed to delete icon', 'omni-icon'),
+                'message' => __('Failed to delete icon', 'jooosi-icon'),
             ];
         }
         
@@ -545,7 +546,7 @@ class LocalIconService
         
         return [
             'success' => true,
-            'message' => __('Icon deleted successfully', 'omni-icon'),
+            'message' => __('Icon deleted successfully', 'jooosi-icon'),
         ];
     }
 
@@ -641,7 +642,7 @@ class LocalIconService
         if (!file_exists($source_path)) {
             return [
                 'success' => false,
-                'message' => __('Icon not found', 'omni-icon'),
+                'message' => __('Icon not found', 'jooosi-icon'),
             ];
         }
 
@@ -660,7 +661,7 @@ class LocalIconService
         if ($prefix === $new_prefix) {
             return [
                 'success' => false,
-                'message' => __('Icon is already in this set', 'omni-icon'),
+                'message' => __('Icon is already in this set', 'jooosi-icon'),
             ];
         }
 
@@ -670,7 +671,7 @@ class LocalIconService
         if (file_exists($target_path)) {
             return [
                 'success' => false,
-                'message' => __('An icon with this name already exists in the target set', 'omni-icon'),
+                'message' => __('An icon with this name already exists in the target set', 'jooosi-icon'),
             ];
         }
 
@@ -684,7 +685,7 @@ class LocalIconService
         if (!$wp_filesystem->move($source_path, $target_path)) {
             return [
                 'success' => false,
-                'message' => __('Failed to move icon', 'omni-icon'),
+                'message' => __('Failed to move icon', 'jooosi-icon'),
             ];
         }
 
@@ -693,7 +694,7 @@ class LocalIconService
 
         return [
             'success' => true,
-            'message' => __('Icon moved successfully', 'omni-icon'),
+            'message' => __('Icon moved successfully', 'jooosi-icon'),
         ];
     }
 
@@ -711,14 +712,14 @@ class LocalIconService
         if (empty($set_name)) {
             return [
                 'success' => false,
-                'message' => __('Invalid set name', 'omni-icon'),
+                'message' => __('Invalid set name', 'jooosi-icon'),
             ];
         }
 
         if ($set_name === 'local') {
             return [
                 'success' => false,
-                'message' => __('Cannot use "local" as a set name', 'omni-icon'),
+                'message' => __('Cannot use "local" as a set name', 'jooosi-icon'),
             ];
         }
 
@@ -727,7 +728,7 @@ class LocalIconService
         if (file_exists($set_dir)) {
             return [
                 'success' => false,
-                'message' => __('A set with this name already exists', 'omni-icon'),
+                'message' => __('A set with this name already exists', 'jooosi-icon'),
             ];
         }
 
@@ -735,7 +736,7 @@ class LocalIconService
         if (!wp_mkdir_p($set_dir)) {
             return [
                 'success' => false,
-                'message' => __('Failed to create icon set directory', 'omni-icon'),
+                'message' => __('Failed to create icon set directory', 'jooosi-icon'),
             ];
         }
 
@@ -744,7 +745,7 @@ class LocalIconService
 
         return [
             'success' => true,
-            'message' => __('Icon set created successfully', 'omni-icon'),
+            'message' => __('Icon set created successfully', 'jooosi-icon'),
         ];
     }
 
@@ -761,7 +762,7 @@ class LocalIconService
         if ($old_name === 'local') {
             return [
                 'success' => false,
-                'message' => __('Cannot rename the default "local" set', 'omni-icon'),
+                'message' => __('Cannot rename the default "local" set', 'jooosi-icon'),
             ];
         }
 
@@ -772,14 +773,14 @@ class LocalIconService
         if ($old_name === $new_name) {
             return [
                 'success' => false,
-                'message' => __('New name must be different from current name', 'omni-icon'),
+                'message' => __('New name must be different from current name', 'jooosi-icon'),
             ];
         }
 
         if ($new_name === 'local') {
             return [
                 'success' => false,
-                'message' => __('Cannot use "local" as a set name', 'omni-icon'),
+                'message' => __('Cannot use "local" as a set name', 'jooosi-icon'),
             ];
         }
 
@@ -789,14 +790,14 @@ class LocalIconService
         if (!is_dir($old_dir)) {
             return [
                 'success' => false,
-                'message' => __('Icon set not found', 'omni-icon'),
+                'message' => __('Icon set not found', 'jooosi-icon'),
             ];
         }
 
         if (file_exists($new_dir)) {
             return [
                 'success' => false,
-                'message' => __('A set with this name already exists', 'omni-icon'),
+                'message' => __('A set with this name already exists', 'jooosi-icon'),
             ];
         }
 
@@ -810,7 +811,7 @@ class LocalIconService
         if (!$wp_filesystem->move($old_dir, $new_dir)) {
             return [
                 'success' => false,
-                'message' => __('Failed to rename icon set', 'omni-icon'),
+                'message' => __('Failed to rename icon set', 'jooosi-icon'),
             ];
         }
 
@@ -819,7 +820,7 @@ class LocalIconService
 
         return [
             'success' => true,
-            'message' => __('Icon set renamed successfully', 'omni-icon'),
+            'message' => __('Icon set renamed successfully', 'jooosi-icon'),
         ];
     }
 

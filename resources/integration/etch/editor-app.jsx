@@ -1,5 +1,5 @@
 /**
- * Omni Icon Picker React App for Etch
+ * Jooosi Icon Picker React App for Etch
  * 
  * This file handles the React rendering of the icon picker modal.
  */
@@ -66,7 +66,7 @@ function openIconPicker(initialValue, callback) {
 			callback: callback,
 		});
 	} else {
-		console.error('[Omni Icon] Modal state manager not initialized');
+		console.error('[Jooosi Icon] Modal state manager not initialized');
 	}
 }
 
@@ -88,7 +88,7 @@ function closeIconPicker() {
 function renderModal() {
 	if (!modalContainer) {
 		modalContainer = document.createElement('div');
-		modalContainer.id = 'omni-icon-etch-picker-root';
+		modalContainer.id = 'jooosi-icon-etch-picker-root';
 		document.body.appendChild(modalContainer);
 	}
 

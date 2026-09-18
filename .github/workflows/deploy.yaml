@@ -1,195 +1,256 @@
-# Builds and deploys the plugin
-# Inspired by https://github.com/rectorphp/rector-src/blob/main/.github/workflows/build_scoped_rector.yaml
-name: Deploy the Plugin
+name: Deploy Free Jooosi Icon
 
 on:
   push:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 env:
-  # see https://github.com/composer/composer/issues/9368#issuecomment-718112361
-  COMPOSER_ROOT_VERSION: "dev-main"
+  COMPOSER_ROOT_VERSION: dev-main
 
 jobs:
-  build_scoped_omni_icon:
-    # Don't run on forks.
-    if: github.repository == 'nabasa-dev/omni-icon'
-
+  release:
+    if: github.repository == 'jooosi-project/jooosi-icon'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     steps:
-        - uses: actions/checkout@v4
-          with:
-            fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-        # Use pnpm to install dependencies and build the Vite+ assets.
-        - uses: actions/setup-node@v4
-          with:
-            node-version: 22
+      - name: Resolve Free release version
+        id: versions
+        shell: bash
+        run: |
+          free_version="${GITHUB_REF_NAME#v}"
 
-        - uses: pnpm/action-setup@v4
+          if [[ ! "$free_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "The release tag must be a semantic version such as 1.0.20 or v1.0.20." >&2
+            exit 1
+          fi
 
-        - name: Get pnpm store directory
-          shell: bash
-          run: |
-            echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          echo "free=${free_version}" >> "$GITHUB_OUTPUT"
+          echo "FREE_VERSION=${free_version}" >> "$GITHUB_ENV"
 
-        - uses: actions/cache@v4
-          name: Setup pnpm cache
-          with:
-            path: ${{ env.STORE_PATH }}
-            key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-            restore-keys: |
-              ${{ runner.os }}-pnpm-store-
+      - uses: pnpm/setup@v2
+        with:
+          runtime: node@26
+          cache: true
+          install: false
 
-        # install dependencies and build the assets
-        - name: Install JavaScript dependencies
-          run: pnpm install --frozen-lockfile
+      - name: Install JavaScript dependencies
+        run: pnpm install --frozen-lockfile
 
-        - name: Build frontend assets
-          run: pnpm run build
+      - name: Build frontend assets
+        run: pnpm run build
 
-        # Setup PHP 8.1 for initial composer operations (Symfony 6.4 requirement)
-        - uses: shivammathur/setup-php@v2
-          with:
-            php-version: 8.1
-            coverage: none
-          env:
-            COMPOSER_TOKEN: ${{ secrets.ORG_DEV_PAT }}
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: composer:v2
 
-        # Setup Deno for update-readme-changelog script
-        - uses: denoland/setup-deno@v2
-          with:
-            deno-version: v2.x
+      - name: Extract Free release notes
+        id: changelog
+        shell: bash
+        run: |
+          {
+            echo "content<<EOF"
+            node deploy/extract-changelog.mjs "$FREE_VERSION"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
-        # Extract changelog content before removing the file (if CHANGELOG.md exists)
-        - name: "Extract changelog for version"
-          id: changelog
-          run: |
-            VERSION=${GITHUB_REF#refs/tags/}
-            VERSION_NO_V=${VERSION#v}
-            if [ -f "CHANGELOG.md" ]; then
-              CHANGELOG_CONTENT=$(node deploy/extract-changelog.js "$VERSION_NO_V")
-              echo "content<<EOF" >> $GITHUB_OUTPUT
-              echo "$CHANGELOG_CONTENT" >> $GITHUB_OUTPUT
-              echo "EOF" >> $GITHUB_OUTPUT
-            else
-              echo "content=Release $VERSION_NO_V" >> $GITHUB_OUTPUT
-            fi
+      - name: Update WordPress.org changelog
+        run: node deploy/update-readme-changelog.mjs
 
-        # Update readme.txt changelog from CHANGELOG.md
-        - name: "Update readme.txt changelog"
-          run: deno run --allow-read --allow-write deploy/update-readme-changelog.ts
+      - name: Prepare release source
+        shell: bash
+        run: |
+          mkdir -p jooosi-icon-deploy
+          rsync -a \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='tests' \
+            --exclude='vendor' \
+            --exclude='jooosi-icon-deploy' \
+            --exclude='jooosi-icon-*-prefixed' \
+            --exclude='dist-branch' \
+            --exclude='dist-free-branch' \
+            ./ jooosi-icon-deploy/
 
-        # install only prod dependencies
-        - run: composer install --no-dev --classmap-authoritative --ansi
+          composer install \
+            --working-dir=jooosi-icon-deploy \
+            --no-dev \
+            --classmap-authoritative \
+            --no-interaction \
+            --prefer-dist \
+            --ansi
 
-        # Remove incompatible Redis5Proxy files
-        - name: "Remove Redis5Proxy files"
-          run: |
-            rm -f vendor/symfony/cache/Traits/Redis5Proxy.php
-            rm -f vendor/symfony/cache/Traits/RedisCluster5Proxy.php
-            echo "Removed Redis5Proxy files for compatibility"
+          # Symfony Cache's Redis 5 proxy has signatures incompatible with newer
+          # PhpRedis releases. The scoper config also forces the Redis 6 proxy.
+          rm -f \
+            jooosi-icon-deploy/vendor/symfony/cache/Traits/Redis5Proxy.php \
+            jooosi-icon-deploy/vendor/symfony/cache/Traits/RedisCluster5Proxy.php
 
-        # Regenerate classmap after removing files
-        - name: "Regenerate classmap"
-          run: composer dump-autoload --classmap-authoritative --no-dev --ansi
+          composer dump-autoload \
+            --working-dir=jooosi-icon-deploy \
+            --classmap-authoritative \
+            --no-dev \
+            --ansi
 
-        # copy all files for scoping process
-        - name: "Copy files for scoping"
-          run: |
-            mkdir -p omni-icon-deploy
-            rsync -av --exclude omni-icon-deploy --exclude .git ./ omni-icon-deploy/ --quiet
+#      - name: Scope Pro edition dependencies
+#        run: bash deploy/deploy-scoped.sh jooosi-icon-deploy jooosi-icon-pro-prefixed --keep-source
+#
+#      - name: Prepare Pro release artifact
+#        shell: bash
+#        run: |
+#          node deploy/add-pro-update-uri.mjs jooosi-icon-pro-prefixed
+#
+#          mkdir -p jooosi-icon-pro-prefixed-filtered
+#          rsync -a \
+#            --exclude='.*' \
+#            --exclude-from=.distignore \
+#            jooosi-icon-pro-prefixed/ \
+#            jooosi-icon-pro-prefixed-filtered/
+#          rm -rf jooosi-icon-pro-prefixed
+#          mv jooosi-icon-pro-prefixed-filtered jooosi-icon-pro-prefixed
+#
+#      - name: Verify Pro edition
+#        shell: bash
+#        run: |
+#          pro=jooosi-icon-pro-prefixed
+#          update_uri='https://jooo.si'
+#
+#          grep -Fq "* Version:             ${FREE_VERSION}" "$pro/jooosi-icon.php"
+#          grep -Fq "public const VERSION = '${FREE_VERSION}';" "$pro/constant.php"
+#          grep -Fq "* Update URI:        ${update_uri}" "$pro/jooosi-icon.php"
+#          grep -Fq 'use EasyDigitalDownloads\\Updater\\Registry;' "$pro/src/Plugin.php"
+#          grep -Eq "'wp_override'[[:space:]]*=>[[:space:]]*\\\\?true" "$pro/src/Licensing/Manager.php"
+#          test -f "$pro/vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php"
+#          grep -Fq "add_action( 'after_setup_theme', array( '\\\\EasyDigitalDownloads\\\\Updater\\\\Versions'" \
+#            "$pro/vendor/easy-digital-downloads/edd-sl-sdk/edd-sl-sdk.php"
+#
+#      - name: Publish Pro build to dist branch
+#        env:
+#          GITHUB_TOKEN: ${{ github.token }}
+#        shell: bash
+#        run: |
+#          git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" dist-branch
+#          cd dist-branch
+#          git fetch origin dist || true
+#          git checkout dist 2>/dev/null || git checkout --orphan dist
+#          git rm -rf . 2>/dev/null || true
+#          git clean -fxd
+#          cp -a ../jooosi-icon-pro-prefixed/. .
+#          git add --all
+#          git config user.name "github-actions[bot]"
+#          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#
+#          if git diff --cached --quiet; then
+#            echo "The dist branch already matches Pro ${FREE_VERSION}."
+#          else
+#            git commit -m "Build Pro Jooosi Icon ${FREE_VERSION}"
+#            git push origin dist
+#          fi
 
-        # Setup PHP 8.2 for php-scoper (humbug/php-scoper requires php ^8.2)
-        - uses: shivammathur/setup-php@v2
-          with:
-            php-version: 8.2
-            coverage: none
+      - name: Scope Free edition dependencies
+        run: bash deploy/deploy-scoped.sh jooosi-icon-deploy jooosi-icon-free-prefixed
 
-        # prefix the namespaces
-        - run: sh deploy/deploy-scoped.sh omni-icon-deploy omni-icon-prefixed
+      - name: Prepare Free release artifact
+        shell: bash
+        run: |
+          mkdir -p jooosi-icon-free-prefixed-filtered
+          rsync -a \
+            --exclude='.*' \
+            --exclude-from=.distignore \
+            jooosi-icon-free-prefixed/ \
+            jooosi-icon-free-prefixed-filtered/
+          rm -rf jooosi-icon-free-prefixed
+          mv jooosi-icon-free-prefixed-filtered jooosi-icon-free-prefixed
 
-        # apply .distignore to remove unnecessary files from final build
-        - name: "Apply .distignore filter"
-          run: |
-            mkdir -p omni-icon-final
-            rsync -av --exclude-from=".distignore" omni-icon-prefixed/ omni-icon-final/ --quiet
-            rm -rf omni-icon-prefixed
-            mv omni-icon-final omni-icon-prefixed
+      - name: Verify Free release artifact
+        shell: bash
+        run: |
+          free=jooosi-icon-free-prefixed
 
-        # clone current repository and checkout/create dist branch
-        - name: "Checkout or create dist branch"
-          run: |
-            git clone https://x-access-token:${{ secrets.ORG_DEV_PAT }}@github.com/${{ github.repository }}.git dist-branch
-            cd dist-branch
-            git fetch origin dist || true
-            git checkout dist 2>/dev/null || git checkout --orphan dist
-            git rm -rf . 2>/dev/null || true
-            git clean -fxd
+          grep -Fq "* Version:             ${FREE_VERSION}" "$free/jooosi-icon.php"
+          grep -Fq "public const VERSION = '${FREE_VERSION}';" "$free/constant.php"
+          grep -Fq "Stable tag: ${FREE_VERSION}" "$free/readme.txt"
+          test -f "$free/vendor/scoper-autoload.php"
 
-        # copy files to dist branch
-        - run: cp -a omni-icon-prefixed/. dist-branch
+          if grep -Eiq '^[[:space:]]*\*[[:space:]]*Update URI:' "$free/jooosi-icon.php"; then
+            echo "The Free artifact must not contain a custom Update URI." >&2
+            exit 1
+          fi
 
-        # setup git
-        - working-directory: dist-branch
-          run: |
-            git config user.name "Joshua Gugun Siagian"
-            git config user.email suabahasa@gmail.com
+          if [[ -d "$free/vendor/easy-digital-downloads/edd-sl-sdk" ]]; then
+            echo "The Free artifact must not contain the EDD Software Licensing SDK." >&2
+            exit 1
+          fi
 
-        # commit metadata
-        - name: "Get Git log"
-          id: git-log
-          run: |
-              echo "log<<EOF" >> $GITHUB_OUTPUT
-              echo "$(git log ${{ github.event.before }}..${{ github.event.after }} --reverse --pretty='https://github.com/nabasa-dev/omni-icon/commit/%H %s')" >> $GITHUB_OUTPUT
-              echo 'EOF' >> $GITHUB_OUTPUT
+          if grep -Fq 'JooosiIconDeps\dbDelta' "$free/vendor/scoper-autoload.php"; then
+            echo "The scoped autoloader contains a broken dbDelta() proxy." >&2
+            exit 1
+          fi
 
-        # publish it to dist branch (without tag, since tag already exists on main)
-        - name: "Commit Prefixed"
-          working-directory: dist-branch
-          if: "startsWith(github.ref, 'refs/tags/')"
-          env:
-              INPUT_LOG: ${{ steps.git-log.outputs.log }}
-          run: |
-            VERSION=${GITHUB_REF#refs/tags/}
-            VERSION_NO_V=${VERSION#v}
-            git add --all
-            git commit -m "Omni Icon $VERSION_NO_V" -m "$INPUT_LOG"
-            git push --quiet origin dist
+      - name: Publish Free build to dist-free branch
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" dist-free-branch
+          cd dist-free-branch
+          git fetch origin dist-free || true
+          git checkout dist-free 2>/dev/null || git checkout --orphan dist-free
+          git rm -rf . 2>/dev/null || true
+          git clean -fxd
+          cp -a ../jooosi-icon-free-prefixed/. .
+          git add --all
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-        # WordPress.org deployment
-        - name: WordPress Plugin Deploy
-          uses: 10up/action-wordpress-plugin-deploy@stable
-          env:
-            SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-            SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-            SLUG: omni-icon
-            BUILD_DIR: omni-icon-prefixed
-            VERSION: ${{ github.ref_name }}
-            ASSETS_DIR: .wordpress-org
+          if git diff --cached --quiet; then
+            echo "The dist-free branch already matches Free ${FREE_VERSION}."
+          else
+            git commit -m "Build Free Jooosi Icon ${FREE_VERSION}"
+            git push origin dist-free
+          fi
 
-        # Create GitHub Release with changelog and zip file
-        - name: "Create plugin zip file"
-          run: |
-            mkdir -p omni-icon-zip/omni-icon
-            cp -r omni-icon-prefixed/* omni-icon-zip/omni-icon/
-            cd omni-icon-zip
-            zip -r "../omni-icon-${{ github.ref_name }}.zip" . -x "*.git*" "*.DS_Store*"
-            cd ..
-            ls -la omni-icon-*.zip
+      - name: Publish Free edition to WordPress.org
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.WORDPRESS_ORG_SVN_USERNAME || secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.WORDPRESS_ORG_SVN_PASSWORD || secrets.SVN_PASSWORD }}
+          SLUG: jooosi-icon
+          BUILD_DIR: jooosi-icon-free-prefixed
+          VERSION: ${{ steps.versions.outputs.free }}
+          ASSETS_DIR: .wordpress-org
 
-        - name: "Create GitHub Release"
-          uses: softprops/action-gh-release@v2
-          if: "startsWith(github.ref, 'refs/tags/')"
-          with:
-            name: "${{ github.ref_name }}"
-            body: ${{ steps.changelog.outputs.content }}
-            files: |
-              omni-icon-${{ github.ref_name }}.zip
-            draft: false
-            prerelease: false
-          env:
-            GITHUB_TOKEN: ${{ secrets.ORG_DEV_PAT }}
+      - name: Create Free plugin archive
+        shell: bash
+        run: |
+          mkdir -p jooosi-icon-free-zip/jooosi-icon
+          cp -a jooosi-icon-free-prefixed/. jooosi-icon-free-zip/jooosi-icon/
+          cd jooosi-icon-free-zip
+          zip -qr "../jooosi-icon-${FREE_VERSION}-free.zip" jooosi-icon -x "*.git*" "*.DS_Store*"
+
+      - name: Upload Free plugin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jooosi-icon-${{ steps.versions.outputs.free }}-free
+          path: jooosi-icon-${{ steps.versions.outputs.free }}-free.zip
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.content }}
+          files: jooosi-icon-${{ steps.versions.outputs.free }}-free.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

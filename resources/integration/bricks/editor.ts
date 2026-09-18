@@ -1,5 +1,5 @@
 /**
- * Omni Icon Picker Integration for Bricks Builder
+ * Jooosi Icon Picker Integration for Bricks Builder
  * 
  * Main entry point that waits for Bricks to load and initializes the integration.
  */
@@ -22,7 +22,7 @@ import './editor.scss';
 	// Wait for iframe Vue app to be ready
 	const iframeElement = document.getElementById('bricks-builder-iframe') as HTMLIFrameElement | null;
 	if (!iframeElement) {
-		console.error('[Omni Icon] Could not find bricks-builder-iframe. Aborting integration.');
+		console.error('[Jooosi Icon] Could not find bricks-builder-iframe. Aborting integration.');
 		return;
 	}
 
@@ -71,7 +71,7 @@ import './editor.scss';
 	}
 
 	// Expose API to window for PHP to use
-	(window as any).omniIconPicker = {
+	(window as any).jooosiIconPicker = {
 		open: (initialValue?: string, callback?: (iconName: string) => void) => {
 			// If no initial value provided, get it from Bricks
 			const currentValue = initialValue !== undefined ? initialValue : getCurrentIconValue();

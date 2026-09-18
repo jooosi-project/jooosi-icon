@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Discovery\Attributes\Service;
 use Psr\Log\LoggerAwareInterface;
 use Symfony\Component\DependencyInjection\Reference;
 

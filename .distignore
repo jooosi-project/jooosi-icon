@@ -1,24 +1,33 @@
-# Development and build files
+# Development and repository files
 /.git
 /.github
-/.vscode
-/.agents
 /.wordpress-org
+/.agents
+/.codex
+/.vscode
 /node_modules
 /vendor/bin
 /tests
+/build
 /deploy
 /yaak
 /resources
 /.editorconfig
 /.gitattributes
 /.gitignore
+/.pnpm-store
+/.env*
 /.php-version
 /.distignore
+/AGENTS.md
+/components.d.ts
+/components.json
+/composer.json
 /composer.lock
 /package.json
 /package-lock.json
 /pnpm-lock.yaml
+/pnpm-workspace.yaml
 /deno.lock
 /phpcs.xml
 /phpunit.xml
@@ -28,6 +37,11 @@
 /DEVELOPMENT.md
 /CHANGELOG.md
 /CLAUDE.md
+/opencode.json
+/tsconfig.app.json
+/tsconfig.json
+/vitest.config.ts
+/*.tsbuildinfo
 
 # Vendor development files
 /vendor/bin
@@ -42,6 +56,9 @@
 /vendor/*/*/.git
 /vendor/*/.github
 /vendor/*/*/.github
+/vendor/**/.*
+/vendor/*/src/PHPUnit
+/vendor/*/*/src/PHPUnit
 /vendor/paragonie/random_compat/build-phar.sh
 /vendor/paragonie/random_compat/dist/random_compat.phar.pubkey
 /vendor/paragonie/random_compat/dist/random_compat.phar.pubkey.asc
@@ -49,12 +66,16 @@
 # Build tools
 /webpack.config.js
 /vite.config.js
-/tsconfig.json
 /.babelrc
 /.eslintrc
 /.prettierrc
 
-# OS files
+# Operating-system and temporary files
 .DS_Store
 Thumbs.db
 *.log
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old

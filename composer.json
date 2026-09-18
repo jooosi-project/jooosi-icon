@@ -1,6 +1,6 @@
 {
-    "name": "omni/icon",
-    "description": "WordPress plugin for Iconify icon blocks in Gutenberg",
+    "name": "jooosi/icon",
+    "description": "Jooosi Icon for WordPress with Iconify, custom SVGs, and page-builder integrations",
     "type": "wordpress-plugin",
     "version": "1.0.0",
     "license": "GPL-2.0-or-later",
@@ -18,10 +18,13 @@
     },
     "autoload": {
         "psr-4": {
-            "OmniIcon\\": "src/"
+            "JooosiIcon\\": "src/"
         },
         "files": [
             "constant.php"
+        ],
+        "exclude-from-classmap": [
+            "/src/Integration/Breakdance/Elements/"
         ]
     },
     "extra": {
@@ -36,7 +39,10 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.1.0"
+        }
     },
     "minimum-stability": "stable",
     "require-dev": {

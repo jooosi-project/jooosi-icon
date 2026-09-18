@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Logger;
+namespace JooosiIcon\Core\Logger;
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
@@ -51,7 +51,7 @@ final class DiscoveryLogger extends AbstractLogger
     private function formatMessage($level, string $message, array $context): string
     {
         $levelStr = is_string($level) ? strtoupper($level) : 'INFO';
-        $parts = ['[OmniIcon Discovery]', "[$levelStr]"];
+        $parts = ['[JooosiIcon Discovery]', "[$levelStr]"];
 
         // Add context prefix if provided
         if (isset($context['component']) && is_string($context['component'])) {

@@ -1,12 +1,12 @@
 import IconSearch from '~icons/tabler/search';
-export function createOmniIconPickerField(elementApi, pickerApi = {}) {
+export function createJooosiIconPickerField(elementApi, pickerApi = {}) {
 	const { createElement, useCallback, useEffect, useState } = elementApi;
 	const { openIconPicker, renderModal } = pickerApi;
 
 	const normalizeString = (value) => (typeof value === 'string' ? value.trim() : '');
 	const hasOwnValue = (value) => value !== undefined && value !== null;
 
-	const OmniIconPickerField = ({ value, defaultValue, onChange, placeholder, fieldRef }) => {
+	const JooosiIconPickerField = ({ value, defaultValue, onChange, placeholder, fieldRef }) => {
 		const hasExplicitValue = hasOwnValue(value);
 		const currentValue = hasExplicitValue ? normalizeString(value) : normalizeString(defaultValue);
 		const [inputValue, setInputValue] = useState(currentValue);
@@ -45,24 +45,24 @@ export function createOmniIconPickerField(elementApi, pickerApi = {}) {
 
 		return createElement(
 			'div',
-			{ className: 'omni-icon-divi-field' },
+			{ className: 'jooosi-icon-divi-field' },
 			createElement(
 				'div',
-				{ className: 'omni-icon-divi-field__preview' },
+				{ className: 'jooosi-icon-divi-field__preview' },
 				currentValue
-					? createElement('omni-icon', {
+					? createElement('jooosi-icon', {
 						name: currentValue,
 						width: '24',
 						height: '24',
 					})
-					: createElement('span', { className: 'omni-icon-divi-field__placeholder' }, '?')
+					: createElement('span', { className: 'jooosi-icon-divi-field__placeholder' }, '?')
 			),
 			createElement(
 				'div',
-				{ className: 'omni-icon-divi-field__input-wrap' },
+				{ className: 'jooosi-icon-divi-field__input-wrap' },
 				createElement('input', {
 					type: 'text',
-					className: 'omni-icon-divi-field__input',
+					className: 'jooosi-icon-divi-field__input',
 					value: inputValue,
 					onChange: handleFieldChange,
 					placeholder: normalizeString(placeholder) || 'mdi:home',
@@ -73,7 +73,7 @@ export function createOmniIconPickerField(elementApi, pickerApi = {}) {
 					'button',
 					{
 						type: 'button',
-						className: 'omni-icon-divi-field__search-button',
+						className: 'jooosi-icon-divi-field__search-button',
 						onClick: handleSearchClick,
 						'aria-label': 'Search icons',
 						title: 'Search icons',
@@ -84,7 +84,7 @@ export function createOmniIconPickerField(elementApi, pickerApi = {}) {
 		);
 	};
 
-	OmniIconPickerField.componentName = 'omni-icon/icon-picker';
+	JooosiIconPickerField.componentName = 'jooosi-icon/icon-picker';
 
-	return OmniIconPickerField;
+	return JooosiIconPickerField;
 }

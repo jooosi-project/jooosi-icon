@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Logger\DiscoveryLogger;
-use OmniIcon\Core\Logger\LoggerService;
-use OMNI_ICON;
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Logger\DiscoveryLogger;
+use JooosiIcon\Core\Logger\LoggerService;
+use JOOOSI_ICON;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -71,8 +71,8 @@ final class DiscoveryManager
         if (isset($composerData['autoload']) && is_array($composerData['autoload']) && 
             isset($composerData['autoload']['psr-4']) && is_array($composerData['autoload']['psr-4'])) {
             foreach ($composerData['autoload']['psr-4'] as $namespace => $path) {
-                if (is_string($namespace) && is_string($path) && str_starts_with($namespace, 'OmniIcon\\')) {
-                    $fullPath = OMNI_ICON::DIR . $path;
+                if (is_string($namespace) && is_string($path) && str_starts_with($namespace, 'JooosiIcon\\')) {
+                    $fullPath = JOOOSI_ICON::DIR . $path;
                     $this->discoveryLocations[] = new DiscoveryLocation(
                         $namespace,
                         $fullPath
@@ -83,8 +83,8 @@ final class DiscoveryManager
 
         if (defined('WP_DEBUG') && WP_DEBUG && (isset($composerData['autoload-dev']) && is_array($composerData['autoload-dev']) && isset($composerData['autoload-dev']['psr-4']) && is_array($composerData['autoload-dev']['psr-4']))) {
             foreach ($composerData['autoload-dev']['psr-4'] as $namespace => $path) {
-                if (is_string($namespace) && is_string($path) && str_starts_with($namespace, 'OmniIcon\\Tests\\')) {
-                    $fullPath = OMNI_ICON::DIR . $path;
+                if (is_string($namespace) && is_string($path) && str_starts_with($namespace, 'JooosiIcon\\Tests\\')) {
+                    $fullPath = JOOOSI_ICON::DIR . $path;
                     $this->discoveryLocations[] = new DiscoveryLocation(
                         $namespace,
                         $fullPath
@@ -104,7 +104,7 @@ final class DiscoveryManager
         if (isset($composerData['extra']['discovery']['exclude']) && is_array($composerData['extra']['discovery']['exclude'])) {
             foreach ($composerData['extra']['discovery']['exclude'] as $path) {
                 if (is_string($path)) {
-                    $this->excludedPaths[] = OMNI_ICON::DIR . $path;
+                    $this->excludedPaths[] = JOOOSI_ICON::DIR . $path;
                 }
             }
         }
@@ -115,7 +115,7 @@ final class DiscoveryManager
      */
     private function getComposerData(): ?array
     {
-        $composerFile = OMNI_ICON::DIR . 'composer.json';
+        $composerFile = JOOOSI_ICON::DIR . 'composer.json';
         $composerContent = file_get_contents($composerFile);
 
         if ($composerContent === false) {
@@ -279,7 +279,7 @@ final class DiscoveryManager
      */
     private function getComposerClassmap(): array
     {
-        $classmapFile = OMNI_ICON::DIR . 'vendor/composer/autoload_classmap.php';
+        $classmapFile = JOOOSI_ICON::DIR . 'vendor/composer/autoload_classmap.php';
 
         if (file_exists($classmapFile)) {
             $classmap = include $classmapFile;

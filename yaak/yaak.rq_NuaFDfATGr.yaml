@@ -14,5 +14,5 @@ headers: []
 method: GET
 name: Single Item - OK
 sortPriority: 2000.0
-url: ${[ WP_URL ]}/omni-icon/v1/icon/item/tabler/brand-facebook
+url: ${[ WP_URL ]}/jooosi-icon/v1/icon/item/tabler/brand-facebook
 urlParameters: []

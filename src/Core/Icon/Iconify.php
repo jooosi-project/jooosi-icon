@@ -10,18 +10,18 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Modified for OmniIcon WordPress plugin.
+ * Modified for JooosiIcon WordPress plugin.
  */
 
-namespace OmniIcon\Core\Icon;
+namespace JooosiIcon\Core\Icon;
 
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpClient\Exception\JsonException;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\ScopingHttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIcon\Core\Icon\Exception\HttpClientNotInstalledException;
-use OmniIcon\Core\Icon\Exception\IconNotFoundException;
+use JooosiIcon\Core\Icon\Exception\HttpClientNotInstalledException;
+use JooosiIcon\Core\Icon\Exception\IconNotFoundException;
 
 /**
  * Client for fetching icons from Iconify API.

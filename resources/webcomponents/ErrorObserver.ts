@@ -26,8 +26,8 @@ export class ErrorObserver {
 	private cssLoaded = false;
 
 	constructor() {
-		document.addEventListener('omni-icon:error', this.handleErrorEvent);
-		document.addEventListener('omni-icon:loaded', this.handleLoadedEvent);
+		document.addEventListener('jooosi-icon:error', this.handleErrorEvent);
+		document.addEventListener('jooosi-icon:loaded', this.handleLoadedEvent);
 	}
 
 	private async loadCSS(): Promise<void> {
@@ -106,7 +106,7 @@ export class ErrorObserver {
 
 		this.errorPanel.innerHTML = `
 			<div class="oiwc-error-panel__header">
-				<span class="oiwc-error-panel__title">Omni Icon - ${error.type}</span>
+				<span class="oiwc-error-panel__title">Jooosi Icon - ${error.type}</span>
 				<button class="oiwc-error-panel__close" aria-label="Close error message">×</button>
 			</div>
 			<p class="oiwc-error-panel__meta">
@@ -251,4 +251,3 @@ export class ErrorObserver {
 		}
 	}
 }
-

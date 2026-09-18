@@ -586,7 +586,7 @@
 	margin-bottom: 12px;
 }
 
-.oiib-preview-content omni-icon {
+.oiib-preview-content :is(jooosi-icon, omni-icon) {
 	width: 48px !important;
 	height: 48px !important;
 }
@@ -1224,7 +1224,7 @@
 	min-width: 0;
 }
 
-.oiib-selected-icon-display omni-icon {
+.oiib-selected-icon-display :is(jooosi-icon, omni-icon) {
 	flex-shrink: 0;
 	padding: 8px;
 	background: color-mix(in srgb, var(--oiib-primary-color) 10%, white);

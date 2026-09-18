@@ -2,7 +2,7 @@ import metadata from './module.json';
 import '../gutenberg/blocks/icon-block/editor.css';
 import '../elementor/editor.scss';
 import './editor.css';
-import { createOmniIconPickerField } from './icon-picker-field.js';
+import { createJooosiIconPickerField } from './icon-picker-field.js';
 import { openIconPicker, renderModal } from './editor-app.jsx';
 
 const elementApi = window?.vendor?.wp?.element || window?.wp?.element;
@@ -13,7 +13,7 @@ const registerModule = window?.divi?.moduleLibrary?.registerModule;
 if (elementApi && addAction && modulePackage && registerModule) {
 	const createElement = elementApi.createElement;
 	const Fragment = elementApi.Fragment;
-	const OmniIconPickerField = createOmniIconPickerField(elementApi, {
+	const JooosiIconPickerField = createJooosiIconPickerField(elementApi, {
 		openIconPicker,
 		renderModal,
 	});
@@ -93,7 +93,7 @@ if (elementApi && addAction && modulePackage && registerModule) {
 					lineHeight: 0,
 				},
 			},
-			createElement('omni-icon', {
+			createElement('jooosi-icon', {
 				name: normalizedIconName,
 				width: dimensions.width,
 				height: dimensions.height,
@@ -144,7 +144,7 @@ if (elementApi && addAction && modulePackage && registerModule) {
 						attrs,
 						elements,
 						id,
-						moduleClassName: 'omni_icon_divi_module',
+						moduleClassName: 'jooosi_icon_divi_module',
 						name,
 						scriptDataComponent: ModuleScriptData,
 						stylesComponent: ModuleStyles,
@@ -191,8 +191,8 @@ if (elementApi && addAction && modulePackage && registerModule) {
 		},
 	};
 
-	const registerOmniIconField = () => {
-		if (window.omniIconDiviFieldRegistered) {
+	const registerJooosiIconField = () => {
+		if (window.jooosiIconDiviFieldRegistered) {
 			return;
 		}
 
@@ -203,17 +203,17 @@ if (elementApi && addAction && modulePackage && registerModule) {
 
 		try {
 			registerFieldComponent({
-				name: 'omni-icon/icon-picker',
-				component: OmniIconPickerField,
+				name: 'jooosi-icon/icon-picker',
+				component: JooosiIconPickerField,
 			});
-			window.omniIconDiviFieldRegistered = true;
+			window.jooosiIconDiviFieldRegistered = true;
 		} catch (error) {
-			console.warn('[Omni Icon] Divi field registration is waiting for the field library.', error);
+			console.warn('[Jooosi Icon] Divi field registration is waiting for the field library.', error);
 		}
 	};
 
-	const registerOmniIconModule = () => {
-		if (window.omniIconDiviModuleRegistered) {
+	const registerJooosiIconModule = () => {
+		if (window.jooosiIconDiviModuleRegistered) {
 			return;
 		}
 
@@ -224,26 +224,26 @@ if (elementApi && addAction && modulePackage && registerModule) {
 
 		try {
 			registerModule(diviIconModule.metadata, moduleDefinition);
-			window.omniIconDiviModuleRegistered = true;
+			window.jooosiIconDiviModuleRegistered = true;
 		} catch (error) {
-			console.warn('[Omni Icon] Divi module registration is waiting for the module library store.', error);
+			console.warn('[Jooosi Icon] Divi module registration is waiting for the module library store.', error);
 		}
 	};
 
 	addAction(
 		'divi.moduleLibrary.registerModuleLibraryStore.after',
-		'omniIcon.divi.module',
+		'jooosiIcon.divi.module',
 		() => {
-			registerOmniIconField();
-			registerOmniIconModule();
+			registerJooosiIconField();
+			registerJooosiIconModule();
 		}
 	);
 
 	window.setTimeout(() => {
 		renderModal();
-		registerOmniIconField();
-		registerOmniIconModule();
+		registerJooosiIconField();
+		registerJooosiIconModule();
 	}, 0);
 } else {
-	console.warn('[Omni Icon] Divi 5 builder dependencies are not available.');
+	console.warn('[Jooosi Icon] Divi 5 builder dependencies are not available.');
 }

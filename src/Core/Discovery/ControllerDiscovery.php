@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
 defined('ABSPATH') || exit;
 
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Container\DependencyResolver;
-use OmniIcon\Core\Discovery\Attributes\Controller;
-use OmniIcon\Core\Discovery\Attributes\Route;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Container\DependencyResolver;
+use JooosiIcon\Core\Discovery\Attributes\Controller;
+use JooosiIcon\Core\Discovery\Attributes\Route;
 use WP_REST_Request;
 
 final class ControllerDiscovery implements Discovery
@@ -59,7 +60,7 @@ final class ControllerDiscovery implements Discovery
         $this->discoveryItems->add($discoveryLocation, [
             'className' => $classReflector->getName(),
             'prefix' => $controllerAttribute->prefix ?? '',
-            'namespace' => $controllerAttribute->namespace ?? 'omni-icon/v1',
+            'namespace' => $controllerAttribute->namespace ?? JOOOSI_ICON::REST_NAMESPACE,
             'middleware' => $controllerAttribute->middleware ?? [],
             'routes' => $routes,
         ]);

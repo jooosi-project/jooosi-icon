@@ -5,8 +5,8 @@
 
 defined('ABSPATH') || exit;
 
-use OmniIcon\Plugin;
-use OmniIcon\Services\IconService;
+use JooosiIcon\Plugin;
+use JooosiIcon\Services\IconService;
 
 $content = $propertiesData['content'] ?? [];
 
@@ -36,7 +36,7 @@ $container = Plugin::get_instance()->container();
 $iconService = $container->get(IconService::class);
 $svg = $iconService->get_icon($icon_name, $attributes);
 
-// Build the omni-icon element with SSR content
+// Build the Jooosi Icon element with SSR content.
 $attr_string = '';
 foreach ($attributes as $key => $value) {
     if ($value !== false && $value !== null && $value !== '') {
@@ -44,7 +44,7 @@ foreach ($attributes as $key => $value) {
     }
 }
 
-// Output the complete omni-icon element
+// Output the complete jooosi-icon element
 if ($svg !== null) {
     /*
      * Security: SVG content is sanitized by IconService->get_icon() using enshrined/svg-sanitize library.
@@ -52,8 +52,8 @@ if ($svg !== null) {
      * as it would break the SVG markup. We use render-time sanitization for defense-in-depth security.
      */
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG sanitized by enshrined/svg-sanitize, attributes escaped with esc_attr()
-    echo sprintf('<omni-icon data-prerendered%s>%s</omni-icon>', $attr_string, $svg);
+    echo sprintf('<jooosi-icon data-prerendered%s>%s</jooosi-icon>', $attr_string, $svg);
 } else {
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Attributes are escaped with esc_attr() above
-    echo sprintf('<omni-icon%s></omni-icon>', $attr_string);
+    echo sprintf('<jooosi-icon%s></jooosi-icon>', $attr_string);
 }

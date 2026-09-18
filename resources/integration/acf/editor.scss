@@ -1,16 +1,16 @@
 /**
- * Omni Icon ACF Field Editor Styles
+ * Jooosi Icon ACF Field Editor Styles
  */
 
 // ACF field container styles
-.acf-omni-icon-field {
-	.acf-omni-icon-controls {
+.acf-jooosi-icon-field {
+	.acf-jooosi-icon-controls {
 		display: flex;
 		gap: 8px;
 		margin-bottom: 12px;
 	}
 
-	.acf-omni-icon-preview {
+	.acf-jooosi-icon-preview {
 		padding: 12px;
 		background: #f9f9f9;
 		border: 1px solid #ddd;
@@ -20,16 +20,16 @@
 		align-items: center;
 		justify-content: center;
 
-		.acf-omni-icon-display {
+		.acf-jooosi-icon-display {
 			display: flex;
 			align-items: center;
 			gap: 12px;
 
-			omni-icon {
+			:is(jooosi-icon, omni-icon) {
 				flex-shrink: 0;
 			}
 
-			.acf-omni-icon-name {
+			.acf-jooosi-icon-name {
 				code {
 					padding: 4px 8px;
 					background: #fff;
@@ -41,7 +41,7 @@
 			}
 		}
 
-		.acf-omni-icon-placeholder {
+		.acf-jooosi-icon-placeholder {
 			color: #8c8f94;
 			font-style: italic;
 
@@ -53,7 +53,7 @@
 }
 
 // Modal-specific styles for ACF
-.acf-omni-icon-picker-modal {
+.acf-jooosi-icon-picker-modal {
 	// Ensure modal is on top of ACF UI
 	z-index: 999999;
 

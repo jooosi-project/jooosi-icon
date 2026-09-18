@@ -1,30 +1,30 @@
-import type { OmniIconRenderer } from './OmniIconRenderer';
+import type { JooosiIconRenderer } from './JooosiIconRenderer';
 
 /**
- * Global OmniIcon Observer
+ * Global Jooosi Icon observer
  * 
- * This module manages lazy-loading of the OmniIconRenderer and tracks which
- * omni-icon elements have been registered for rendering.
+ * This module manages lazy-loading of the JooosiIconRenderer and tracks which
+ * jooosi-icon and legacy omni-icon elements have been registered for rendering.
  */
 
 // Singleton renderer instance (lazy-loaded)
-let renderer: OmniIconRenderer | null = null;
+let renderer: JooosiIconRenderer | null = null;
 
 // Promise for lazy-loading the renderer module
-let rendererPromise: Promise<OmniIconRenderer> | null = null;
+let rendererPromise: Promise<JooosiIconRenderer> | null = null;
 
 // Track which elements have been seen to avoid duplicate processing
 // Using WeakMap instead of WeakSet to support deletion via clearSeenElement
 const seenElements = new WeakMap<Element, boolean>();
 
 /**
- * Lazy-loads the OmniIconRenderer module
+ * Lazy-loads the JooosiIconRenderer module
  * Returns cached promise if already loading/loaded
  */
-function loadRenderer(): Promise<OmniIconRenderer> {
+function loadRenderer(): Promise<JooosiIconRenderer> {
     if (!rendererPromise) {
-        rendererPromise = import('./OmniIconRenderer').then((module) => {
-            renderer = new module.OmniIconRenderer();
+        rendererPromise = import('./JooosiIconRenderer').then((module) => {
+            renderer = new module.JooosiIconRenderer();
             return renderer;
         });
     }
@@ -32,7 +32,7 @@ function loadRenderer(): Promise<OmniIconRenderer> {
 }
 
 function ensureRenderer(el: Element) {
-    if (!(el.tagName === 'OMNI-ICON')) return;
+    if (!['JOOOSI-ICON', 'OMNI-ICON'].includes(el.tagName)) return;
 
     // Already processed
     if (seenElements.has(el)) return;
@@ -56,23 +56,19 @@ function processNode(node: Node) {
 
     if (node.nodeType !== /* Node.ELEMENT_NODE */ 1) return;
 
+    const selector = 'jooosi-icon, omni-icon';
     const targets =
-        (node as Element).matches('omni-icon')
+        (node as Element).matches(selector)
             ? [(node as Element)]
-            : Array.from((node as Element).querySelectorAll('omni-icon'));
+            : Array.from((node as Element).querySelectorAll(selector));
 
     targets.forEach((el) => ensureRenderer(el));
 }
 
 /**
- * Initial scan of existing omni-icon elements in the DOM
- */
-processNode(document.body);
-
-/**
  * Global MutationObserver
- * Watches for new omni-icon elements added to the DOM
- * Note: Attribute changes are handled by per-element observers in OmniIconRenderer
+ * Watches for new Jooosi Icon elements added to the DOM
+ * Note: Attribute changes are handled by per-element observers in JooosiIconRenderer
  */
 const observer = new MutationObserver((mutations) => {
     for (const { type, addedNodes } of mutations) {
@@ -82,17 +78,35 @@ const observer = new MutationObserver((mutations) => {
     }
 });
 
+/**
+ * Scan the existing document and begin observing it once a body is available.
+ * The web component can be loaded in the document head, including in the
+ * Gutenberg editor, where document.body has not been created yet.
+ */
+function initializeObserver(): void {
+    const root = document.body;
 
-// Start observing the document
-observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-});
+    if (!root) {
+        return;
+    }
+
+    processNode(root);
+    observer.observe(root, {
+        childList: true,
+        subtree: true,
+    });
+}
+
+if (document.body) {
+    initializeObserver();
+} else {
+    document.addEventListener('DOMContentLoaded', initializeObserver, { once: true });
+}
 
 /**
  * Get the current renderer instance (may be null if not yet loaded)
  */
-export const getRenderer = (): OmniIconRenderer | null => renderer;
+export const getRenderer = (): JooosiIconRenderer | null => renderer;
 
 /**
  * Mark element as not seen so it can be re-attached if added back to DOM

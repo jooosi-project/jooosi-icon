@@ -1,6 +1,6 @@
 # Development Guide
 
-This guide covers everything you need to know to develop, customize, and contribute to Omni Icon.
+This guide covers everything you need to know to develop, customize, and contribute to Jooosi Icon.
 
 ## Requirements
 
@@ -18,8 +18,8 @@ Clone the repository to your WordPress `wp-content/plugins` directory:
 
 ```bash
 cd /path/to/wordpress/wp-content/plugins
-git clone https://github.com/nabasa-dev/omni-icon.git
-cd omni-icon
+git clone https://github.com/jooosi-project/jooosi-icon.git
+cd jooosi-icon
 ```
 
 ### 2. Install Dependencies
@@ -50,13 +50,13 @@ This will start the Vite+ dev server on `http://localhost:5173` and watch for ch
 
 1. Go to your WordPress admin panel
 2. Navigate to Plugins
-3. Find "Omni Icon" and click "Activate"
+3. Find "Jooosi Icon" and click "Activate"
 
 ## Architecture
 
 ### Overview
 
-Omni Icon uses modern PHP and JavaScript architecture patterns:
+Jooosi Icon uses modern PHP and JavaScript architecture patterns:
 
 - **PHP**: Symfony-based dependency injection with attribute-based discovery
 - **JavaScript**: Vite+ + React + TypeScript with web components
@@ -69,7 +69,7 @@ Omni Icon uses modern PHP and JavaScript architecture patterns:
 **Location**: `src/Services/IconService.php`
 
 Unified icon management using Chain of Responsibility pattern:
-- Routes requests to appropriate icon sources (Local → Bundle → Iconify)
+- Routes requests to appropriate icon sources (Local → Bundle/third-party → Iconify)
 - Provides unified API for all icon operations
 - Manages caching strategy
 
@@ -82,13 +82,16 @@ Manages user-uploaded custom SVG icons:
 - mtime-based cache invalidation
 - CRUD operations via REST API
 
-#### BundleIconService
-**Location**: `src/Services/BundleIconService.php`
+#### IconSourceService
+**Location**: `src/Services/IconSourceService.php`
 
-Manages plugin-bundled icons:
+Manages built-in and third-party file-based icon sources:
 - Simple flat directory structure
-- All icons use `omni:` prefix
+- Bundled icons use the `jooosi:` prefix (`omni:` remains a compatibility alias)
+- Third-party icon sources can be added with `jooosi-icon/service/icon:sources`
 - Cached icon listings
+
+`BundleIconService` remains as a deprecated compatibility subclass for existing integrations.
 
 #### IconifyService
 **Location**: `src/Services/IconifyService.php`
@@ -98,6 +101,24 @@ On-demand Iconify API integration:
 - Search across 200,000+ icons
 - Cached metadata and search results
 - Reflection-based API access
+
+#### Third-party icon sources
+Third-party plugins can add an icon source to the registry, collection metadata, and search results with the `jooosi-icon/service/icon:sources` filter:
+
+```php
+add_filter('jooosi-icon/service/icon:sources', static function (array $sources): array {
+    $icon_dir = __DIR__ . '/icons';
+    $sources['acme'] = [
+        'name' => 'Acme Icons',
+        'path' => $icon_dir,
+        'url' => plugins_url('icons', __FILE__),
+    ];
+
+    return $sources;
+});
+```
+
+Each source must provide a slug key, `name`, and `path`; `url` is optional and is used in icon metadata when available. The source is checked after uploaded local icons and before the Iconify registry, and its icons are included in the collections and search endpoints. Source registration is lazy, so a theme can add the filter from `functions.php`; it must run before the first icon use. This lets a third-party icon use the same prefix/name format as other icon sources without modifying plugin files or the uploads directory.
 
 #### AssetsService
 **Location**: `src/Services/AssetsService.php`
@@ -118,7 +139,7 @@ Vite build system integration:
 
 **Location**: `src/Core/Container/`
 
-Omni Icon uses Symfony DependencyInjection for PSR-11 compliant dependency injection:
+Jooosi Icon uses Symfony DependencyInjection for PSR-11 compliant dependency injection:
 
 - **Container.php**: Main DI container implementation
 - **DependencyResolver.php**: Resolves dependencies and manages service instantiation
@@ -141,7 +162,7 @@ Components are automatically discovered using PHP 8.2+ attributes:
 Auto-register services in the DI container:
 
 ```php
-use OmniIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Core\Discovery\Attributes\Service;
 
 #[Service(singleton: true)]
 class MyService {
@@ -161,7 +182,7 @@ Options:
 Auto-register WordPress actions and filters:
 
 ```php
-use OmniIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
 
 class MyHooks {
     #[Hook('init', priority: 10)]
@@ -183,8 +204,8 @@ class MyHooks {
 Auto-register REST API endpoints:
 
 ```php
-use OmniIcon\Core\Discovery\Attributes\Controller;
-use OmniIcon\Core\Discovery\Attributes\Route;
+use JooosiIcon\Core\Discovery\Attributes\Controller;
+use JooosiIcon\Core\Discovery\Attributes\Route;
 
 #[Controller]
 class IconController {
@@ -213,7 +234,7 @@ Multi-layer caching for optimal performance:
 - Persistent cache across requests
 - PSR-6 compliant
 - Automatic serialization
-- Location: `wp-content/uploads/omni-icon/cache/iconify/`
+- Location: `wp-content/uploads/jooosi-icon/cache/iconify/` (the former `wp-content/uploads/omni-icon/` tree is migrated automatically, with fallback when a rename is unavailable)
 
 #### 3. IndexedDB (Browser-Side)
 - Client-side cache for web components
@@ -254,11 +275,11 @@ Example:
 ## Directory Structure
 
 ```
-omni-icon/
+jooosi-icon/
 ├── composer.json             # PHP dependencies
 ├── package.json              # JavaScript dependencies
 ├── pnpm-lock.yaml            # Lock file for pnpm
-├── omni-icon.php             # Main plugin file (bootstrap)
+├── jooosi-icon.php           # Main plugin file (bootstrap)
 ├── constant.php              # Plugin constants and paths
 ├── vite.config.js            # Vite configuration
 ├── .gitignore                # Git ignore rules
@@ -302,7 +323,7 @@ omni-icon/
 │   │
 │   ├── Services/            # Business logic services
 │   │   ├── AssetsService.php
-│   │   ├── BundleIconService.php
+│   │   ├── IconSourceService.php
 │   │   ├── IconifyService.php
 │   │   ├── IconService.php
 │   │   ├── LocalIconService.php
@@ -326,10 +347,10 @@ omni-icon/
 
 ### Web Components
 
-#### OmniIconRenderer
-**Location**: `resources/webcomponents/OmniIconRenderer.ts`
+#### JooosiIconRenderer
+**Location**: `resources/webcomponents/JooosiIconRenderer.ts`
 
-Main rendering engine for the `<omni-icon>` web component:
+Main rendering engine for the `<jooosi-icon>` web component:
 - State management per element (WeakMap)
 - Mutation observer for attribute changes
 - Abort controller for request cancellation
@@ -446,16 +467,16 @@ Custom React hooks:
 
 ## REST API
 
-All endpoints under namespace: `omni-icon/v1`
+All endpoints use the `jooosi-icon/v1` namespace.
 
 ### Public Endpoints
 
 #### Get Icon Data
 ```
-GET /wp-json/omni-icon/v1/icon/item/{prefix}/{name}
+GET /wp-json/jooosi-icon/v1/icon/item/{prefix}/{name}
 ```
 
-Example: `/wp-json/omni-icon/v1/icon/item/mdi/home`
+Example: `/wp-json/jooosi-icon/v1/icon/item/mdi/home`
 
 Response:
 ```json
@@ -468,21 +489,21 @@ Response:
 
 #### Get Icon SVG (Direct)
 ```
-GET /wp-json/omni-icon/v1/icon/item/{prefix}/{name}.svg
+GET /wp-json/jooosi-icon/v1/icon/item/{prefix}/{name}.svg
 ```
 
 Returns raw SVG with `image/svg+xml` content-type and cache headers (`max-age=31536000, immutable`).
 
 #### Search Icons
 ```
-GET /wp-json/omni-icon/v1/icon/search?query=home
+GET /wp-json/jooosi-icon/v1/icon/search?query=home
 ```
 
 Returns search results from all sources (local, bundle, Iconify).
 
 #### Get Collections
 ```
-GET /wp-json/omni-icon/v1/icon/collections
+GET /wp-json/jooosi-icon/v1/icon/collections
 ```
 
 Returns list of available icon sets with metadata.
@@ -491,7 +512,7 @@ Returns list of available icon sets with metadata.
 
 #### Upload Icon
 ```
-POST /wp-json/omni-icon/v1/admin/local-icon/upload
+POST /wp-json/jooosi-icon/v1/admin/local-icon/upload
 ```
 
 Requires: `manage_options` capability
@@ -502,7 +523,7 @@ Parameters:
 
 #### Delete Icon
 ```
-DELETE /wp-json/omni-icon/v1/admin/local-icon/{icon_name}
+DELETE /wp-json/jooosi-icon/v1/admin/local-icon/{icon_name}
 ```
 
 Requires: `manage_options` capability

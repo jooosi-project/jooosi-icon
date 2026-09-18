@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Container\DependencyResolver;
-use OmniIcon\Core\Discovery\Attributes\Command;
-use OmniIcon\Core\Logger\LogComponent;
-use OmniIcon\Core\Logger\LoggerService;
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Container\DependencyResolver;
+use JooosiIcon\Core\Discovery\Attributes\Command;
+use JooosiIcon\Core\Logger\LogComponent;
+use JooosiIcon\Core\Logger\LoggerService;
 use Throwable;
 use WP_CLI;
 
@@ -186,7 +186,7 @@ final class CommandDiscovery implements Discovery
     private function generateCommandName(string $className): string
     {
         // Convert class name to command name
-        // e.g., "OmniIcon\Commands\EmailCommand" -> "omni-icon email"
+        // e.g., "JooosiIcon\Commands\EmailCommand" -> "jooosi-icon email"
         $parts = explode('\\', $className);
         $commandClass = end($parts);
         
@@ -200,7 +200,7 @@ final class CommandDiscovery implements Discovery
         // Convert PascalCase to kebab-case
         $commandName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $commandClass) ?? '');
         
-        return 'omni-icon ' . $commandName;
+        return 'jooosi-icon ' . $commandName;
     }
     
     private function generateMethodCommandName(string $className, string $methodName): string
@@ -218,7 +218,7 @@ final class CommandDiscovery implements Discovery
         $classCommand = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $commandClass) ?? '');
         $methodCommand = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $methodName) ?? '');
         
-        return sprintf('omni-icon %s %s', $classCommand, $methodCommand);
+        return sprintf('jooosi-icon %s %s', $classCommand, $methodCommand);
     }
 
 }

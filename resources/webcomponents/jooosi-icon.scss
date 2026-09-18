@@ -1,11 +1,11 @@
 /**
- * Omni Icon Web Component Styles
+ * Jooosi Icon Web Component Styles
  * Optimized for minimal CSS bundle size
  */
 
-@layer omni-icon {
+@layer jooosi-icon {
 	/* Base icon styles - only essential properties */
-	omni-icon {
+	:is(jooosi-icon, omni-icon) {
 		display: inline-block;
 		line-height: 0;
 		vertical-align: baseline;
@@ -32,7 +32,7 @@
 		0%, 100% { background-position: 200% 0; }
 	}
 
-	omni-icon[data-oiwc-state="loading"] {
+	:is(jooosi-icon, omni-icon)[data-oiwc-state="loading"] {
 		background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
 		background-size: 200% 100%;
 		animation: oiwc-skeleton-pulse 1.5s ease-in-out infinite;
@@ -40,7 +40,7 @@
 	}
 
 	/* Simplified dark mode support */
-	:is([data-theme="dark"], .dark) omni-icon[data-oiwc-state="loading"] {
+	:is([data-theme="dark"], .dark) :is(jooosi-icon, omni-icon)[data-oiwc-state="loading"] {
 		background: linear-gradient(90deg, #2d2d2d 25%, #3d3d3d 50%, #2d2d2d 75%);
 	}
 }

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Integration\Gutenberg;
+namespace JooosiIcon\Integration\Gutenberg;
 
 defined('ABSPATH') || exit;
 
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Hook;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIcon\Services\IconService;
-use OmniIcon\Services\ViteService;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Services\IconService;
+use JooosiIcon\Services\ViteService;
 
 /**
  * Service for registering and managing Gutenberg blocks
@@ -64,13 +64,13 @@ class BlocksService
      */
     private function enqueue_webcomponent_for_editor(): void
     {
-        // Enqueue omni-icon webcomponent
+        // Enqueue the Jooosi Icon web component (including the legacy alias).
         $this->viteService->enqueue_asset(
-            'resources/webcomponents/omni-icon.ts',
+            'resources/webcomponents/jooosi-icon.ts',
             [
-                'handle' => OMNI_ICON::TEXT_DOMAIN . ':web-component:omni-icon',
+                'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':web-component:jooosi-icon',
                 'dependencies' => [
-                    // OMNI_ICON::TEXT_DOMAIN . ':web-component-module:error-handler-editor',
+                    // JOOOSI_ICON::TEXT_DOMAIN . ':web-component-module:error-handler-editor',
                 ],
                 'in_footer' => true,
             ]
@@ -83,7 +83,7 @@ class BlocksService
     private function enqueue_iframe_asset_for_editor(): void
     {
         $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/iframe.ts', [
-            'handle' => OMNI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block:iframe'
+            'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block:iframe'
         ]);
     }
 
@@ -93,7 +93,7 @@ class BlocksService
     public function admin_head(): void
     {
         $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/index.jsx', [
-            'handle' => OMNI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block',
+            'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block',
             'dependencies' => [
                 'wp-blocks',
                 'wp-element',
@@ -125,7 +125,7 @@ class BlocksService
 
         $svg = $this->iconService->get_icon($attributes['name'] ?? '', $attributes);
 
-        // Build attribute string for omni-icon element
+        // Build attribute string for the jooosi-icon element.
         $attrString = '';
         foreach ($attributes as $key => $value) {
             if ($value !== false && $value !== null) {
@@ -141,7 +141,7 @@ class BlocksService
              */
             // SSR: Render with data-prerendered attribute and SVG content inside
             return sprintf(
-                '<omni-icon data-prerendered%s>%s</omni-icon>',
+                '<jooosi-icon data-prerendered%s>%s</jooosi-icon>',
                 $attrString,
                 $svg
             );
@@ -149,7 +149,7 @@ class BlocksService
 
         // Fallback: let frontend handle the error (client-side rendering)
         return sprintf(
-            '<omni-icon%s></omni-icon>',
+            '<jooosi-icon%s></jooosi-icon>',
             $attrString
         );
     }

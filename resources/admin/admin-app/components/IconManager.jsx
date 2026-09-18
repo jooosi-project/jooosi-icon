@@ -47,14 +47,14 @@ const IconManager = ({ refreshTrigger }) => {
 	// Fetch icon sets
 	const fetchIconSets = useCallback(async () => {
 		try {
-			const response = await fetch(`${window.omniIconAdmin.apiUrl}/sets`, {
+			const response = await fetch(`${window.jooosiIconAdmin.apiUrl}/sets`, {
 				headers: {
-					'X-WP-Nonce': window.omniIconAdmin.nonce,
+					'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 				},
 			});
 
 			if (!response.ok) {
-				throw new Error(__('Failed to fetch icon sets', 'omni-icon'));
+				throw new Error(__('Failed to fetch icon sets', 'jooosi-icon'));
 			}
 
 			const data = await response.json();
@@ -70,20 +70,20 @@ const IconManager = ({ refreshTrigger }) => {
 		setError(null);
 
 		try {
-			let url = `${window.omniIconAdmin.apiUrl}/icons`;
-			
+			let url = `${window.jooosiIconAdmin.apiUrl}/icons`;
+
 			if (selectedSet !== 'all') {
-				url = `${window.omniIconAdmin.apiUrl}/sets/${selectedSet}/icons`;
+				url = `${window.jooosiIconAdmin.apiUrl}/sets/${selectedSet}/icons`;
 			}
 
 			const response = await fetch(url, {
 				headers: {
-					'X-WP-Nonce': window.omniIconAdmin.nonce,
+					'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 				},
 			});
 
 			if (!response.ok) {
-				throw new Error(__('Failed to fetch icons', 'omni-icon'));
+				throw new Error(__('Failed to fetch icons', 'jooosi-icon'));
 			}
 
 			const data = await response.json();
@@ -100,22 +100,22 @@ const IconManager = ({ refreshTrigger }) => {
 		setIsDeleting(true);
 
 		try {
-			const response = await fetch(`${window.omniIconAdmin.apiUrl}/${iconName}`, {
+			const response = await fetch(`${window.jooosiIconAdmin.apiUrl}/${iconName}`, {
 				method: 'DELETE',
 				headers: {
-					'X-WP-Nonce': window.omniIconAdmin.nonce,
+					'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 				},
 			});
 
 			if (!response.ok) {
 				const data = await response.json();
-				throw new Error(data.message || __('Failed to delete icon', 'omni-icon'));
+				throw new Error(data.message || __('Failed to delete icon', 'jooosi-icon'));
 			}
 
 			// Refresh icons and sets
 			await fetchIcons();
 			await fetchIconSets();
-			
+
 			setDeleteModal(null);
 			setSelectedIcon(null);
 		} catch (err) {
@@ -137,10 +137,10 @@ const IconManager = ({ refreshTrigger }) => {
 			// Delete icons sequentially
 			for (const iconName of iconNames) {
 				try {
-					const response = await fetch(`${window.omniIconAdmin.apiUrl}/${iconName}`, {
+					const response = await fetch(`${window.jooosiIconAdmin.apiUrl}/${iconName}`, {
 						method: 'DELETE',
 						headers: {
-							'X-WP-Nonce': window.omniIconAdmin.nonce,
+							'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 						},
 					});
 
@@ -156,12 +156,12 @@ const IconManager = ({ refreshTrigger }) => {
 			// Refresh icons and sets
 			await fetchIcons();
 			await fetchIconSets();
-			
+
 			setDeleteModal(null);
 			setSelectedIcons(new Set());
 
 			if (errors.length > 0) {
-				setError(__('Some icons failed to delete:\n', 'omni-icon') + errors.join('\n'));
+				setError(__('Some icons failed to delete:\n', 'jooosi-icon') + errors.join('\n'));
 			}
 		} catch (err) {
 			setError(err.message);
@@ -181,11 +181,11 @@ const IconManager = ({ refreshTrigger }) => {
 			// Move icons sequentially
 			for (const iconName of iconNames) {
 				try {
-					const response = await fetch(`${window.omniIconAdmin.apiUrl}/move`, {
+					const response = await fetch(`${window.jooosiIconAdmin.apiUrl}/move`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
-							'X-WP-Nonce': window.omniIconAdmin.nonce,
+							'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 						},
 						body: JSON.stringify({
 							icon_name: iconName,
@@ -208,7 +208,7 @@ const IconManager = ({ refreshTrigger }) => {
 			setSelectedIcons(new Set());
 
 			if (errors.length > 0) {
-				setError(__('Some icons failed to move:\n', 'omni-icon') + errors.join('\n'));
+				setError(__('Some icons failed to move:\n', 'jooosi-icon') + errors.join('\n'));
 			}
 		} catch (err) {
 			setError(err.message);
@@ -218,11 +218,11 @@ const IconManager = ({ refreshTrigger }) => {
 	// Move icon to different set
 	const handleMoveIcon = useCallback(async (iconName, targetSet) => {
 		try {
-			const response = await fetch(`${window.omniIconAdmin.apiUrl}/move`, {
+			const response = await fetch(`${window.jooosiIconAdmin.apiUrl}/move`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-WP-Nonce': window.omniIconAdmin.nonce,
+					'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 				},
 				body: JSON.stringify({
 					icon_name: iconName,
@@ -232,7 +232,7 @@ const IconManager = ({ refreshTrigger }) => {
 
 			if (!response.ok) {
 				const data = await response.json();
-				throw new Error(data.message || __('Failed to move icon', 'omni-icon'));
+				throw new Error(data.message || __('Failed to move icon', 'jooosi-icon'));
 			}
 
 			// Refresh icons and sets
@@ -253,11 +253,11 @@ const IconManager = ({ refreshTrigger }) => {
 		setIsRenamingSet(true);
 
 		try {
-			const response = await fetch(`${window.omniIconAdmin.apiUrl}/sets/${renameSet.oldName}/rename`, {
+			const response = await fetch(`${window.jooosiIconAdmin.apiUrl}/sets/${renameSet.oldName}/rename`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-WP-Nonce': window.omniIconAdmin.nonce,
+					'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 				},
 				body: JSON.stringify({
 					new_name: renameSet.newName.trim(),
@@ -266,7 +266,7 @@ const IconManager = ({ refreshTrigger }) => {
 
 			if (!response.ok) {
 				const data = await response.json();
-				throw new Error(data.message || __('Failed to rename set', 'omni-icon'));
+				throw new Error(data.message || __('Failed to rename set', 'jooosi-icon'));
 			}
 
 			// If current selected set was renamed, update it
@@ -294,11 +294,11 @@ const IconManager = ({ refreshTrigger }) => {
 		setIsCreatingSet(true);
 
 		try {
-			const response = await fetch(`${window.omniIconAdmin.apiUrl}/sets/create`, {
+			const response = await fetch(`${window.jooosiIconAdmin.apiUrl}/sets/create`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-WP-Nonce': window.omniIconAdmin.nonce,
+					'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 				},
 				body: JSON.stringify({
 					set_name: newSetName.trim(),
@@ -307,7 +307,7 @@ const IconManager = ({ refreshTrigger }) => {
 
 			if (!response.ok) {
 				const data = await response.json();
-				throw new Error(data.message || __('Failed to create set', 'omni-icon'));
+				throw new Error(data.message || __('Failed to create set', 'jooosi-icon'));
 			}
 
 			// Refresh sets
@@ -330,13 +330,13 @@ const IconManager = ({ refreshTrigger }) => {
 		for (const file of files) {
 			// Validate file type
 			if (!file.name.toLowerCase().endsWith('.svg')) {
-				errors.push(`${file.name}: ${__('Only SVG files are allowed', 'omni-icon')}`);
+				errors.push(`${file.name}: ${__('Only SVG files are allowed', 'jooosi-icon')}`);
 				continue;
 			}
 
 			// Validate file size (1MB max)
 			if (file.size > 1024 * 1024) {
-				errors.push(`${file.name}: ${__('File size must be less than 1MB', 'omni-icon')}`);
+				errors.push(`${file.name}: ${__('File size must be less than 1MB', 'jooosi-icon')}`);
 				continue;
 			}
 
@@ -349,7 +349,7 @@ const IconManager = ({ refreshTrigger }) => {
 	// Upload icon(s) - file input
 	const handleFileSelect = useCallback((event) => {
 		const files = Array.from(event.target.files || []);
-		
+
 		if (files.length === 0) {
 			setSelectedFiles([]);
 			return;
@@ -380,7 +380,7 @@ const IconManager = ({ refreshTrigger }) => {
 	const handleUploadDragLeave = useCallback((e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		
+
 		// Only set dragOver to false if we're leaving the drop zone entirely
 		if (dropZoneRef.current && !dropZoneRef.current.contains(e.relatedTarget)) {
 			setIsDragOver(false);
@@ -399,7 +399,7 @@ const IconManager = ({ refreshTrigger }) => {
 		setIsDragOver(false);
 
 		const files = Array.from(e.dataTransfer.files || []);
-		
+
 		if (files.length === 0) {
 			return;
 		}
@@ -430,22 +430,22 @@ const IconManager = ({ refreshTrigger }) => {
 
 		try {
 			const formData = new FormData();
-			
+
 			// Append all files with the same field name
 			selectedFiles.forEach((file) => {
 				formData.append('icon[]', file);
 			});
-			
+
 			// Use selected set from grid (not from input field)
 			const targetSet = selectedSet === 'all' ? '' : selectedSet;
 			if (targetSet) {
 				formData.append('icon_set', targetSet);
 			}
 
-			const response = await fetch(`${window.omniIconAdmin.apiUrl}/upload`, {
+			const response = await fetch(`${window.jooosiIconAdmin.apiUrl}/upload`, {
 				method: 'POST',
 				headers: {
-					'X-WP-Nonce': window.omniIconAdmin.nonce,
+					'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 				},
 				body: formData,
 			});
@@ -453,7 +453,7 @@ const IconManager = ({ refreshTrigger }) => {
 			const data = await response.json();
 
 			if (!response.ok) {
-				throw new Error(data.message || __('Upload failed', 'omni-icon'));
+				throw new Error(data.message || __('Upload failed', 'jooosi-icon'));
 			}
 
 			// Handle both single and multiple upload responses
@@ -462,12 +462,12 @@ const IconManager = ({ refreshTrigger }) => {
 			if (isMultiple) {
 				// Multiple file upload response
 				const hasErrors = data.errors && data.errors.length > 0;
-				
+
 				setUploadStatus({
 					type: hasErrors ? 'warning' : 'success',
 					message: data.message,
 				});
-				
+
 				setUploadResult({
 					...data,
 					isMultiple: true,
@@ -476,12 +476,12 @@ const IconManager = ({ refreshTrigger }) => {
 				// Single file upload response (backward compatibility)
 				setUploadStatus({
 					type: 'success',
-					message: data.message || __('Icon uploaded successfully!', 'omni-icon'),
+					message: data.message || __('Icon uploaded successfully!', 'jooosi-icon'),
 				});
-				
+
 				setUploadResult(data);
 			}
-			
+
 			// Reset form
 			setSelectedFiles([]);
 			if (fileInputRef.current) {
@@ -504,7 +504,7 @@ const IconManager = ({ refreshTrigger }) => {
 		} catch (error) {
 			setUploadStatus({
 				type: 'error',
-				message: error.message || __('An error occurred during upload.', 'omni-icon'),
+				message: error.message || __('An error occurred during upload.', 'jooosi-icon'),
 			});
 		} finally {
 			setIsUploading(false);
@@ -515,17 +515,17 @@ const IconManager = ({ refreshTrigger }) => {
 	const handleRefresh = useCallback(async () => {
 		try {
 			// Clear cache first
-			await fetch(`${window.omniIconAdmin.apiUrl}/cache/clear`, {
+			await fetch(`${window.jooosiIconAdmin.apiUrl}/cache/clear`, {
 				method: 'POST',
 				headers: {
-					'X-WP-Nonce': window.omniIconAdmin.nonce,
+					'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 				},
 			});
 		} catch (err) {
 			// Silently fail cache clear, still continue with refresh
 			console.warn('Failed to clear cache:', err);
 		}
-		
+
 		await fetchIconSets();
 		await fetchIcons();
 	}, [fetchIconSets, fetchIcons]);
@@ -576,11 +576,11 @@ const IconManager = ({ refreshTrigger }) => {
 	// Check if a set is a valid drop target
 	const isValidDropTarget = useCallback((targetSet) => {
 		if (!draggedIcon) return false;
-		
+
 		if (draggedIcon.isMultiple) {
 			return true; // Always allow dropping multiple icons
 		}
-		
+
 		return draggedIcon.icon_set !== targetSet;
 	}, [draggedIcon]);
 
@@ -591,7 +591,7 @@ const IconManager = ({ refreshTrigger }) => {
 		}
 
 		const query = searchQuery.toLowerCase();
-		return icons.filter(icon => 
+		return icons.filter(icon =>
 			icon.name.toLowerCase().includes(query) ||
 			icon.icon_name.toLowerCase().includes(query)
 		);
@@ -620,7 +620,7 @@ const IconManager = ({ refreshTrigger }) => {
 			const start = Math.min(lastSelectedIndex, index);
 			const end = Math.max(lastSelectedIndex, index);
 			const rangeIcons = filteredIcons.slice(start, end + 1).map(icon => icon.icon_name);
-			
+
 			setSelectedIcons(prev => {
 				const newSet = new Set(prev);
 				rangeIcons.forEach(name => newSet.add(name));
@@ -643,9 +643,9 @@ const IconManager = ({ refreshTrigger }) => {
 	// Mouse area selection (marquee/lasso)
 	const handleMouseDown = useCallback((e) => {
 		// Only start selection on wrapper/grid background, not on icons or buttons
-		const isOnBackground = e.target.classList.contains('omni-icon-grid') || 
-		                        e.target.classList.contains('omni-icon-content-wrapper');
-		
+		const isOnBackground = e.target.classList.contains('jooosi-icon-grid') ||
+		                        e.target.classList.contains('jooosi-icon-content-wrapper');
+
 		if (isOnBackground && gridRef.current) {
 			const rect = gridRef.current.getBoundingClientRect();
 			setIsSelecting(true);
@@ -654,7 +654,7 @@ const IconManager = ({ refreshTrigger }) => {
 				y: e.clientY - rect.top + gridRef.current.scrollTop,
 			});
 			setSelectionBox(null);
-			
+
 			// Clear selection if not holding Ctrl/Cmd
 			if (!e.ctrlKey && !e.metaKey) {
 				setSelectedIcons(new Set());
@@ -679,7 +679,7 @@ const IconManager = ({ refreshTrigger }) => {
 		setSelectionBox(box);
 
 		// Find icons within selection box
-		const gridItems = gridRef.current.querySelectorAll('.omni-icon-item');
+		const gridItems = gridRef.current.querySelectorAll('.jooosi-icon-item');
 		const newSelectedIcons = new Set(e.ctrlKey || e.metaKey ? selectedIcons : []);
 
 		gridItems.forEach((item) => {
@@ -700,7 +700,7 @@ const IconManager = ({ refreshTrigger }) => {
 			);
 
 			if (intersects) {
-				const iconName = item.querySelector('.omni-icon-item-name')?.textContent;
+				const iconName = item.querySelector('.jooosi-icon-item-name')?.textContent;
 				const iconData = filteredIcons.find(icon => icon.name === iconName);
 				if (iconData) {
 					newSelectedIcons.add(iconData.icon_name);
@@ -732,7 +732,7 @@ const IconManager = ({ refreshTrigger }) => {
 			if (e.key === 'Escape' && selectedIcons.size > 0) {
 				handleClearSelection();
 			}
-			
+
 			// Delete/Backspace: Delete selected icons
 			if ((e.key === 'Delete' || e.key === 'Backspace') && selectedIcons.size > 0) {
 				// Don't trigger if user is typing in an input
@@ -789,20 +789,20 @@ const IconManager = ({ refreshTrigger }) => {
 	// Get target set display name for upload modal
 	const targetSetDisplayName = useMemo(() => {
 		if (selectedSet === 'all') {
-			return __('Local (default)', 'omni-icon');
+			return __('Local (default)', 'jooosi-icon');
 		}
 		return iconSets[selectedSet]?.name || selectedSet;
 	}, [selectedSet, iconSets]);
 
 	return (
-		<div className="omni-icon-manager">
-			<div className="omni-icon-manager-header">
+		<div className="jooosi-icon-manager">
+			<div className="jooosi-icon-manager-header">
 				<div className="header-info">
-					<h2>{__('Manage Local Icons', 'omni-icon')}</h2>
+					<h2>{__('Manage Local Icons', 'jooosi-icon')}</h2>
 					<p className="description">
 						{totalCount > 0
-							? __(`You have ${totalCount} custom icons across ${Object.keys(iconSets).length} sets.`, 'omni-icon')
-							: __('No custom icons uploaded yet.', 'omni-icon')
+							? __(`You have ${totalCount} custom icons across ${Object.keys(iconSets).length} sets.`, 'jooosi-icon')
+							: __('No custom icons uploaded yet.', 'jooosi-icon')
 						}
 					</p>
 				</div>
@@ -812,7 +812,7 @@ const IconManager = ({ refreshTrigger }) => {
 						onClick={() => setUploadModal(true)}
 						icon={<IconUpload />}
 					>
-						{__('Upload Icons', 'omni-icon')}
+						{__('Upload Icons', 'jooosi-icon')}
 					</Button>
 					<Button
 						variant="secondary"
@@ -820,7 +820,7 @@ const IconManager = ({ refreshTrigger }) => {
 						disabled={isLoading}
 						icon={<IconRefresh />}
 					>
-						{__('Refresh', 'omni-icon')}
+						{__('Refresh', 'jooosi-icon')}
 					</Button>
 				</div>
 			</div>
@@ -832,12 +832,12 @@ const IconManager = ({ refreshTrigger }) => {
 			)}
 
 			{/* Icon Set Grid */}
-			<div className="omni-icon-set-grid-wrapper">
+			<div className="jooosi-icon-set-grid-wrapper">
 				<div className="set-grid-label">
 					<IconFolder />
-					<span>{__('Icon Sets', 'omni-icon')}</span>
+					<span>{__('Icon Sets', 'jooosi-icon')}</span>
 				</div>
-				<div className="omni-icon-set-grid">
+				<div className="jooosi-icon-set-grid">
 					{/* All Icons Set */}
 					<button
 						className={`set-card ${selectedSet === 'all' ? 'is-active' : ''}`}
@@ -847,8 +847,8 @@ const IconManager = ({ refreshTrigger }) => {
 							<IconFolder />
 						</div>
 						<div className="set-card-info">
-							<span className="set-card-name">{__('All Icons', 'omni-icon')}</span>
-							<span className="set-card-count">{totalCount} {__('icons', 'omni-icon')}</span>
+							<span className="set-card-name">{__('All Icons', 'jooosi-icon')}</span>
+							<span className="set-card-count">{totalCount} {__('icons', 'jooosi-icon')}</span>
 						</div>
 					</button>
 
@@ -866,7 +866,7 @@ const IconManager = ({ refreshTrigger }) => {
 							</div>
 							<div className="set-card-info">
 								<span className="set-card-name">{set.name}</span>
-								<span className="set-card-count">{set.total} {__('icons', 'omni-icon')}</span>
+								<span className="set-card-count">{set.total} {__('icons', 'jooosi-icon')}</span>
 							</div>
 							{prefix !== 'local' && (
 								<button
@@ -875,7 +875,7 @@ const IconManager = ({ refreshTrigger }) => {
 										e.stopPropagation();
 										setRenameSet({ oldName: prefix, newName: prefix });
 									}}
-									title={__('Rename set', 'omni-icon')}
+									title={__('Rename set', 'jooosi-icon')}
 								>
 									<IconEdit />
 								</button>
@@ -892,7 +892,7 @@ const IconManager = ({ refreshTrigger }) => {
 							<IconFolderPlus />
 						</div>
 						<div className="set-card-info">
-							<span className="set-card-name">{__('Create New Set', 'omni-icon')}</span>
+							<span className="set-card-name">{__('Create New Set', 'jooosi-icon')}</span>
 						</div>
 					</button>
 				</div>
@@ -900,21 +900,21 @@ const IconManager = ({ refreshTrigger }) => {
 
 			{/* Search */}
 			{icons.length > 0 && (
-				<div className="omni-icon-search">
-					<div className="omni-search-wrapper">
-						<IconSearch className="omni-search-icon" />
+				<div className="jooosi-icon-search">
+					<div className="jooosi-search-wrapper">
+						<IconSearch className="jooosi-search-icon" />
 						<input
 							type="text"
-							className="omni-search-input"
+							className="jooosi-search-input"
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							placeholder={__('Search icons...', 'omni-icon')}
+							placeholder={__('Search icons...', 'jooosi-icon')}
 						/>
 						{searchQuery && (
 							<button
-								className="omni-search-clear"
+								className="jooosi-search-clear"
 								onClick={() => setSearchQuery('')}
-								aria-label={__('Clear search', 'omni-icon')}
+								aria-label={__('Clear search', 'jooosi-icon')}
 							>
 								<IconX />
 							</button>
@@ -924,20 +924,20 @@ const IconManager = ({ refreshTrigger }) => {
 			)}
 
 			{/* Icons Grid */}
-			<div 
-				className="omni-icon-content-wrapper"
+			<div
+				className="jooosi-icon-content-wrapper"
 				onMouseDown={handleMouseDown}
 				onMouseMove={handleMouseMove}
 				style={{ position: 'relative', userSelect: 'none' }}
 			>
 				{isLoading ? (
-					<div className="omni-icon-loading">
+					<div className="jooosi-icon-loading">
 						<Spinner />
-						<p>{__('Loading icons...', 'omni-icon')}</p>
+						<p>{__('Loading icons...', 'jooosi-icon')}</p>
 					</div>
 				) : iconItems.length > 0 ? (
-					<div 
-						className="omni-icon-grid" 
+					<div
+						className="jooosi-icon-grid"
 						ref={gridRef}
 					>
 						{iconItems.map((icon, index) => (
@@ -954,7 +954,7 @@ const IconManager = ({ refreshTrigger }) => {
 						{/* Selection Box Overlay */}
 						{selectionBox && (
 							<div
-								className="omni-icon-selection-box"
+								className="jooosi-icon-selection-box"
 								style={{
 									position: 'absolute',
 									left: `${selectionBox.left}px`,
@@ -967,18 +967,18 @@ const IconManager = ({ refreshTrigger }) => {
 						)}
 					</div>
 				) : (
-					<div className="omni-icon-empty">
+					<div className="jooosi-icon-empty">
 						<IconSearch style={{ width: '64px', height: '64px', opacity: 0.3 }} />
 						<h3>
 							{searchQuery
-								? __('No icons found', 'omni-icon')
-								: __('No icons uploaded', 'omni-icon')
+								? __('No icons found', 'jooosi-icon')
+								: __('No icons uploaded', 'jooosi-icon')
 							}
 						</h3>
 						<p>
 							{searchQuery
-								? __('Try a different search term', 'omni-icon')
-								: __('Upload your first icon using the "Upload Icons" tab', 'omni-icon')
+								? __('Try a different search term', 'jooosi-icon')
+								: __('Upload your first icon using the "Upload Icons" tab', 'jooosi-icon')
 							}
 						</p>
 					</div>
@@ -987,14 +987,14 @@ const IconManager = ({ refreshTrigger }) => {
 
 			{/* Floating Action Bar - shown when multiple icons are selected */}
 			{selectedIcons.size > 0 && (
-				<div className="omni-icon-floating-action-bar">
+				<div className="jooosi-icon-floating-action-bar">
 					<div className="floating-bar-content">
 						<div className="selection-info">
 							<span className="selection-count-badge">{selectedIcons.size}</span>
 							<span className="selection-text">
-								{selectedIcons.size === 1 
-									? __('1 icon selected', 'omni-icon')
-									: __(`${selectedIcons.size} icons selected`, 'omni-icon')
+								{selectedIcons.size === 1
+									? __('1 icon selected', 'jooosi-icon')
+									: __(`${selectedIcons.size} icons selected`, 'jooosi-icon')
 								}
 							</span>
 						</div>
@@ -1004,7 +1004,7 @@ const IconManager = ({ refreshTrigger }) => {
 								onClick={handleClearSelection}
 								size="compact"
 							>
-								{__('Clear Selection', 'omni-icon')}
+								{__('Clear Selection', 'jooosi-icon')}
 							</Button>
 							<Button
 								variant="secondary"
@@ -1013,7 +1013,7 @@ const IconManager = ({ refreshTrigger }) => {
 								isDestructive
 								size="compact"
 							>
-								{__('Delete', 'omni-icon')} ({selectedIcons.size})
+								{__('Delete', 'jooosi-icon')} ({selectedIcons.size})
 							</Button>
 						</div>
 					</div>
@@ -1022,15 +1022,15 @@ const IconManager = ({ refreshTrigger }) => {
 
 			{/* Action Footer - shown when single icon is selected */}
 			{selectedIcon && selectedIconData && !selectedIcons.size && (
-				<div className="omni-icon-action-footer">
+				<div className="jooosi-icon-action-footer">
 					<div className="selected-icon-preview">
-						<omni-icon
+						<jooosi-icon
 							name={selectedIcon}
 							width="32"
 							height="32"
 						/>
 						<div className="selected-icon-info">
-							<span className="selected-icon-label">{__('Selected:', 'omni-icon')}</span>
+							<span className="selected-icon-label">{__('Selected:', 'jooosi-icon')}</span>
 							<span className="selected-icon-name">{selectedIcon}</span>
 						</div>
 					</div>
@@ -1039,7 +1039,7 @@ const IconManager = ({ refreshTrigger }) => {
 							variant="secondary"
 							onClick={() => setSelectedIcon(null)}
 						>
-							{__('Cancel', 'omni-icon')}
+							{__('Cancel', 'jooosi-icon')}
 						</Button>
 						<Button
 							variant="primary"
@@ -1047,7 +1047,7 @@ const IconManager = ({ refreshTrigger }) => {
 							onClick={() => setDeleteModal({ iconName: selectedIcon, iconData: selectedIconData })}
 							icon={<IconTrash />}
 						>
-							{__('Delete Icon', 'omni-icon')}
+							{__('Delete Icon', 'jooosi-icon')}
 						</Button>
 					</div>
 				</div>
@@ -1056,25 +1056,25 @@ const IconManager = ({ refreshTrigger }) => {
 			{/* Delete Confirmation Modal */}
 			{deleteModal && (
 				<Modal
-					title={deleteModal.isMultiple 
-						? __('Delete Multiple Icons', 'omni-icon')
-						: __('Delete Icon', 'omni-icon')
+					title={deleteModal.isMultiple
+						? __('Delete Multiple Icons', 'jooosi-icon')
+						: __('Delete Icon', 'jooosi-icon')
 					}
 					onRequestClose={() => setDeleteModal(null)}
-					className="omni-icon-delete-modal"
+					className="jooosi-icon-delete-modal"
 				>
 					<div className="delete-modal-content">
 						{deleteModal.isMultiple ? (
 							<>
 								<p>
-									{__(`Are you sure you want to delete ${deleteModal.count} icons?`, 'omni-icon')}
+									{__(`Are you sure you want to delete ${deleteModal.count} icons?`, 'jooosi-icon')}
 								</p>
 								<div className="delete-preview-grid">
 									{Array.from(selectedIcons).slice(0, 6).map(iconName => {
 										const iconData = filteredIcons.find(i => i.icon_name === iconName);
 										return (
 											<div key={iconName} className="delete-preview-item">
-												<omni-icon
+												<jooosi-icon
 													name={iconName}
 													width="32"
 													height="32"
@@ -1085,16 +1085,16 @@ const IconManager = ({ refreshTrigger }) => {
 									})}
 									{selectedIcons.size > 6 && (
 										<div className="delete-preview-more">
-											+{selectedIcons.size - 6} {__('more', 'omni-icon')}
+											+{selectedIcons.size - 6} {__('more', 'jooosi-icon')}
 										</div>
 									)}
 								</div>
 							</>
 						) : (
 							<>
-								<p>{__('Are you sure you want to delete this icon?', 'omni-icon')}</p>
+								<p>{__('Are you sure you want to delete this icon?', 'jooosi-icon')}</p>
 								<div className="delete-preview">
-									<omni-icon
+									<jooosi-icon
 										name={deleteModal.iconName}
 										width="64"
 										height="64"
@@ -1108,7 +1108,7 @@ const IconManager = ({ refreshTrigger }) => {
 							</>
 						)}
 						<p className="warning">
-							{__('This action cannot be undone.', 'omni-icon')}
+							{__('This action cannot be undone.', 'jooosi-icon')}
 						</p>
 					</div>
 					<div className="delete-modal-actions">
@@ -1117,7 +1117,7 @@ const IconManager = ({ refreshTrigger }) => {
 							onClick={() => setDeleteModal(null)}
 							disabled={isDeleting}
 						>
-							{__('Cancel', 'omni-icon')}
+							{__('Cancel', 'jooosi-icon')}
 						</Button>
 						<Button
 							variant="primary"
@@ -1126,11 +1126,11 @@ const IconManager = ({ refreshTrigger }) => {
 							isBusy={isDeleting}
 							disabled={isDeleting}
 						>
-							{isDeleting 
-								? __('Deleting...', 'omni-icon') 
-								: deleteModal.isMultiple 
-									? __(`Delete ${deleteModal.count} Icons`, 'omni-icon')
-									: __('Delete', 'omni-icon')
+							{isDeleting
+								? __('Deleting...', 'jooosi-icon')
+								: deleteModal.isMultiple
+									? __(`Delete ${deleteModal.count} Icons`, 'jooosi-icon')
+									: __('Delete', 'jooosi-icon')
 							}
 						</Button>
 					</div>
@@ -1140,17 +1140,17 @@ const IconManager = ({ refreshTrigger }) => {
 			{/* Rename Set Modal */}
 			{renameSet && (
 				<Modal
-					title={__('Rename Icon Set', 'omni-icon')}
+					title={__('Rename Icon Set', 'jooosi-icon')}
 					onRequestClose={() => setRenameSet(null)}
-					className="omni-icon-rename-modal"
+					className="jooosi-icon-rename-modal"
 				>
 					<div className="rename-modal-content">
 						<TextControl
-							label={__('Set Name', 'omni-icon')}
+							label={__('Set Name', 'jooosi-icon')}
 							value={renameSet.newName}
 							onChange={(value) => setRenameSet({ ...renameSet, newName: value })}
-							placeholder={__('Enter new set name', 'omni-icon')}
-							help={__('Use lowercase letters, numbers, and hyphens only.', 'omni-icon')}
+							placeholder={__('Enter new set name', 'jooosi-icon')}
+							help={__('Use lowercase letters, numbers, and hyphens only.', 'jooosi-icon')}
 						/>
 					</div>
 					<div className="rename-modal-actions">
@@ -1159,7 +1159,7 @@ const IconManager = ({ refreshTrigger }) => {
 							onClick={() => setRenameSet(null)}
 							disabled={isRenamingSet}
 						>
-							{__('Cancel', 'omni-icon')}
+							{__('Cancel', 'jooosi-icon')}
 						</Button>
 						<Button
 							variant="primary"
@@ -1168,7 +1168,7 @@ const IconManager = ({ refreshTrigger }) => {
 							disabled={isRenamingSet || !renameSet.newName.trim() || renameSet.newName === renameSet.oldName}
 							icon={<IconCheck />}
 						>
-							{isRenamingSet ? __('Renaming...', 'omni-icon') : __('Rename', 'omni-icon')}
+							{isRenamingSet ? __('Renaming...', 'jooosi-icon') : __('Rename', 'jooosi-icon')}
 						</Button>
 					</div>
 				</Modal>
@@ -1177,20 +1177,20 @@ const IconManager = ({ refreshTrigger }) => {
 			{/* Create Set Modal */}
 			{createSetModal && (
 				<Modal
-					title={__('Create New Icon Set', 'omni-icon')}
+					title={__('Create New Icon Set', 'jooosi-icon')}
 					onRequestClose={() => {
 						setCreateSetModal(false);
 						setNewSetName('');
 					}}
-					className="omni-icon-create-set-modal"
+					className="jooosi-icon-create-set-modal"
 				>
 					<div className="create-set-modal-content">
 						<TextControl
-							label={__('Set Name', 'omni-icon')}
+							label={__('Set Name', 'jooosi-icon')}
 							value={newSetName}
 							onChange={setNewSetName}
-							placeholder={__('e.g., brand, social, custom', 'omni-icon')}
-							help={__('Use lowercase letters, numbers, and hyphens only. This will be used as the icon prefix.', 'omni-icon')}
+							placeholder={__('e.g., brand, social, custom', 'jooosi-icon')}
+							help={__('Use lowercase letters, numbers, and hyphens only. This will be used as the icon prefix.', 'jooosi-icon')}
 							autoFocus
 						/>
 					</div>
@@ -1203,7 +1203,7 @@ const IconManager = ({ refreshTrigger }) => {
 							}}
 							disabled={isCreatingSet}
 						>
-							{__('Cancel', 'omni-icon')}
+							{__('Cancel', 'jooosi-icon')}
 						</Button>
 						<Button
 							variant="primary"
@@ -1212,7 +1212,7 @@ const IconManager = ({ refreshTrigger }) => {
 							disabled={isCreatingSet || !newSetName.trim()}
 							icon={<IconFolderPlus />}
 						>
-							{isCreatingSet ? __('Creating...', 'omni-icon') : __('Create Set', 'omni-icon')}
+							{isCreatingSet ? __('Creating...', 'jooosi-icon') : __('Create Set', 'jooosi-icon')}
 						</Button>
 					</div>
 				</Modal>
@@ -1221,7 +1221,7 @@ const IconManager = ({ refreshTrigger }) => {
 			{/* Upload Icon Modal */}
 			{uploadModal && (
 				<Modal
-					title={__('Upload Icons', 'omni-icon')}
+					title={__('Upload Icons', 'jooosi-icon')}
 					onRequestClose={() => {
 						setUploadModal(false);
 						setSelectedFiles([]);
@@ -1229,9 +1229,9 @@ const IconManager = ({ refreshTrigger }) => {
 						setUploadResult(null);
 						setIsDragOver(false);
 					}}
-					className="omni-icon-upload-modal"
+					className="jooosi-icon-upload-modal"
 				>
-					<div 
+					<div
 						className={`upload-modal-content ${isDragOver ? 'is-drag-over' : ''}`}
 						ref={dropZoneRef}
 						onDragEnter={handleUploadDragEnter}
@@ -1242,7 +1242,7 @@ const IconManager = ({ refreshTrigger }) => {
 						{isDragOver && (
 							<div className="drag-overlay">
 								<IconUpload className="drag-overlay-icon" />
-								<p className="drag-overlay-text">{__('Drop files to upload', 'omni-icon')}</p>
+								<p className="drag-overlay-text">{__('Drop files to upload', 'jooosi-icon')}</p>
 							</div>
 						)}
 
@@ -1259,15 +1259,15 @@ const IconManager = ({ refreshTrigger }) => {
 										icon={<IconUpload />}
 										className="upload-file-button"
 									>
-										{selectedFiles.length > 0 
-											? __(`${selectedFiles.length} file(s) selected`, 'omni-icon')
-											: __('Choose SVG File(s)', 'omni-icon')
+										{selectedFiles.length > 0
+											? __(`${selectedFiles.length} file(s) selected`, 'jooosi-icon')
+											: __('Choose SVG File(s)', 'jooosi-icon')
 										}
 									</Button>
 								)}
 							/>
 							<p className="upload-hint">
-								{__('or drag and drop files here', 'omni-icon')}
+								{__('or drag and drop files here', 'jooosi-icon')}
 							</p>
 							{selectedFiles.length > 0 && (
 								<div className="files-info">
@@ -1287,13 +1287,13 @@ const IconManager = ({ refreshTrigger }) => {
 						<div className="target-set-info">
 							<label className="target-set-label">
 								<IconFolder />
-								<span>{__('Upload to:', 'omni-icon')}</span>
+								<span>{__('Upload to:', 'jooosi-icon')}</span>
 							</label>
 							<div className="target-set-display">
 								<strong>{targetSetDisplayName}</strong>
 							</div>
 							<p className="target-set-help">
-								{__('Select a different icon set from the grid above to change the upload destination.', 'omni-icon')}
+								{__('Select a different icon set from the grid above to change the upload destination.', 'jooosi-icon')}
 							</p>
 						</div>
 
@@ -1314,11 +1314,11 @@ const IconManager = ({ refreshTrigger }) => {
 										{/* Multiple upload results */}
 										{uploadResult.results && uploadResult.results.length > 0 && (
 											<div className="upload-success-list">
-												<h4>{__('Successfully uploaded:', 'omni-icon')}</h4>
+												<h4>{__('Successfully uploaded:', 'jooosi-icon')}</h4>
 												{uploadResult.results.map((result, index) => (
 													<div key={index} className="result-item">
 														<div className="result-preview">
-															<omni-icon
+															<jooosi-icon
 																name={result.icon_name}
 																width="32"
 																height="32"
@@ -1335,7 +1335,7 @@ const IconManager = ({ refreshTrigger }) => {
 										)}
 										{uploadResult.errors && uploadResult.errors.length > 0 && (
 											<div className="upload-error-list">
-												<h4>{__('Failed uploads:', 'omni-icon')}</h4>
+												<h4>{__('Failed uploads:', 'jooosi-icon')}</h4>
 												{uploadResult.errors.map((error, index) => (
 													<div key={index} className="error-item">
 														<IconX className="icon-error" />
@@ -1353,7 +1353,7 @@ const IconManager = ({ refreshTrigger }) => {
 									<>
 										{/* Single upload result */}
 										<div className="result-preview">
-											<omni-icon
+											<jooosi-icon
 												name={uploadResult.icon_name}
 												width="48"
 												height="48"
@@ -1361,7 +1361,7 @@ const IconManager = ({ refreshTrigger }) => {
 										</div>
 										<div className="result-info">
 											<div className="info-row">
-												<strong>{__('Icon Name:', 'omni-icon')}</strong>
+												<strong>{__('Icon Name:', 'jooosi-icon')}</strong>
 												<code>{uploadResult.icon_name}</code>
 											</div>
 										</div>
@@ -1371,12 +1371,12 @@ const IconManager = ({ refreshTrigger }) => {
 						)}
 
 						<div className="upload-guidelines">
-							<h4>{__('Guidelines', 'omni-icon')}</h4>
+							<h4>{__('Guidelines', 'jooosi-icon')}</h4>
 							<ul>
-								<li><IconAlertCircle /> {__('Only SVG files are accepted', 'omni-icon')}</li>
-								<li><IconAlertCircle /> {__('Maximum file size: 1MB per file', 'omni-icon')}</li>
-								<li><IconAlertCircle /> {__('Files will be automatically sanitized', 'omni-icon')}</li>
-								<li><IconAlertCircle /> {__('You can select multiple files at once', 'omni-icon')}</li>
+								<li><IconAlertCircle /> {__('Only SVG files are accepted', 'jooosi-icon')}</li>
+								<li><IconAlertCircle /> {__('Maximum file size: 1MB per file', 'jooosi-icon')}</li>
+								<li><IconAlertCircle /> {__('Files will be automatically sanitized', 'jooosi-icon')}</li>
+								<li><IconAlertCircle /> {__('You can select multiple files at once', 'jooosi-icon')}</li>
 							</ul>
 						</div>
 					</div>
@@ -1391,7 +1391,7 @@ const IconManager = ({ refreshTrigger }) => {
 							}}
 							disabled={isUploading}
 						>
-							{__('Close', 'omni-icon')}
+							{__('Close', 'jooosi-icon')}
 						</Button>
 						<Button
 							variant="primary"
@@ -1400,11 +1400,11 @@ const IconManager = ({ refreshTrigger }) => {
 							disabled={selectedFiles.length === 0 || isUploading}
 							icon={<IconUpload />}
 						>
-							{isUploading 
-								? __('Uploading...', 'omni-icon') 
-								: selectedFiles.length > 1 
-									? __(`Upload ${selectedFiles.length} Icons`, 'omni-icon')
-									: __('Upload Icon', 'omni-icon')
+							{isUploading
+								? __('Uploading...', 'jooosi-icon')
+								: selectedFiles.length > 1
+									? __(`Upload ${selectedFiles.length} Icons`, 'jooosi-icon')
+									: __('Upload Icon', 'jooosi-icon')
 							}
 						</Button>
 					</div>

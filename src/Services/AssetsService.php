@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Services;
+namespace JooosiIcon\Services;
 
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Hook;
-use OmniIcon\Core\Discovery\Attributes\Service;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Discovery\Attributes\Service;
 
 /**
  * Service for managing plugin assets (scripts and styles)
@@ -26,11 +26,11 @@ class AssetsService
     public function enqueue_frontend_scripts(): void
     {
         $this->viteService->enqueue_asset(
-            'resources/webcomponents/omni-icon.ts',
+            'resources/webcomponents/jooosi-icon.ts',
             [
-                'handle' => OMNI_ICON::TEXT_DOMAIN . ':web-component:omni-icon',
+                'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':web-component:jooosi-icon',
                 'dependencies' => [
-                    // OMNI_ICON::TEXT_DOMAIN . ':web-component-module:error-handler',
+                    // JOOOSI_ICON::TEXT_DOMAIN . ':web-component-module:error-handler',
                 ],
                 'in_footer' => false,
             ]

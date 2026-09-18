@@ -15,7 +15,7 @@
             "step": "installPlugin",
             "pluginZipFile": {
                 "resource": "wordpress.org\/plugins",
-                "slug": "omni-icon"
+                "slug": "jooosi-icon"
             },
             "options": {
                 "activate": false

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Integration\Bricks;
+namespace JooosiIcon\Integration\Bricks;
 
 use Bricks\Elements;
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Hook;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIcon\Services\ViteService;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Services\ViteService;
 
 /**
  * Service for registering and managing Bricks integration
@@ -23,7 +23,7 @@ class BricksService
     /**
      * Register the Bricks elements
      *
-     * Registers custom Omni Icon element for Bricks Builder when Bricks is active.
+     * Registers custom Jooosi Icon element for Bricks Builder when Bricks is active.
      */
     #[Hook('init', priority: 1_000_000)]
     public function register_elements(): void
@@ -33,10 +33,10 @@ class BricksService
             return;
         }
 
-        // Register the Omni Icon element
+        // Register the Jooosi Icon element
         Elements::register_element(
             __DIR__ . '/Elements/IconElement.php',
-            OMNI_ICON::TEXT_DOMAIN,
+            JOOOSI_ICON::TEXT_DOMAIN,
         );
     }
 
@@ -47,23 +47,23 @@ class BricksService
             return;
         }
 
-        // Enqueue omni-icon web component for the editor
+        // Enqueue jooosi-icon web component for the editor
         $this->viteService->enqueue_asset(
-            'resources/webcomponents/omni-icon.ts',
+            'resources/webcomponents/jooosi-icon.ts',
             [
-                'handle' => OMNI_ICON::TEXT_DOMAIN . ':web-component:omni-icon',
+                'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':web-component:jooosi-icon',
                 'in_footer' => true,
             ]
         );
 
         // Enqueue Gutenberg icon block styles (reuse for Bricks)
         $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/editor.css', [
-            'handle' => OMNI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles',
+            'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles',
         ]);
 
         // Enqueue Bricks editor integration script
         $this->viteService->enqueue_asset('resources/integration/bricks/editor.ts', [
-            'handle' => OMNI_ICON::TEXT_DOMAIN . ':integration-bricks-editor',
+            'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':integration-bricks-editor',
             'in_footer' => true,
             'dependencies' => [
                 'wp-blocks',

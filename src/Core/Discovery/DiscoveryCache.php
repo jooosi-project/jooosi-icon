@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
-use OmniIcon\Core\Logger\DiscoveryLogger;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Logger\DiscoveryLogger;
 use Psr\Log\LoggerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -22,10 +23,11 @@ final class DiscoveryCache
         private DiscoveryCacheStrategy $discoveryCacheStrategy,
     ) {
         $uploadDir = wp_upload_dir();
-        $cacheDir = $uploadDir['basedir'] . '/omni-icon/cache/discovery/';
+        $storage = JOOOSI_ICON::resolve_upload_location($uploadDir);
+        $cacheDir = $storage['basedir'] . 'cache/discovery/';
         
         $this->cache = new FilesystemAdapter(
-            namespace: 'OMNI_ICON_discovery',
+            namespace: 'JOOOSI_ICON_discovery',
             defaultLifetime: 0, // No expiration, manual invalidation only
             directory: $cacheDir
         );

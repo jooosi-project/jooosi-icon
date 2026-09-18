@@ -34,7 +34,7 @@
 		line-height: 1.4em;
 	}
 
-	omni-icon,
+	:is(jooosi-icon, omni-icon),
 	.components-button
 	{
 		color: #1e1e1e !important;
@@ -75,7 +75,7 @@
 	Icon Picker Button
    ======================================== */
 
-.omni-icon-picker-button {
+.jooosi-icon-picker-button {
 	display: inline-flex;
 	align-items: center;
 	gap: 4px;
@@ -98,6 +98,6 @@
 	Etch Editor Specific Adjustments
    ======================================== */
 
-.iconify--omni-icon {
+.iconify--jooosi-icon {
 	color: var(--e-foreground-color-muted);
 }

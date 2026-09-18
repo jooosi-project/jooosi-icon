@@ -7,15 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Rebrand the plugin, PHP namespace, assets, integrations, and web component to Jooosi Icon.
+- Move canonical uploaded-icon storage to `wp-content/uploads/jooosi-icon/` with automatic migration and a legacy-directory fallback.
+
+### Added
+- Add the `jooosi-icon/service/icon:sources` filter for third-party icon sources.
+
+### Deprecated
+- Forward pre-rebrand filters and actions through WordPress deprecated-hook APIs.
+- Keep the former `omni:` icon prefix and `<omni-icon>` markup as compatibility aliases.
+
 ## [1.0.19] - 2026-07-24
 
 ### Fixed
-- Resolve dynamic data tags in the Bricks Omni Icon element's Icon Name setting ([WordPress.org support thread](https://wordpress.org/support/topic/returning-dynamic-icon-name-in-bricks-builder/))
+- Resolve dynamic data tags in the Bricks Jooosi Icon element's Icon Name setting ([WordPress.org support thread](https://wordpress.org/support/topic/returning-dynamic-icon-name-in-bricks-builder/))
 
 ## [1.0.18] - 2026-06-05
 
 ### Fixed
-- CSS stylesheets loaded as JS in builder integrations [#9](https://github.com/nabasa-dev/omni-icon/issues/9)
+- CSS stylesheets loaded as JS in builder integrations [#9](https://github.com/jooosi-project/jooosi-icon/issues/9)
 
 ## [1.0.17] - 2026-03-25
 
@@ -74,10 +85,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.4] - 2026-01-09
 
 ### Added
-- ACF (Advanced Custom Fields) integration [#4](https://github.com/nabasa-dev/omni-icon/issues/4)
+- ACF (Advanced Custom Fields) integration [#4](https://github.com/jooosi-project/jooosi-icon/issues/4)
 
 ### Fixed
-- Modal footer visibility on laptop screens - Confirm/Cancel buttons now visible without requiring full-screen mode [#3](https://github.com/nabasa-dev/omni-icon/issues/3)
+- Modal footer visibility on laptop screens - Confirm/Cancel buttons now visible without requiring full-screen mode [#3](https://github.com/jooosi-project/jooosi-icon/issues/3)
 - WordPress.org plugin repository compliance fixes
 
 ## [1.0.3] - 2026-01-08
@@ -101,20 +112,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🐣 Initial release.
 
-[unreleased]: https://github.com/nabasa-dev/omni-icon/compare/1.0.19...HEAD
-[1.0.19]: https://github.com/nabasa-dev/omni-icon/compare/1.0.18...1.0.19
-[1.0.18]: https://github.com/nabasa-dev/omni-icon/compare/1.0.17...1.0.18
-[1.0.17]: https://github.com/nabasa-dev/omni-icon/compare/1.0.16...1.0.17
-[1.0.16]: https://github.com/nabasa-dev/omni-icon/compare/1.0.15...1.0.16
-[1.0.15]: https://github.com/nabasa-dev/omni-icon/compare/1.0.14...1.0.15
-[1.0.14]: https://github.com/nabasa-dev/omni-icon/compare/1.0.13...1.0.14
-[1.0.13]: https://github.com/nabasa-dev/omni-icon/compare/1.0.12...1.0.13
-[1.0.12]: https://github.com/nabasa-dev/omni-icon/compare/1.0.11...1.0.12
-[1.0.11]: https://github.com/nabasa-dev/omni-icon/compare/1.0.10...1.0.11
-[1.0.9]: https://github.com/nabasa-dev/omni-icon/compare/1.0.8...1.0.9
-[1.0.7]: https://github.com/nabasa-dev/omni-icon/compare/1.0.6...1.0.7
-[1.0.4]: https://github.com/nabasa-dev/omni-icon/compare/1.0.3...1.0.4
-[1.0.3]: https://github.com/nabasa-dev/omni-icon/compare/1.0.2...1.0.3
-[1.0.2]: https://github.com/nabasa-dev/omni-icon/compare/1.0.1...1.0.2
-[1.0.1]: https://github.com/nabasa-dev/omni-icon/compare/1.0.0...1.0.1
-[1.0.0]: https://github.com/nabasa-dev/omni-icon/compare/main...1.0.0
+[unreleased]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.19...HEAD
+[1.0.19]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.18...1.0.19
+[1.0.18]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.17...1.0.18
+[1.0.17]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.16...1.0.17
+[1.0.16]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.15...1.0.16
+[1.0.15]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.14...1.0.15
+[1.0.14]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.13...1.0.14
+[1.0.13]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.12...1.0.13
+[1.0.12]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.11...1.0.12
+[1.0.11]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.10...1.0.11
+[1.0.9]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.8...1.0.9
+[1.0.7]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.6...1.0.7
+[1.0.4]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.3...1.0.4
+[1.0.3]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.2...1.0.3
+[1.0.2]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.1...1.0.2
+[1.0.1]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.0...1.0.1
+[1.0.0]: https://github.com/jooosi-project/jooosi-icon/compare/main...1.0.0

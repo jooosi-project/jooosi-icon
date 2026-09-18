@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Integration\Divi;
+namespace JooosiIcon\Integration\Divi;
 
 use ET\Builder\Framework\Utility\HTMLUtility;
 use ET\Builder\FrontEnd\Module\Style;
@@ -10,17 +10,17 @@ use ET\Builder\Packages\Module\Module;
 use ET\Builder\Packages\Module\Options\Element\ElementClassnames;
 use ET\Builder\Packages\ModuleLibrary\ModuleRegistration;
 use ET\Builder\VisualBuilder\Assets\PackageBuildManager;
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Hook;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIcon\Services\IconService;
-use OmniIcon\Services\ViteService;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Services\IconService;
+use JooosiIcon\Services\ViteService;
 use WP_Block;
 
 #[Service]
 final class DiviService
 {
-    private const MODULE_CLASS_NAME = 'omni_icon_divi_module';
+    private const MODULE_CLASS_NAME = 'jooosi_icon_divi_module';
 
     public function __construct(
         private IconService $iconService,
@@ -34,8 +34,12 @@ final class DiviService
             return;
         }
 
+        $module_dir = $this->viteService->is_development()
+            ? JOOOSI_ICON::DIR . 'resources/integration/divi'
+            : $this->viteService->get_manifest_dir() . '/integration/divi';
+
         ModuleRegistration::register_module(
-            OMNI_ICON::DIR . 'resources/integration/divi',
+            $module_dir,
             [
                 'render_callback' => [$this, 'render_callback'],
             ]
@@ -52,11 +56,11 @@ final class DiviService
 
         // Enqueue Gutenberg icon block styles (reuse for Divi)
         $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/editor.css', [
-            'handle' => OMNI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles',
+            'handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles',
         ]);
 
         // Enqueue Breakdance editor integration script
-        $handle = OMNI_ICON::TEXT_DOMAIN . ':integration-divi-editor';
+        $handle = JOOOSI_ICON::TEXT_DOMAIN . ':integration-divi-editor';
         $this->viteService->enqueue_asset('resources/integration/divi/editor.ts', [
             'handle' => $handle,
             'in_footer' => true,
@@ -91,7 +95,7 @@ final class DiviService
         }
 
         $icon_attributes = [
-            'class'  => 'omni-icon-divi__icon',
+            'class'  => 'jooosi-icon-divi__icon',
             'name'   => $icon_name,
             'width'  => $width,
             'height' => $height,
@@ -112,7 +116,7 @@ final class DiviService
                     'class' => 'et_pb_module_inner',
                 ],
                 'childrenSanitizer' => 'et_core_esc_previously',
-                'children'          => $this->render_omni_icon($icon_attributes, $svg),
+                'children'          => $this->render_jooosi_icon($icon_attributes, $svg),
             ]
         );
 
@@ -231,7 +235,7 @@ final class DiviService
     /**
      * @param array<string, mixed> $attributes
      */
-    private function render_omni_icon(array $attributes, ?string $svg): string
+    private function render_jooosi_icon(array $attributes, ?string $svg): string
     {
         $attribute_string = '';
 
@@ -244,10 +248,10 @@ final class DiviService
         }
 
         if ($svg !== null) {
-            return sprintf('<omni-icon data-prerendered%s>%s</omni-icon>', $attribute_string, $svg);
+            return sprintf('<jooosi-icon data-prerendered%s>%s</jooosi-icon>', $attribute_string, $svg);
         }
 
-        return sprintf('<omni-icon%s></omni-icon>', $attribute_string);
+        return sprintf('<jooosi-icon%s></jooosi-icon>', $attribute_string);
     }
 
 }

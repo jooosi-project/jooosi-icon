@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Services;
+namespace JooosiIcon\Services;
 
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIcon\Core\Logger\LogComponent;
-use OmniIcon\Core\Logger\LoggerService;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Core\Logger\LogComponent;
+use JooosiIcon\Core\Logger\LoggerService;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use OmniIcon\Core\Icon\Iconify as UXIconify;
-use OmniIcon\Core\Icon\IconRegistryInterface;
-use OmniIcon\Core\Icon\Registry\CacheIconRegistry;
-use OmniIcon\Core\Icon\Registry\IconifyOnDemandRegistry;
+use JooosiIcon\Core\Icon\Iconify as UXIconify;
+use JooosiIcon\Core\Icon\IconRegistryInterface;
+use JooosiIcon\Core\Icon\Registry\CacheIconRegistry;
+use JooosiIcon\Core\Icon\Registry\IconifyOnDemandRegistry;
 
 /**
  * Iconify service for registry and metadata access.
@@ -28,7 +28,8 @@ class IconifyService
         private LoggerService $logger,
     ) {
         // Initialize Symfony cache adapter for icon metadata
-        $cache = new FilesystemAdapter('iconify', 0, wp_upload_dir()['basedir'] . OMNI_ICON::CACHE_DIR . 'iconify');
+        $storage = JOOOSI_ICON::resolve_upload_location(wp_upload_dir());
+        $cache = new FilesystemAdapter('iconify', 0, $storage['basedir'] . 'cache/iconify');
 
         // Initialize Symfony UX Iconify (for fetching icon sets metadata)
         $this->iconify = new UXIconify($cache);
@@ -40,7 +41,7 @@ class IconifyService
         $this->registry = new CacheIconRegistry($onDemandRegistry, $cache);
         
         // Initialize cache for search API requests (5 minutes TTL)
-        $searchCacheDir = wp_upload_dir()['basedir'] . OMNI_ICON::CACHE_DIR . 'iconify-search';
+        $searchCacheDir = $storage['basedir'] . 'cache/iconify-search';
         $this->searchCache = new FilesystemAdapter('iconify_search', 300, $searchCacheDir);
     }
 

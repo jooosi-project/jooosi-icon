@@ -1,5 +1,5 @@
 /**
- * Omni Icon Picker Integration for Etch
+ * Jooosi Icon Picker Integration for Etch
  * 
  * Main entry point that waits for Etch to load and initializes the integration.
  */
@@ -23,7 +23,7 @@ const getEtchIframeWindow = (): Window | null => {
 		await new Promise(resolve => setTimeout(resolve, 100));
 	}
 
-	console.log('[Omni Icon] Etch editor detected, initializing...');
+	console.log('[Jooosi Icon] Etch editor detected, initializing...');
 
 	// Dynamically import modules after iframe is ready
 	// This ensures React and all dependencies are loaded before components
@@ -38,13 +38,13 @@ const getEtchIframeWindow = (): Window | null => {
 		import('./modules/element-settings-panel'),
 	]);
 
-	console.log('[Omni Icon] Modules loaded, initializing modal...');
+	console.log('[Jooosi Icon] Modules loaded, initializing modal...');
 
 	// Initialize modal container
 	renderModal();
 
 	// Expose API to window for Etch controls to use
-	(window as any).omniIconPicker = {
+	(window as any).jooosiIconPicker = {
 		open: (initialValue?: string, callback?: (iconName: string) => void) => {
 			openIconPicker(initialValue || '', callback || (() => {}));
 		},
@@ -63,10 +63,10 @@ const getEtchIframeWindow = (): Window | null => {
 
 			// Find elements where we can inject icon picker buttons
 			// This will depend on how you want to integrate with Etch's UI
-			const targetElements = etchDoc.querySelectorAll('.etch-html-block-properties-wrapper:not([data-omni-icon-injected])');
+			const targetElements = etchDoc.querySelectorAll('.etch-html-block-properties-wrapper:not([data-jooosi-icon-injected])');
 			
 			targetElements.forEach((element) => {
-				element.setAttribute('data-omni-icon-injected', 'true');
+				element.setAttribute('data-jooosi-icon-injected', 'true');
 				injectIconPicker(element as HTMLElement);
 			});
 		});
@@ -77,7 +77,7 @@ const getEtchIframeWindow = (): Window | null => {
 			childList: true,
 		});
 
-		console.log('[Omni Icon] Etch observer initialized');
+		console.log('[Jooosi Icon] Etch observer initialized');
 	};
 
 	// Function to inject icon picker button into Etch UI
@@ -85,7 +85,7 @@ const getEtchIframeWindow = (): Window | null => {
 		// Create a button to open the icon picker
 		const iconPickerButton = document.createElement('button');
 		iconPickerButton.type = 'button';
-		iconPickerButton.className = 'etch-builder-button etch-builder-button--variant-primary omni-icon-picker-button';
+		iconPickerButton.className = 'etch-builder-button etch-builder-button--variant-primary jooosi-icon-picker-button';
 		iconPickerButton.textContent = '🎨 Select Icon';
 		iconPickerButton.style.marginTop = '8px';
 		
@@ -94,26 +94,26 @@ const getEtchIframeWindow = (): Window | null => {
 			e.stopPropagation();
 			
 			openIconPicker('', (iconName: string) => {
-				console.log('[Omni Icon] Icon selected:', iconName);
+				console.log('[Jooosi Icon] Icon selected:', iconName);
 				// Insert the icon into the Etch editor
 				insertIconIntoEditor(iconName);
 			});
 		});
 
 		containerElement.appendChild(iconPickerButton);
-		console.log('[Omni Icon] Icon picker button injected');
+		console.log('[Jooosi Icon] Icon picker button injected');
 	};
 
 	// Function to insert icon into the Etch editor
 	const insertIconIntoEditor = (iconName: string) => {
 		const etchDoc = getEtchIframeDocument();
 		if (!etchDoc) {
-			console.error('[Omni Icon] Could not access Etch iframe document');
+			console.error('[Jooosi Icon] Could not access Etch iframe document');
 			return;
 		}
 
 		// Create the icon element
-		const iconHTML = `<omni-icon name="${iconName}" width="24" height="24"></omni-icon>`;
+		const iconHTML = `<jooosi-icon name="${iconName}" width="24" height="24"></jooosi-icon>`;
 		
 		// Try to insert at the current selection or cursor position
 		try {
@@ -142,14 +142,14 @@ const getEtchIframeWindow = (): Window | null => {
 				}
 			}
 			
-			console.log('[Omni Icon] Icon inserted into editor:', iconName);
+			console.log('[Jooosi Icon] Icon inserted into editor:', iconName);
 		} catch (error) {
-			console.error('[Omni Icon] Error inserting icon:', error);
+			console.error('[Jooosi Icon] Error inserting icon:', error);
 		}
 	};
 
 	// Start observing the Etch panel
 	observeEtchPanel();
 
-	console.log('[Omni Icon] Etch integration initialized successfully');
+	console.log('[Jooosi Icon] Etch integration initialized successfully');
 })();

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Container;
+namespace JooosiIcon\Core\Container;
 
-use OMNI_ICON;
+use JOOOSI_ICON;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -110,9 +110,9 @@ final class Container implements ContainerInterface
 
     private function configure_core_services(): void
     {
-        $this->parameter('omni-icon.plugin_dir', OMNI_ICON::DIR);
-        $this->parameter('omni-icon.plugin_url', OMNI_ICON::url());
-        $this->parameter('omni-icon.version', OMNI_ICON::VERSION);
+        $this->parameter('jooosi-icon.plugin_dir', JOOOSI_ICON::DIR);
+        $this->parameter('jooosi-icon.plugin_url', JOOOSI_ICON::url());
+        $this->parameter('jooosi-icon.version', JOOOSI_ICON::VERSION);
 
         $this->containerBuilder->setAlias(ContainerInterface::class, 'service_container');
 

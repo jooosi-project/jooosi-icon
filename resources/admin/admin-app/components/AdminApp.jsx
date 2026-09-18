@@ -9,22 +9,22 @@ const AdminApp = () => {
 	const [activeTab, setActiveTab] = useState('icons');
 
 	const tabs = [
-		{ id: 'icons', label: __('Icons', 'omni-icon') },
-		// { id: 'help', label: __('Help', 'omni-icon') },
-		{ id: 'about', label: __('About', 'omni-icon') },
+		{ id: 'icons', label: __('Icons', 'jooosi-icon') },
+		// { id: 'help', label: __('Help', 'jooosi-icon') },
+		{ id: 'about', label: __('About', 'jooosi-icon') },
 	];
 
 	return (
-		<div className="omni-icon-admin-wrapper">
-			<div className="omni-icon-admin-header">
-				<h1>{__('Omni Icon', 'omni-icon')}</h1>
+		<div className="jooosi-icon-admin-wrapper">
+			<div className="jooosi-icon-admin-header">
+				<h1>{__('Jooosi Icon', 'jooosi-icon')}</h1>
 			</div>
 
-			<nav className="omni-icon-admin-tabs">
+			<nav className="jooosi-icon-admin-tabs">
 				{tabs.map((tab) => (
 					<button
 						key={tab.id}
-						className={`omni-icon-tab ${activeTab === tab.id ? 'is-active' : ''}`}
+						className={`jooosi-icon-tab ${activeTab === tab.id ? 'is-active' : ''}`}
 						onClick={() => setActiveTab(tab.id)}
 					>
 						{tab.label}
@@ -32,7 +32,7 @@ const AdminApp = () => {
 				))}
 			</nav>
 
-			<div className="omni-icon-admin-content">
+			<div className="jooosi-icon-admin-content">
 				{activeTab === 'icons' && <IconManager refreshTrigger={refreshTrigger} />}
 				{activeTab === 'help' && <HelpTab />}
 				{activeTab === 'about' && <AboutTab />}

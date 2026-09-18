@@ -14,7 +14,7 @@ headers: []
 method: GET
 name: Collections
 sortPriority: 4000.0
-url: ${[ WP_URL ]}/omni-icon/v1/icon/collections
+url: ${[ WP_URL ]}/jooosi-icon/v1/icon/collections
 urlParameters:
 - enabled: true
   name: ''

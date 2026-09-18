@@ -1,5 +1,5 @@
 /**
- * Omni Icon Picker React App for Bricks Builder
+ * Jooosi Icon Picker React App for Bricks Builder
  * 
  * This file handles the React rendering of the icon picker modal.
  */
@@ -67,7 +67,7 @@ function openIconPicker(initialValue, callback) {
 			callback: callback,
 		});
 	} else {
-		console.error('[Omni Icon] Modal state manager not initialized');
+		console.error('[Jooosi Icon] Modal state manager not initialized');
 	}
 }
 

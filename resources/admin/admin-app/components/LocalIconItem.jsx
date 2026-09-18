@@ -19,7 +19,7 @@ const LocalIconItem = memo(({
 	const [scrollDuration, setScrollDuration] = useState('3s');
 
 	const handleMouseEnter = useCallback((e) => {
-		const nameEl = e.currentTarget.querySelector('.omni-icon-item-name');
+		const nameEl = e.currentTarget.querySelector('.jooosi-icon-item-name');
 		if (nameEl && nameEl.scrollWidth > nameEl.clientWidth) {
 			const distance = nameEl.scrollWidth - nameEl.clientWidth;
 			const duration = (distance / 25);
@@ -58,7 +58,7 @@ const LocalIconItem = memo(({
 
 	return (
 		<button
-			className={`omni-icon-item ${isSelected ? 'is-selected' : ''}`}
+			className={`jooosi-icon-item ${isSelected ? 'is-selected' : ''}`}
 			onClick={handleClick}
 			onKeyDown={handleKeyDown}
 			onMouseEnter={handleMouseEnter}
@@ -73,20 +73,20 @@ const LocalIconItem = memo(({
 			aria-pressed={isSelected}
 		>
 			{isSelected && (
-				<div className="omni-icon-selected-badge">
+				<div className="jooosi-icon-selected-badge">
 					<IconCheck />
 				</div>
 			)}
-			<div className="omni-icon-preview">
-				<omni-icon
+			<div className="jooosi-icon-preview">
+				<jooosi-icon
 					name={icon.name}
 					width="32"
 					height="32"
 				/>
 			</div>
-			<div className="omni-icon-label">
+			<div className="jooosi-icon-label">
 				<span 
-					className={`omni-icon-item-name ${isOverflowing ? 'is-overflowing' : ''}`}
+					className={`jooosi-icon-item-name ${isOverflowing ? 'is-overflowing' : ''}`}
 					style={{
 						'--scroll-distance': scrollDistance,
 						'--scroll-duration': scrollDuration,
@@ -94,7 +94,7 @@ const LocalIconItem = memo(({
 				>
 					{icon.iconName}
 				</span>
-				<span className="omni-icon-prefix">{icon.prefix}</span>
+				<span className="jooosi-icon-prefix">{icon.prefix}</span>
 			</div>
 		</button>
 	);

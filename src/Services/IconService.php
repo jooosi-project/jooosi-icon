@@ -2,23 +2,24 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Services;
+namespace JooosiIcon\Services;
 
 use enshrined\svgSanitize\Sanitizer;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIcon\Core\Logger\LogComponent;
-use OmniIcon\Core\Logger\LoggerService;
-use OmniIcon\Core\Icon\Exception\IconNotFoundException;
-use OmniIcon\Core\Icon\IconRegistryInterface;
-use OmniIcon\Core\Icon\Registry\ChainIconRegistry;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Core\Logger\LogComponent;
+use JooosiIcon\Core\Logger\LoggerService;
+use JooosiIcon\Core\Icon\Exception\IconNotFoundException;
+use JooosiIcon\Core\Icon\IconRegistryInterface;
+use JooosiIcon\Core\Icon\Registry\ChainIconRegistry;
 
 /**
- * Icon service for rendering SVG icons from local uploads, plugin bundles, and Iconify API.
+ * Icon service for rendering SVG icons from local uploads, file-based sources, and Iconify API.
  *
  * @example
  * // Basic usage with local and remote icons
  * $iconService->get_icon('local:my-icon');
- * $iconService->get_icon('omni:livecanvas');
+ * $iconService->get_icon('jooosi:livecanvas');
  * $iconService->get_icon('about-us:old-logo');
  * $iconService->get_icon('mdi:home');
  *
@@ -28,24 +29,36 @@ use OmniIcon\Core\Icon\Registry\ChainIconRegistry;
 #[Service]
 class IconService
 {
-    private IconRegistryInterface $registry;
+    private ?IconRegistryInterface $registry = null;
     private Sanitizer $sanitizer;
 
     public function __construct(
         private LocalIconService $localIconService,
-        private BundleIconService $bundleIconService,
+        private IconSourceService $iconSourceService,
         private IconifyService $iconifyService,
         private LoggerService $logger,
     ) {
-        // Chain registries: local icons take precedence over bundle icons, then on-demand icons
-        $this->registry = new ChainIconRegistry([
-            $localIconService->get_registry(), // Check local uploaded icons first
-            $bundleIconService->get_registry(), // Check plugin bundled icons second
-            $iconifyService->get_registry(), // Fallback to on-demand Iconify icons
-        ]);
-        
         // Initialize SVG sanitizer for render-time sanitization
         $this->sanitizer = new Sanitizer();
+    }
+
+    /**
+     * Build the registry only when it is first used so late-loaded theme filters
+     * can register sources before the source service initializes.
+     */
+    private function get_or_create_registry(): IconRegistryInterface
+    {
+        if (!$this->registry instanceof IconRegistryInterface) {
+            // Chain registries: local icons take precedence over file-based sources,
+            // followed by on-demand Iconify icons.
+            $this->registry = new ChainIconRegistry([
+                $this->localIconService->get_registry(), // Check local uploaded icons first
+                $this->iconSourceService->get_registry(), // Check built-in and third-party sources next
+                $this->iconifyService->get_registry(), // Fallback to on-demand Iconify icons
+            ]);
+        }
+
+        return $this->registry;
     }
 
     /**
@@ -67,7 +80,7 @@ class IconService
 
         try {
             // Fetch icon from registry (with caching)
-            $icon = $this->registry->get($name);
+            $icon = $this->get_or_create_registry()->get($name);
 
             // Add custom attributes if provided
             if (! empty($attributes)) {
@@ -76,7 +89,20 @@ class IconService
 
             $svg = $icon->toHtml();
 
-            if (apply_filters('omni-icon/service/icon:skip_render_sanitization', false, $name, $attributes)) {
+            $skipSanitization = apply_filters(
+                'jooosi-icon/service/icon:skip_render_sanitization',
+                false,
+                $name,
+                $attributes,
+            );
+            $skipSanitization = apply_filters_deprecated(
+                'omni-icon/service/icon:skip_render_sanitization',
+                [$skipSanitization, $name, $attributes],
+                JOOOSI_ICON::VERSION,
+                'jooosi-icon/service/icon:skip_render_sanitization',
+            );
+
+            if ($skipSanitization) {
                 return $svg;
             }
 
@@ -143,25 +169,25 @@ class IconService
      */
     public function get_registry(): IconRegistryInterface
     {
-        return $this->registry;
+        return $this->get_or_create_registry();
     }
 
     /**
-     * Get all available icon sets from local, bundle, and Iconify registries.
+     * Get all available icon sets from local, file-based, and Iconify registries.
      *
      * @return array<string, array{name: string, total: int, samples: array<int, string>}>
      */
     public function get_icon_sets(): array
     {
         $localSets = $this->localIconService->get_icon_sets();
-        $bundleSet = $this->bundleIconService->get_icon_set();
+        $sourceSets = $this->iconSourceService->get_icon_sets();
         $iconifySets = $this->iconifyService->get_icon_sets();
 
-        return array_merge($localSets, ['omni' => $bundleSet], $iconifySets);
+        return array_merge($localSets, $sourceSets, $iconifySets);
     }
 
     /**
-     * Search for icons - fetches ALL results from local, bundle, and Iconify (limit=999)
+     * Search for icons - fetches ALL results from local, file-based, and Iconify (limit=999)
      * Iconify results are cached for 5 minutes
      *
      * @param string $query Search query string
@@ -172,14 +198,14 @@ class IconService
         // Get local icons (already cached)
         $localResults = $this->localIconService->search_icons($query);
         
-        // Get bundle icons (already cached)
-        $bundleResults = $this->bundleIconService->search_icons($query);
+        // Get file-based source icons (already cached)
+        $sourceResults = $this->iconSourceService->search_icons($query);
         
         // Fetch all results from Iconify (limit=999, cached for 5 minutes)
         $iconifyResults = $this->iconifyService->search_icons($query);
         
-        // Merge local icons first, then bundle icons, then Iconify results
-        $allResults = array_merge($localResults, $bundleResults, $iconifyResults['results']);
+        // Merge local icons first, then file-based sources, then Iconify results
+        $allResults = array_merge($localResults, $sourceResults, $iconifyResults['results']);
         
         return [
             'results' => $allResults,

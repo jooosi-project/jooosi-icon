@@ -1,7 +1,7 @@
 /**
  * Web Component Injector for Etch iframe
  * 
- * This module injects the omni-icon web component script into the Etch iframe
+ * This module injects the Jooosi Icon web component script into the Etch iframe
  * so icons can be rendered inside the editor.
  */
 
@@ -13,11 +13,11 @@ const getEtchIframe = (): HTMLIFrameElement | null => {
 async function injectWebComponent() {
 	const iframeEl = getEtchIframe();
 	if (!iframeEl) {
-		console.error('[Omni Icon] Etch iframe not found');
+		console.error('[Jooosi Icon] Etch iframe not found');
 		return;
 	}
 
-	console.log('[Omni Icon] Finding omni-icon web component script...');
+	console.log('[Jooosi Icon] Finding web component script...');
 
 	// Timeout flag and timer to limit the search duration
 	let timeoutOccurred = false;
@@ -31,15 +31,15 @@ async function injectWebComponent() {
 	while (!timeoutOccurred) {
 		const allScripts = document.querySelectorAll('script');
 
-		// Filter scripts to find omni-icon web component scripts
-		// Look for scripts with id containing 'omni-icon:web-component' or 'vite-client'
+		// Find the canonical web component handle or Vite clients.
 		scriptElements = Array.from(allScripts).filter(scriptElement => {
 			const id = scriptElement.getAttribute('id');
 			const src = scriptElement.getAttribute('src');
 			
-			// Match omni-icon web component or vite client scripts
-			return (id && (id.includes('omni-icon:web-component') || id.startsWith('vite-client'))) ||
-				   (src && src.includes('omni-icon'));
+			return (id && (
+				id.includes('jooosi-icon:web-component') ||
+				id.startsWith('vite-client')
+			)) || (src && src.includes('jooosi-icon'));
 		});
 
 		if (scriptElements.length > 0) {
@@ -51,17 +51,17 @@ async function injectWebComponent() {
 	}
 
 	if (timeoutOccurred) {
-		console.error('[Omni Icon] Timeout! Failed to find omni-icon web component script');
+		console.error('[Jooosi Icon] Timeout! Failed to find web component script');
 		return;
 	}
 
-	console.log('[Omni Icon] Found omni-icon web component script', scriptElements);
+	console.log('[Jooosi Icon] Found web component script', scriptElements);
 
 	const contentWindow = iframeEl.contentWindow;
 	const contentDocument = iframeEl.contentDocument || contentWindow?.document;
 
 	if (!contentWindow || !contentDocument) {
-		console.error('[Omni Icon] Cannot access iframe content');
+		console.error('[Jooosi Icon] Cannot access iframe content');
 		return;
 	}
 
@@ -70,19 +70,20 @@ async function injectWebComponent() {
 		await new Promise(resolve => setTimeout(resolve, 300));
 	}
 
-	console.log('[Omni Icon] Injecting omni-icon web component into iframe...');
+	console.log('[Jooosi Icon] Injecting web component into iframe...');
 
 	// Check if script is already injected
 	const injectedScripts = contentDocument.querySelectorAll('script');
 	const isScriptInjected = Array.from(injectedScripts).some(script => {
 		const id = script.getAttribute('id');
 		const src = script.getAttribute('src');
-		return (id && id.includes('omni-icon:web-component')) ||
-			   (src && src.includes('omni-icon'));
+		return (id && (
+			id.includes('jooosi-icon:web-component')
+		)) || (src && src.includes('jooosi-icon'));
 	});
 
 	if (!isScriptInjected) {
-		console.log('[Omni Icon] Starting injection process...');
+		console.log('[Jooosi Icon] Starting injection process...');
 		
 		// Inject each script element
 		scriptElements.forEach(scriptElement => {
@@ -112,28 +113,28 @@ async function injectWebComponent() {
 		// Also inject the REST API configuration
 		const configScript = contentDocument.createElement('script');
 		configScript.textContent = `
-			window.omniIconConfig = {
-				restUrl: '${(window as any).omniIconEtch?.restUrl || ''}',
-				nonce: '${(window as any).omniIconEtch?.nonce || ''}'
+			window.jooosiIconConfig = {
+				restUrl: '${(window as any).jooosiIconEtch?.restUrl || ''}',
+				nonce: '${(window as any).jooosiIconEtch?.nonce || ''}'
 			};
 		`;
 		contentDocument.head.appendChild(configScript);
 		
-		console.log('[Omni Icon] Web component injected successfully');
+		console.log('[Jooosi Icon] Web component injected successfully');
 	} else {
-		console.log('[Omni Icon] Web component already injected, skipping...');
+		console.log('[Jooosi Icon] Web component already injected, skipping...');
 	}
 
-	iframeEl.dataset.omniIconInjected = 'true';
+	iframeEl.dataset.jooosiIconInjected = 'true';
 }
 
 // Set up MutationObserver to watch for iframe changes
 const observer = new MutationObserver(() => {
 	const target = getEtchIframe();
 
-	if (target && !target.dataset.omniIconInjected) {
+	if (target && !target.dataset.jooosiIconInjected) {
 		setTimeout(() => {
-			if (target.dataset.omniIconInjected) {
+			if (target.dataset.jooosiIconInjected) {
 				return; // Already injected
 			}
 
@@ -148,4 +149,4 @@ observer.observe(document, {
 	childList: true,
 });
 
-console.log('[Omni Icon] Web component injector module loaded');
+console.log('[Jooosi Icon] Web component injector module loaded');

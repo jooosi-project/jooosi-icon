@@ -1,5 +1,5 @@
 /**
- * Omni Icon Picker Integration for Breakdance Builder
+ * Jooosi Icon Picker Integration for Breakdance Builder
  * 
  * Main entry point that initializes the integration for Breakdance Element Studio.
  * This monitors the UI and hooks into the Browse button to open the icon picker.
@@ -23,7 +23,7 @@ import './editor.scss';
 	const vueStore = vueApp.$store;
 
 	// Expose API to window
-	(window as any).omniIconPicker = {
+	(window as any).jooosiIconPicker = {
 		open: (initialValue?: string, callback?: (iconName: string) => void) => {
 			const currentValue = initialValue || '';
 			openIconPicker(currentValue, callback);
@@ -85,7 +85,7 @@ import './editor.scss';
 			target.closest('button.breakdance-trigger-action-button');
 
 		if (isInsideIconPicker && isTriggerButton) {
-			// Check if we're in an OmniIcon element by looking for the icon name control
+			// Check if we're in an JooosiIcon element by looking for the icon name control
 			// instead of relying on activeElement.type which may be undefined
 			const iconNameControl = document.querySelector('div[data-test-id="control-content-icon-name"]');
 

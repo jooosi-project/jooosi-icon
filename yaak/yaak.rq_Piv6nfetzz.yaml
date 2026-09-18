@@ -14,5 +14,5 @@ headers: []
 method: GET
 name: Single Svg - OK
 sortPriority: 3000.0
-url: ${[ WP_URL ]}/omni-icon/v1/icon/item/tabler/home.svg
+url: ${[ WP_URL ]}/jooosi-icon/v1/icon/item/tabler/home.svg
 urlParameters: []

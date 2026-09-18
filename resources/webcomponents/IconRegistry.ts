@@ -61,9 +61,9 @@ export interface IconFetchOptions {
 	priority?: number;
 }
 
-const API_BASE_PATH = '/wp-json/omni-icon/v1/icon/item';
+const API_BASE_PATH = '/wp-json/jooosi-icon/v1/icon/item';
 const IDB_KEY = 'oiwc-cache';
-const IDB_DB_NAME = 'omni-icon';
+const IDB_DB_NAME = 'jooosi-icon';
 const IDB_STORE_NAME = 'icon-cache';
 const MAX_CONCURRENT_REQUESTS = 16;
 const idbStore = createStore(IDB_DB_NAME, IDB_STORE_NAME);

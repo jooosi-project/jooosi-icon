@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Discovery\Attributes;
+namespace JooosiIcon\Core\Discovery\Attributes;
 
 use Attribute;
 

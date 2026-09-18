@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OmniIcon\Core\Logger;
+namespace JooosiIcon\Core\Logger;
 
 defined('ABSPATH') || exit;
 
@@ -18,6 +18,8 @@ enum LogComponent: string
     case ICON_SERVICE = 'IconService';
     case ICONIFY_SERVICE = 'IconifyService';
     case LOCAL_ICON_SERVICE = 'LocalIconService';
+    case ICON_SOURCE_SERVICE = 'IconSourceService';
+    /** @deprecated Use ICON_SOURCE_SERVICE instead. */
     case BUNDLE_ICON_SERVICE = 'BundleIconService';
     case DISCOVERY = 'Discovery';
     case COMMAND_DISCOVERY = 'CommandDiscovery';

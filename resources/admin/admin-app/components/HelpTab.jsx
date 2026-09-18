@@ -2,11 +2,11 @@ import { __ } from '@wordpress/i18n';
 
 const HelpTab = () => {
 	return (
-		<div className="omni-icon-tab-content omni-icon-help-tab">
+		<div className="jooosi-icon-tab-content jooosi-icon-help-tab">
 			<div className="tab-content-inner">
-				<h2>{__('Help & Documentation', 'omni-icon')}</h2>
+				<h2>{__('Help & Documentation', 'jooosi-icon')}</h2>
 				<p className="description">
-					{__('Documentation and help resources coming soon.', 'omni-icon')}
+					{__('Documentation and help resources coming soon.', 'jooosi-icon')}
 				</p>
 			</div>
 		</div>

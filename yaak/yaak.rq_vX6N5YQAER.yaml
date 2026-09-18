@@ -14,7 +14,7 @@ headers: []
 method: GET
 name: Search
 sortPriority: 5000.0
-url: ${[ WP_URL ]}/omni-icon/v1/icon/search
+url: ${[ WP_URL ]}/jooosi-icon/v1/icon/search
 urlParameters:
 - enabled: true
   name: query

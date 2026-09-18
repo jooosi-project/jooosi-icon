@@ -45,7 +45,7 @@ return [
     // will be generated instead.
     //
     // For more see: https://github.com/humbug/php-scoper/blob/master/docs/configuration.md#prefix
-    'prefix' => 'OmniIconDeps',
+    'prefix' => 'JooosiIconDeps',
 
     // By default when running php-scoper add-prefix, it will prefix all relevant code found in the current working
     // directory. You can however define which files should be scoped by defining a collection of Finders in the
@@ -137,8 +137,8 @@ return [
     //
     // For more information see: https://github.com/humbug/php-scoper/blob/master/docs/configuration.md#excluded-symbols
     'exclude-namespaces' => [
-        'OmniIcon',
-        'OMNI_ICON',
+        'JooosiIcon',
+        'JOOOSI_ICON',
         'WP_CLI',
         'Symfony\Polyfill',
 
@@ -161,7 +161,7 @@ return [
     'exclude-classes' => array_merge(
         $wp_classes,
         [
-            'OMNI_ICON',
+            'JOOOSI_ICON',
             'WP_CLI',
             'WP_CLI_Command',
             'DOMXPath',
@@ -231,7 +231,7 @@ return [
     'expose-global-functions' => false,
     'expose-namespaces' => [],
     'expose-classes' => [
-        'OMNI_ICON',
+        'JOOOSI_ICON',
     ],
     'expose-functions' => [],
     'expose-constants' => [],

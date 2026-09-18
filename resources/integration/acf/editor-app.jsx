@@ -1,5 +1,5 @@
 /**
- * Omni Icon Picker React App for ACF
+ * Jooosi Icon Picker React App for ACF
  * 
  * This file handles the React rendering of the icon picker modal.
  */
@@ -66,7 +66,7 @@ function openIconPicker(initialValue, callback) {
 			callback: callback,
 		});
 	} else {
-		console.error('[Omni Icon] Modal state manager not initialized');
+		console.error('[Jooosi Icon] Modal state manager not initialized');
 	}
 }
 
@@ -88,7 +88,7 @@ function closeIconPicker() {
 function renderModal() {
 	if (!modalContainer) {
 		modalContainer = document.createElement('div');
-		modalContainer.id = 'acf-omni-icon-picker-root';
+		modalContainer.id = 'acf-jooosi-icon-picker-root';
 		document.body.appendChild(modalContainer);
 	}
 

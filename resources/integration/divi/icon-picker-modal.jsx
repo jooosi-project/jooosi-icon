@@ -29,7 +29,7 @@ const renderIconItem = (icon, isSelected, onSelect, index) => createElement(
 	createElement(
 		'div',
 		{ className: 'oiib-icon-preview' },
-		createElement('omni-icon', {
+		createElement('jooosi-icon', {
 			name: icon.name,
 			width: '32',
 			height: '32',
@@ -142,23 +142,23 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 		if (isLoading) {
 			if (searchQuery) {
 				const collectionName = selectedCollection === 'all' ? '' : ` in ${collections[selectedCollection]?.name || selectedCollection}`;
-				return __(`Searching for "${searchQuery}"${collectionName}...`, 'omni-icon');
+				return __(`Searching for "${searchQuery}"${collectionName}...`, 'jooosi-icon');
 			}
 
-			return __('Loading icons...', 'omni-icon');
+			return __('Loading icons...', 'jooosi-icon');
 		}
 
 		if (debouncedSearchQuery) {
 			const collectionName = selectedCollection === 'all' ? '' : ` in ${collections[selectedCollection]?.name || selectedCollection}`;
 
 			return totalCount > 0
-				? __(`Found ${totalCount} icons for "${debouncedSearchQuery}"${collectionName}`, 'omni-icon')
-				: __(`No icons found for "${debouncedSearchQuery}"${collectionName}`, 'omni-icon');
+				? __(`Found ${totalCount} icons for "${debouncedSearchQuery}"${collectionName}`, 'jooosi-icon')
+				: __(`No icons found for "${debouncedSearchQuery}"${collectionName}`, 'jooosi-icon');
 		}
 
 		return selectedCollection === 'all'
-			? __('Showing sample icons from all collections', 'omni-icon')
-			: __(`Showing sample icons from ${collections[selectedCollection]?.name || selectedCollection}`, 'omni-icon');
+			? __('Showing sample icons from all collections', 'jooosi-icon')
+			: __(`Showing sample icons from ${collections[selectedCollection]?.name || selectedCollection}`, 'jooosi-icon');
 	}, [collections, debouncedSearchQuery, isLoading, searchQuery, selectedCollection, totalCount]);
 
 	return createElement(
@@ -167,11 +167,11 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 		isOpen ? createElement(
 			Modal,
 			{
-				title: __('Omni Icon - Icon Picker', 'omni-icon'),
+				title: __('Jooosi Icon - Icon Picker', 'jooosi-icon'),
 				onRequestClose: onClose,
 				className: 'oiib-icon-picker-modal oiel-icon-picker-modal',
 				size: 'large',
-				'aria-label': __('Icon Picker', 'omni-icon'),
+				'aria-label': __('Icon Picker', 'jooosi-icon'),
 			},
 			createElement(
 				'div',
@@ -189,8 +189,8 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 							className: 'oiib-search-input',
 							value: searchQuery,
 							onChange: (event) => setSearchQuery(event.target.value),
-							placeholder: __('Search icons... (e.g., home, mdi:heart, lucide:star)', 'omni-icon'),
-							'aria-label': __('Search icons', 'omni-icon'),
+							placeholder: __('Search icons... (e.g., home, mdi:heart, lucide:star)', 'jooosi-icon'),
+							'aria-label': __('Search icons', 'jooosi-icon'),
 						}),
 						searchQuery ? createElement(
 							'button',
@@ -198,7 +198,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 								type: 'button',
 								className: 'oiib-search-clear',
 								onClick: () => setSearchQuery(''),
-								'aria-label': __('Clear search', 'omni-icon'),
+								'aria-label': __('Clear search', 'jooosi-icon'),
 							},
 							createElement(IconX, { 'aria-hidden': 'true' })
 						) : null
@@ -210,15 +210,15 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 							className: 'oiib-search-refresh',
 							onClick: refreshCollections,
 								disabled: isRefreshing,
-								'aria-label': __('Refresh icon collections', 'omni-icon'),
-								title: __('Refresh icon collections', 'omni-icon'),
+								'aria-label': __('Refresh icon collections', 'jooosi-icon'),
+								title: __('Refresh icon collections', 'jooosi-icon'),
 							},
 							createElement(IconRefresh, { className: isRefreshing ? 'is-spinning' : '', 'aria-hidden': 'true' })
 						)
 					),
 				Object.keys(collections).length > 0 ? createElement(
 					'div',
-					{ className: 'oiib-collection-filter', role: 'tablist', 'aria-label': __('Filter by collection', 'omni-icon') },
+					{ className: 'oiib-collection-filter', role: 'tablist', 'aria-label': __('Filter by collection', 'jooosi-icon') },
 					createElement(
 						'div',
 						{ className: 'oiib-collection-filter-wrapper' },
@@ -231,7 +231,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 								role: 'tab',
 								'aria-selected': selectedCollection === 'all',
 							},
-							__('All', 'omni-icon'),
+							__('All', 'jooosi-icon'),
 							createElement('span', { className: 'oiib-collection-count' }, allIcons.length)
 						),
 						...Object.entries(collections).map(([prefix, collection]) => {
@@ -268,7 +268,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 					),
 					!isLoading && debouncedSearchQuery && totalPages > 1 ? createElement(
 						'div',
-						{ className: 'oiib-pagination', role: 'navigation', 'aria-label': __('Icon pagination', 'omni-icon') },
+						{ className: 'oiib-pagination', role: 'navigation', 'aria-label': __('Icon pagination', 'jooosi-icon') },
 						createElement(
 							'button',
 							{
@@ -276,11 +276,11 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 								className: 'oiib-pagination-btn',
 								onClick: () => handlePageChange(currentPage - 1),
 								disabled: currentPage === 1,
-								'aria-label': __('Previous page', 'omni-icon'),
+								'aria-label': __('Previous page', 'jooosi-icon'),
 							},
 							'Prev'
 						),
-						createElement('span', { className: 'oiib-pagination-info' }, __(`Page ${currentPage} of ${totalPages}`, 'omni-icon')),
+						createElement('span', { className: 'oiib-pagination-info' }, __(`Page ${currentPage} of ${totalPages}`, 'jooosi-icon')),
 						createElement(
 							'button',
 							{
@@ -288,7 +288,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 								className: 'oiib-pagination-btn',
 								onClick: () => handlePageChange(currentPage + 1),
 								disabled: currentPage === totalPages,
-								'aria-label': __('Next page', 'omni-icon'),
+								'aria-label': __('Next page', 'jooosi-icon'),
 							},
 							'Next'
 						)
@@ -300,7 +300,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 					isLoading ? createElement(
 						'div',
 						{ className: 'oiib-icon-picker-loading', role: 'status', 'aria-live': 'polite' },
-						createElement('p', null, __('Loading icons...', 'omni-icon'))
+						createElement('p', null, __('Loading icons...', 'jooosi-icon'))
 					) : null,
 					error ? createElement(
 						'div',
@@ -309,14 +309,14 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 					) : null,
 					!isLoading && !error && paginatedIcons.length > 0 ? createElement(
 						'div',
-						{ className: 'oiib-icon-picker-grid', role: 'grid', 'aria-label': __('Icon grid', 'omni-icon') },
+						{ className: 'oiib-icon-picker-grid', role: 'grid', 'aria-label': __('Icon grid', 'jooosi-icon') },
 						...paginatedIcons.map((icon, index) => renderIconItem(icon, icon.name === tempSelectedIcon, handleSelectIcon, index))
 					) : null,
 					!isLoading && !error && paginatedIcons.length === 0 && debouncedSearchQuery ? createElement(
 						'div',
 						{ className: 'oiib-icon-picker-empty', role: 'status' },
-						createElement('h3', null, __('No icons found', 'omni-icon')),
-						createElement('p', null, __('Try a different search term or icon prefix', 'omni-icon'))
+						createElement('h3', null, __('No icons found', 'jooosi-icon')),
+						createElement('p', null, __('Try a different search term or icon prefix', 'jooosi-icon'))
 					) : null
 				),
 				(tempSelectedIcon !== currentIcon || tempSelectedIcon || currentIcon) ? createElement(
@@ -328,11 +328,11 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 						tempSelectedIcon ? createElement(
 							'div',
 							{ className: 'oiib-selected-icon-display' },
-							createElement('omni-icon', { name: tempSelectedIcon, width: '32', height: '32' }),
+							createElement('jooosi-icon', { name: tempSelectedIcon, width: '32', height: '32' }),
 							createElement(
 								'div',
 								{ className: 'oiib-selected-icon-info' },
-								createElement('span', { className: 'oiib-selected-icon-label' }, __('Selected:', 'omni-icon')),
+								createElement('span', { className: 'oiib-selected-icon-label' }, __('Selected:', 'jooosi-icon')),
 								createElement('span', { className: 'oiib-selected-icon-name' }, tempSelectedIcon)
 							)
 						) : createElement(
@@ -341,7 +341,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 							createElement(
 								'div',
 								{ className: 'oiib-selected-icon-info' },
-								createElement('span', { className: 'oiib-selected-icon-label' }, __('Icon will be removed', 'omni-icon'))
+								createElement('span', { className: 'oiib-selected-icon-label' }, __('Icon will be removed', 'jooosi-icon'))
 							)
 						),
 						createElement(
@@ -354,7 +354,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 									className: 'oiib-btn oiib-btn-secondary',
 									onClick: handleCancelSelection,
 								},
-								__('Cancel', 'omni-icon')
+								__('Cancel', 'jooosi-icon')
 							),
 							createElement(
 								'button',
@@ -363,7 +363,7 @@ const IconPickerModal = ({ isOpen, onClose, onSelectIcon, currentIcon }) => {
 									className: 'oiib-btn oiib-btn-primary',
 									onClick: handleConfirmSelection,
 								},
-								__('Confirm', 'omni-icon')
+								__('Confirm', 'jooosi-icon')
 							)
 						)
 					)

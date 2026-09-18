@@ -1,11 +1,11 @@
 /**
- * Omni Icon Error Observer Styles
+ * Jooosi Icon Error Observer Styles
  * 
  * Styles for the error panel and error state interactions.
  */
 
 /* Error state - the icon becomes the trigger */
-omni-icon[data-oiwc-state="error"] {
+:is(jooosi-icon, omni-icon)[data-oiwc-state="error"] {
 	position: relative;
 	cursor: pointer;
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -21,34 +21,34 @@ omni-icon[data-oiwc-state="error"] {
 }
 
 /* Make the SVG smaller to fit within the error box */
-omni-icon[data-oiwc-state="error"] > svg {
+:is(jooosi-icon, omni-icon)[data-oiwc-state="error"] > svg {
 	width: calc(100% - 8px) !important;
 	height: calc(100% - 8px) !important;
 	color: #ef4444;
 }
 
-omni-icon[data-oiwc-state="error"]:focus {
+:is(jooosi-icon, omni-icon)[data-oiwc-state="error"]:focus {
 	outline: 2px solid rgba(239, 68, 68, 0.5);
 	border-radius: 16px;
 	outline-offset: 2px;
 }
 
-omni-icon[data-oiwc-state="error"]:focus:not(:focus-visible) {
+:is(jooosi-icon, omni-icon)[data-oiwc-state="error"]:focus:not(:focus-visible) {
 	outline: none;
 }
 
-omni-icon[data-oiwc-state="error"]:hover {
+:is(jooosi-icon, omni-icon)[data-oiwc-state="error"]:hover {
 	background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(220, 38, 38, 0.08) 100%);
 	border-color: rgba(239, 68, 68, 0.4);
 	box-shadow: 0 4px 8px rgba(239, 68, 68, 0.15);
 	/* transform: scale(1.05); */
 }
 
-omni-icon[data-oiwc-state="error"]:hover > svg {
+:is(jooosi-icon, omni-icon)[data-oiwc-state="error"]:hover > svg {
 	animation: oiwc-shake 0.5s ease;
 }
 
-omni-icon[data-oiwc-expanded="true"] {
+:is(jooosi-icon, omni-icon)[data-oiwc-expanded="true"] {
 	background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.12) 100%);
 	border-color: rgba(239, 68, 68, 0.5);
 	animation: oiwc-pulse-glow 2s ease-in-out infinite;

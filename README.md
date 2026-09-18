@@ -1,48 +1,48 @@
 <p align="center">
-  <img src="./omni-icon.svg" alt="Omni Icon Logo" width="100">
+  <img src="./jooosi-icon.svg" alt="Jooosi Icon Logo" width="100">
 </p>
 
-<h1 align="center">Omni Icon</h1>
+<h1 align="center">Jooosi Icon</h1>
 
 <p align="center">
   <i>A modern WordPress plugin that seamlessly integrates icons across the WordPress ecosystem with support for multiple page builders, custom icon uploads, and access to 200,000+ icons from Iconify.</i>
 </p>
 
 <p align="center">
-  <a href="https://downloads.wordpress.org/plugin/omni-icon.zip">
+  <a href="https://downloads.wordpress.org/plugin/jooosi-icon.zip">
     <picture>
-    <img src="https://img.shields.io/wordpress/plugin/v/omni-icon.svg?logo=wordpress&label=version" alt="WordPress plugin version" />
+    <img src="https://img.shields.io/wordpress/plugin/v/jooosi-icon.svg?logo=wordpress&label=version" alt="WordPress plugin version" />
     </picture>
   </a>
-  <a href="https://wordpress.org/plugins/omni-icon/advanced/">
+  <a href="https://wordpress.org/plugins/jooosi-icon/advanced/">
     <picture>
-    <img src="https://img.shields.io/wordpress/plugin/dt/omni-icon.svg?logo=wordpress" alt="WordPress plugin downloads" />
+    <img src="https://img.shields.io/wordpress/plugin/dt/jooosi-icon.svg?logo=wordpress" alt="WordPress plugin downloads" />
     </picture>
   </a>
-  <a href="https://wordpress.org/plugins/omni-icon/">
+  <a href="https://wordpress.org/plugins/jooosi-icon/">
     <picture>
-    <img src="https://img.shields.io/wordpress/plugin/installs/omni-icon.svg?logo=wordpress" alt="WordPress plugin active installs" />
+    <img src="https://img.shields.io/wordpress/plugin/installs/jooosi-icon.svg?logo=wordpress" alt="WordPress plugin active installs" />
     </picture>
   </a>
-  <a href="https://wordpress.org/support/plugin/omni-icon/reviews/?filter=5/#new-post">
+  <a href="https://wordpress.org/support/plugin/jooosi-icon/reviews/?filter=5/#new-post">
     <picture>
-    <img src="https://img.shields.io/wordpress/plugin/stars/omni-icon.svg?logo=wordpress" alt="WordPress plugin rating" />
+    <img src="https://img.shields.io/wordpress/plugin/stars/jooosi-icon.svg?logo=wordpress" alt="WordPress plugin rating" />
     </picture>
   </a>
   <br />
-  <a href="https://github.com/nabasa-dev/omni-icon/releases">
+  <a href="https://github.com/jooosi-project/jooosi-icon/releases">
     <picture>
-    <img src="https://img.shields.io/github/v/release/nabasa-dev/omni-icon.svg?logo=github" alt="GitHub Release" />
+    <img src="https://img.shields.io/github/v/release/jooosi-project/jooosi-icon.svg?logo=github" alt="GitHub Release" />
     </picture>
   </a>
-  <a href="https://github.com/nabasa-dev/omni-icon/blob/master/LICENSE">
+  <a href="https://github.com/jooosi-project/jooosi-icon/blob/master/LICENSE">
     <picture>
-    <img src="https://img.shields.io/github/license/nabasa-dev/omni-icon.svg" alt="MIT License" />
+    <img src="https://img.shields.io/github/license/jooosi-project/jooosi-icon.svg" alt="GPL License" />
     </picture>
   </a>
-  <a href="https://github.com/nabasa-dev/omni-icon/actions">
+  <a href="https://github.com/jooosi-project/jooosi-icon/actions">
     <picture>
-    <img src="https://img.shields.io/github/actions/workflow/status/nabasa-dev/omni-icon/deploy.yaml" alt="Build Status" />
+    <img src="https://img.shields.io/github/actions/workflow/status/jooosi-project/jooosi-icon/deploy.yaml" alt="Build Status" />
     </picture>
   </a>
   <br />
@@ -65,11 +65,11 @@
 
 > [!NOTE]
 >
-> Omni Icon is an open-source WordPress plugin by [Nabasa](https://nabasa.dev). Consider sponsoring us to support continued development.
+> Jooosi Icon is an open-source WordPress plugin by [Jooosi](https://jooo.si). Consider sponsoring us to support continued development.
 
 ## Intro
 
-Add beautiful icons to your WordPress site with seamless integration across Gutenberg, Elementor, Bricks, Breakdance, LiveCanvas, or anywhere with the `<omni-icon>` web component.
+Add beautiful icons to your WordPress site with seamless integration across Gutenberg, Elementor, Bricks, Breakdance, LiveCanvas, or anywhere with the `<jooosi-icon>` web component.
 
 ### Features
 
@@ -77,7 +77,7 @@ Add beautiful icons to your WordPress site with seamless integration across Gute
 - 🎨 **Icon Search & Discovery**: Powerful search across all icon sources with intelligent caching
 - ⚡️ **Server-Side Rendering (SSR)**: Icons pre-rendered on server for instant display
 - 🚀 **Smart Caching**: Multi-layer caching (memory, filesystem, IndexedDB) for optimal performance
-- 📦 **Web Component**: Use `<omni-icon>` custom element anywhere in your theme or content
+- 📦 **Web Component**: Use `<jooosi-icon>` custom element anywhere in your theme or content
 - 🔒 **Secure**: SVG sanitization prevents XSS attacks on uploaded icons
 - 🏗️ **Modern Architecture**: Built with PHP 8.0+ attributes, Symfony DI, and auto-discovery
 
@@ -105,13 +105,35 @@ Upload your own SVG icons via admin page or manually place them in the storage d
 - SVG sanitization for security
 - Manual upload (optional): Place SVG files in the storage directory
 
-**Storage**: `wp-content/uploads/omni-icon/local/`
+**Storage**: `wp-content/uploads/jooosi-icon/local/` (the former `wp-content/uploads/omni-icon/` directory is migrated automatically, with fallback when a rename is unavailable)
+
+### Third-party Icons
+
+Third-party plugins can register an icon source with the `jooosi-icon/service/icon:sources` filter. These sources are checked after uploaded local icons and before Iconify icons.
+
+For a directory of SVG files, use the same directory structure as the built-in bundled source:
+
+```php
+add_filter('jooosi-icon/service/icon:sources', static function (array $sources): array {
+    $icon_dir = __DIR__ . '/icons';
+
+    $sources['acme'] = [
+        'name' => 'Acme Icons',
+        'path' => $icon_dir,
+        'url' => plugins_url('icons', __FILE__),
+    ];
+
+    return $sources;
+});
+```
+
+With `icons/logo.svg` in that directory, the icon is available as `acme:logo` in the icon picker and anywhere Jooosi Icon renders icons. The filter is evaluated lazily on the first registry, collection, or search request, so it can be registered from a theme's `functions.php`; register it before the first icon use.
 
 ### Bundle Icons
 
 Pre-packaged icons included with the plugin:
 
-- Prefix: `omni:icon-name`
+- Prefix: `jooosi:icon-name` (`omni:icon-name` remains supported for existing content)
 - Sponsored icons
 
 **Storage**: `/svg` directory in plugin folder
@@ -133,14 +155,16 @@ Visit [Iconify](https://icon-sets.iconify.design/) to browse available icons.
 
 ### Web Component
 
-Use the `<omni-icon>` web component directly in your theme or content:
+Use the `<jooosi-icon>` web component directly in your theme or content:
 
 ```html
-<omni-icon name="mdi:home"></omni-icon>
-<omni-icon name="local:my-logo" width="64" height="64"></omni-icon>
-<omni-icon name="omni:windpress" color="#3b82f6"></omni-icon>
-<omni-icon name="fa6-solid:heart"></omni-icon>
+<jooosi-icon name="mdi:home"></jooosi-icon>
+<jooosi-icon name="local:my-logo" width="64" height="64"></jooosi-icon>
+<jooosi-icon name="jooosi:windpress" color="#3b82f6"></jooosi-icon>
+<jooosi-icon name="fa6-solid:heart"></jooosi-icon>
 ```
+
+Existing `<omni-icon>` markup remains fully supported as a backward-compatible alias.
 
 **Features**:
 - Server-side rendering for instant display
@@ -151,31 +175,31 @@ Use the `<omni-icon>` web component directly in your theme or content:
 ### Page Builders
 
 **Gutenberg**:
-- In the block editor, add a new "Omni Icon" block
+- In the block editor, add a new "Jooosi Icon" block
 - Click the icon picker to browse or search icons
 
 **Elementor**:
-- Add the "Omni Icon" widget
+- Add the "Jooosi Icon" widget
 - Click "Browse Icons" to open the icon picker
 
 **Bricks**:
-- Add the "Omni Icon" element
+- Add the "Jooosi Icon" element
 - Click "Browse Icons" to open the icon picker
 
 **Breakdance**:
-- Add the "Omni Icon" element
+- Add the "Jooosi Icon" element
 - Click "Browse Icons" to open the icon picker
 
 **LiveCanvas**:
-- Add the "Omni Icon" element
+- Add the "Jooosi Icon" element
 
 **Advanced Custom Fields (ACF)**:
 - Create or edit an ACF Field Group
-- Add a new field and select "Omni Icon" as the field type
+- Add a new field and select "Jooosi Icon" as the field type
 - Configure return format (string, array, or HTML)
 
 **Etch**:
-- Add the "omni-icon" Element from the menu element on the bottom of screen
+- Add the "jooosi-icon" element from the element menu at the bottom of the screen
 - Browse or search icons in the icon picker
 - Confirm selection to copy the code to clipboard
 - Paste the copied code into the HTML editor
@@ -201,19 +225,19 @@ Want to contribute or customize the plugin? Check out our [DEVELOPMENT.md](./DEV
 
 ## Sponsors
 
-If you like this project, please consider supporting us by becoming a sponsor. Your sponsorship helps us maintain and improve **all our free WordPress plugins**, not just Omni Icon.
+If you like this project, please consider supporting us by becoming a sponsor. Your sponsorship helps us maintain and improve **all our free WordPress plugins**, not just Jooosi Icon.
 
 ### Sponsorship Benefits
 
 As a sponsor, you'll receive benefits across our entire plugin ecosystem:
 
-- 🎨 **Your product/brand icon SVG bundled** in Omni Icon releases (via `omni:your-brand` prefix)
+- 🎨 **Your product/brand icon SVG bundled** in Jooosi Icon releases (via `jooosi:your-brand` prefix)
 - 📝 **Your logo and link featured** in the README of **all our current and future free plugins**
 - ⭐ **Recognition** in the admin area sponsor section across **all our plugins**
 - 💼 **Direct exposure** to thousands of WordPress developers and designers using our plugin ecosystem
 - 🌟 **Unified sponsor listing** - one sponsorship covers your presence in our entire plugin family
 
-Your icons will be permanently accessible to all Omni Icon users through the `omni:` prefix, and your brand will gain visibility across our growing collection of WordPress tools.
+Your icons will be permanently accessible to all Jooosi Icon users through the `jooosi:` prefix, and your brand will gain visibility across our growing collection of WordPress tools.
 
 **Supporting one plugin means supporting all our open-source efforts!**
 

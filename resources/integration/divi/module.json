@@ -1,10 +1,10 @@
 {
-	"name": "omni-icon/divi-icon",
+	"name": "jooosi-icon/divi-icon",
 	"d4Shortcode": "",
-	"title": "Omni Icon",
-	"titles": "Omni Icons",
-	"moduleClassName": "omni_icon_divi_module",
-	"moduleOrderClassName": "omni_icon_divi_module",
+	"title": "Jooosi Icon",
+	"titles": "Jooosi Icons",
+	"moduleClassName": "jooosi_icon_divi_module",
+	"moduleOrderClassName": "jooosi_icon_divi_module",
 	"category": "module",
 	"attributes": {
 		"module": {
@@ -14,7 +14,7 @@
 				"meta": {
 					"adminLabel": {
 						"desktop": {
-							"value": "Omni Icon"
+							"value": "Jooosi Icon"
 						}
 					}
 				}
@@ -65,14 +65,14 @@
 						"render": true,
 						"attrName": "iconName.innerContent",
 						"label": "Icon",
-						"description": "Browse and choose an icon from Omni Icon collections.",
+						"description": "Browse and choose an icon from Jooosi Icon collections.",
 						"features": {
 							"sticky": false,
 							"dynamicContent": false,
 							"responsive": false
 						},
 						"component": {
-							"name": "omni-icon/icon-picker",
+							"name": "jooosi-icon/icon-picker",
 							"type": "field"
 						}
 					}

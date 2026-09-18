@@ -5,9 +5,9 @@ createdAt: 2024-07-24T03:59:56
 updatedAt: 2025-11-28T08:18:59.596807
 authentication: {}
 authenticationType: null
-description: Omni Icon API
+description: Jooosi Icon API
 headers: []
-name: Omni Icon
+name: Jooosi Icon
 encryptionKeyChallenge: null
 settingValidateCertificates: true
 settingFollowRedirects: true

@@ -1,5 +1,5 @@
 /**
- * Omni Icon Picker Integration for Elementor
+ * Jooosi Icon Picker Integration for Elementor
  * 
  * Main entry point that waits for Elementor to load and initializes the integration.
  */
@@ -38,7 +38,7 @@ import './editor.scss';
 				}
 			}
 		} catch (error) {
-			console.warn('[Omni Icon] Could not get current icon value:', error);
+			console.warn('[Jooosi Icon] Could not get current icon value:', error);
 		}
 		
 		return '';
@@ -66,12 +66,12 @@ import './editor.scss';
 				currentElement.model.setSetting('icon_name', iconName);
 			}
 		} catch (error) {
-			console.error('[Omni Icon] Could not update icon value:', error);
+			console.error('[Jooosi Icon] Could not update icon value:', error);
 		}
 	}
 
 	// Expose API to window for Elementor control to use
-	(window as any).omniIconPicker = {
+	(window as any).jooosiIconPicker = {
 		open: (initialValue?: string, callback?: (iconName: string) => void) => {
 			// If no initial value provided, get it from Elementor
 			const currentValue = initialValue !== undefined ? initialValue : getCurrentIconValue();

@@ -1,5 +1,5 @@
 /**
- * Omni Icon Picker Integration for ACF
+ * Jooosi Icon Picker Integration for ACF
  * 
  * Main entry point that initializes the icon picker for ACF fields.
  */
@@ -12,12 +12,12 @@ import './editor.scss';
 
 	// Helper function to get field container
 	function getFieldContainer(element: HTMLElement): HTMLElement | null {
-		return element.closest('.acf-omni-icon-field');
+		return element.closest('.acf-jooosi-icon-field');
 	}
 
 	// Helper function to get input element
 	function getInputElement(container: HTMLElement): HTMLInputElement | null {
-		return container.querySelector('.acf-omni-icon-input');
+		return container.querySelector('.acf-jooosi-icon-input');
 	}
 
 	// Helper function to update field value
@@ -42,40 +42,40 @@ import './editor.scss';
 
 	// Helper function to update field preview
 	function updateFieldPreview(container: HTMLElement, iconName: string) {
-		const preview = container.querySelector('.acf-omni-icon-preview');
+		const preview = container.querySelector('.acf-jooosi-icon-preview');
 		if (!preview) return;
 
 		if (iconName) {
 			preview.innerHTML = `
-				<div class="acf-omni-icon-display">
-					<omni-icon name="${iconName}" width="32" height="32"></omni-icon>
-					<div class="acf-omni-icon-name">
+				<div class="acf-jooosi-icon-display">
+					<jooosi-icon name="${iconName}" width="32" height="32"></jooosi-icon>
+					<div class="acf-jooosi-icon-name">
 						<code>${iconName}</code>
 					</div>
 				</div>
 			`;
 
 			// Add/update remove button
-			const controls = container.querySelector('.acf-omni-icon-controls');
-			let removeBtn = controls?.querySelector('.acf-omni-icon-remove');
+			const controls = container.querySelector('.acf-jooosi-icon-controls');
+			let removeBtn = controls?.querySelector('.acf-jooosi-icon-remove');
 			
 			if (!removeBtn && controls) {
 				removeBtn = document.createElement('button');
 				removeBtn.type = 'button';
-				removeBtn.className = 'button acf-omni-icon-remove';
+				removeBtn.className = 'button acf-jooosi-icon-remove';
 				removeBtn.setAttribute('data-action', 'remove');
 				removeBtn.textContent = 'Remove Icon';
 				controls.appendChild(removeBtn);
 			}
 		} else {
 			preview.innerHTML = `
-				<div class="acf-omni-icon-placeholder">
+				<div class="acf-jooosi-icon-placeholder">
 					<p>No icon selected</p>
 				</div>
 			`;
 
 			// Remove the remove button
-			const removeBtn = container.querySelector('.acf-omni-icon-remove');
+			const removeBtn = container.querySelector('.acf-jooosi-icon-remove');
 			if (removeBtn) {
 				removeBtn.remove();
 			}
@@ -83,7 +83,7 @@ import './editor.scss';
 	}
 
 	// Expose API to window for ACF field to use
-	(window as any).omniIconPicker = {
+	(window as any).jooosiIconPicker = {
 		open: (initialValue?: string, callback?: (iconName: string) => void) => {
 			openIconPicker(initialValue || '', callback || (() => {}));
 		},
@@ -96,11 +96,11 @@ import './editor.scss';
 		const target = e.target as HTMLElement;
 		
 		// Handle browse button
-		if (target.matches('.acf-omni-icon-browse') || target.closest('.acf-omni-icon-browse')) {
+		if (target.matches('.acf-jooosi-icon-browse') || target.closest('.acf-jooosi-icon-browse')) {
 			e.preventDefault();
 			e.stopPropagation();
 			
-			const button = target.closest('.acf-omni-icon-browse') as HTMLElement;
+			const button = target.closest('.acf-jooosi-icon-browse') as HTMLElement;
 			const container = getFieldContainer(button);
 			if (!container) return;
 			
@@ -113,11 +113,11 @@ import './editor.scss';
 		}
 		
 		// Handle remove button
-		if (target.matches('.acf-omni-icon-remove') || target.closest('.acf-omni-icon-remove')) {
+		if (target.matches('.acf-jooosi-icon-remove') || target.closest('.acf-jooosi-icon-remove')) {
 			e.preventDefault();
 			e.stopPropagation();
 			
-			const button = target.closest('.acf-omni-icon-remove') as HTMLElement;
+			const button = target.closest('.acf-jooosi-icon-remove') as HTMLElement;
 			const container = getFieldContainer(button);
 			if (!container) return;
 			
@@ -129,7 +129,7 @@ import './editor.scss';
 	if ((window as any).acf) {
 		(window as any).acf.addAction('append', function($el: any) {
 			// Fields are automatically handled by event delegation
-			console.log('[Omni Icon ACF] Field appended, ready for interaction');
+			console.log('[Jooosi Icon ACF] Field appended, ready for interaction');
 		});
 	}
 })();

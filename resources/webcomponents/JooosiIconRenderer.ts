@@ -25,7 +25,8 @@ export interface IconRendererState {
 	cachedSvgElement: SVGSVGElement | null;
 }
 
-export class OmniIconRenderer {
+/** Renders canonical and legacy Jooosi Icon custom elements. */
+export class JooosiIconRenderer {
 	private static readonly RESERVED_ATTRS = new Set(['name', 'id', 'role', 'aria-expanded', 'tabindex']);
 	private static readonly SVG_ATTRS = new Set(['xmlns', 'viewBox', 'aria-hidden', 'focusable']);
 	private static readonly CLEANUP_ATTRS = ['data-oiwc-state', 'data-oiwc-error-type', 'data-oiwc-original-icon', 'data-oiwc-expanded', 'role', 'aria-expanded', 'tabindex'];
@@ -179,7 +180,7 @@ export class OmniIconRenderer {
 			throw new IconError(IconErrorType.NO_NAME, 'No icon name specified');
 		}
 
-		const separatorIndex = iconName.indexOf(/* OmniIconRenderer.ICON_NAME_SEPARATOR */ ':');
+		const separatorIndex = iconName.indexOf(/* JooosiIconRenderer.ICON_NAME_SEPARATOR */ ':');
 
 		if (separatorIndex === -1 || separatorIndex === 0 || separatorIndex === iconName.length - 1) {
 			throw new IconError(
@@ -285,18 +286,20 @@ export class OmniIconRenderer {
 
 		state.renderStatus = 'rendered';
 		// Batch remove cleanup attributes
-		OmniIconRenderer.CLEANUP_ATTRS.forEach(attr => element.removeAttribute(attr));
+		JooosiIconRenderer.CLEANUP_ATTRS.forEach(attr => element.removeAttribute(attr));
 		(element as HTMLElement).style.width = '';
 		(element as HTMLElement).style.height = '';
 		(element as HTMLElement).style.cursor = '';
 
+		const detail = {
+			iconName: config.name,
+			wasError,
+			element,
+		};
+
 		element.dispatchEvent(
-			new CustomEvent('omni-icon:loaded', {
-				detail: {
-					iconName: config.name,
-					wasError,
-					element,
-				},
+			new CustomEvent('jooosi-icon:loaded', {
+				detail,
 				bubbles: true,
 				composed: true,
 			})
@@ -319,9 +322,9 @@ export class OmniIconRenderer {
 
 		try {
 			const fallbackSvg = await this.fetchIcon(
-				/* OmniIconRenderer.FALLBACK_ICON */ 'tabler:error-404',
+				/* JooosiIconRenderer.FALLBACK_ICON */ 'tabler:error-404',
 				signal,
-				/* OmniIconRenderer.FALLBACK_PRIORITY */ 10
+				/* JooosiIconRenderer.FALLBACK_PRIORITY */ 10
 			);
 			if (signal?.aborted) {
 				return;
@@ -345,32 +348,35 @@ export class OmniIconRenderer {
 		// Lazy load ErrorObserver on first error
 		await this.ensureErrorObserver();
 
+		const detail = {
+			type: error.type,
+			message: error.message,
+			iconName: config.name,
+			element,
+		};
+
 		element.dispatchEvent(
-			new CustomEvent('omni-icon:error', {
-				detail: {
-					type: error.type,
-					message: error.message,
-					iconName: config.name,
-					element,
-				},
+			new CustomEvent('jooosi-icon:error', {
+				detail,
 				bubbles: true,
 				composed: true,
 			})
 		);
+
 	}
 
 	private async ensureErrorObserver(): Promise<void> {
-		if (!OmniIconRenderer.errorObserverLoaded && !OmniIconRenderer.errorObserverPromise) {
-			OmniIconRenderer.errorObserverPromise = import('./ErrorObserver').then(({ ErrorObserver }) => {
+		if (!JooosiIconRenderer.errorObserverLoaded && !JooosiIconRenderer.errorObserverPromise) {
+			JooosiIconRenderer.errorObserverPromise = import('./ErrorObserver').then(({ ErrorObserver }) => {
 				new ErrorObserver();
-				OmniIconRenderer.errorObserverLoaded = true;
+				JooosiIconRenderer.errorObserverLoaded = true;
 			});
 		}
-		await OmniIconRenderer.errorObserverPromise;
+		await JooosiIconRenderer.errorObserverPromise;
 	}
 
 	private shouldSkipAttribute(attrName: string): boolean {
-		return attrName.startsWith('data-oiwc-') || OmniIconRenderer.RESERVED_ATTRS.has(attrName);
+		return attrName.startsWith('data-oiwc-') || JooosiIconRenderer.RESERVED_ATTRS.has(attrName);
 	}
 
 	private toCssLength(value: string): string {
@@ -394,7 +400,7 @@ export class OmniIconRenderer {
 		}
 		state.cachedSvgElement = svgElement;
 
-		// Get current attributes on the omni-icon element
+		// Get current attributes on the jooosi-icon element
 		const hostAttrs = new Map<string, string>();
 		Array.from(element.attributes).forEach((attr) => {
 			if (!this.shouldSkipAttribute(attr.name)) {
@@ -406,8 +412,8 @@ export class OmniIconRenderer {
 		Array.from(svgElement.attributes).forEach((attr) => {
 			const attrName = attr.name;
 			// Skip SVG-specific attributes
-			if (!OmniIconRenderer.SVG_ATTRS.has(attrName) &&
-				!OmniIconRenderer.RESERVED_ATTRS.has(attrName) &&
+			if (!JooosiIconRenderer.SVG_ATTRS.has(attrName) &&
+				!JooosiIconRenderer.RESERVED_ATTRS.has(attrName) &&
 				!hostAttrs.has(attrName)) {
 				svgElement.removeAttribute(attrName);
 			}

@@ -23,7 +23,7 @@ export default defineConfig({
 				'integration/gutenberg/blocks/icon-block': 'resources/integration/gutenberg/blocks/icon-block/index.jsx',
 				'integration/gutenberg/blocks/icon-block/css': 'resources/integration/gutenberg/blocks/icon-block/editor.css',
 				'integration/gutenberg/blocks/icon-block/iframe': 'resources/integration/gutenberg/blocks/icon-block/iframe.ts',
-				'webcomponents/omni-icon': 'resources/webcomponents/omni-icon.ts',
+				'webcomponents/jooosi-icon': 'resources/webcomponents/jooosi-icon.ts',
 
 				// admin
 				'admin/admin-app/index': 'resources/admin/admin-app/index.jsx',
@@ -52,6 +52,10 @@ export default defineConfig({
 					src: 'resources/integration/gutenberg/blocks/icon-block/block.json',
 					dest: 'integration/gutenberg/blocks/icon-block/'
 				},
+				{
+					src: 'resources/integration/divi/module.json',
+					dest: 'integration/divi/'
+				},
 				// {
 				//     src: 'assets/integration/gutenberg/common-block/block.json',
 				//     dest: 'blocks/common-block/'
@@ -67,5 +71,9 @@ export default defineConfig({
 	},
 	build: {
 		sourcemap: false,
+	},
+	server: {
+		// WordPress is served by Docker on a different origin during development.
+		cors: true,
 	}
 });
