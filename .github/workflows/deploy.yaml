@@ -181,6 +181,15 @@ jobs:
           grep -Fq "public const VERSION = '${FREE_VERSION}';" "$free/constant.php"
           grep -Fq "Stable tag: ${FREE_VERSION}" "$free/readme.txt"
           test -f "$free/vendor/scoper-autoload.php"
+          test -f "$free/dist/integration/divi/module.json"
+          grep -Fq "function_exists('et_builder_d5_enabled')" \
+            "$free/src/Integration/Divi/DiviService.php"
+
+          if grep -Fq "function_exists('JooosiIconDeps\\et_builder_d5_enabled')" \
+            "$free/src/Integration/Divi/DiviService.php"; then
+            echo "The scoped Divi capability guard was incorrectly prefixed." >&2
+            exit 1
+          fi
 
           if grep -Eiq '^[[:space:]]*\*[[:space:]]*Update URI:' "$free/jooosi-icon.php"; then
             echo "The Free artifact must not contain a custom Update URI." >&2

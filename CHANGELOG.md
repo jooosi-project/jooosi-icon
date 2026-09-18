@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Keep the former `omni:` icon prefix and `<omni-icon>` markup as compatibility aliases.
 
 ### Fixed
+- Fix Divi 5 module registration in scoped release builds [#11](https://github.com/jooosi-project/jooosi-icon/issues/11)
 - Fix Gutenberg icon rendering and CSS loading in the editor canvas [#5](https://github.com/jooosi-project/jooosi-icon/issues/5) [#8](https://github.com/jooosi-project/jooosi-icon/discussions/8)
 - Preserve uploaded SVG presentation attributes during client-side rendering [#12](https://github.com/jooosi-project/jooosi-icon/issues/12)
 - Remove XML declarations from sanitized SVG output to avoid bogus HTML comments during client rendering

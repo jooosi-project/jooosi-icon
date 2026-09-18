@@ -175,6 +175,10 @@ return [
             // Cache clearing functions
 
             // Page builder functions
+            // Divi declares this function in the global namespace. Keep the
+            // function_exists() string literal unprefixed in the scoped build.
+            'et_builder_d5_enabled',
+
             'bricks_is_builder_main',
             'bricks_is_builder_iframe',
             'bricks_render_dynamic_data',
