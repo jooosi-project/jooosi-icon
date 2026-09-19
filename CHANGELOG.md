@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Keep `omni-icon.php` as a compatibility loader so upgrades from Omni Icon do not deactivate the plugin when the canonical entry file is renamed to `jooosi-icon.php`.
+
 ## [1.0.21] - 2026-09-19
 
 ### Fixed

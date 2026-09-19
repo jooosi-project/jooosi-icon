@@ -181,6 +181,8 @@ jobs:
           grep -Fq "* Version:             ${FREE_VERSION}" "$free/jooosi-icon.php"
           grep -Fq "public const VERSION = '${FREE_VERSION}';" "$free/constant.php"
           grep -Fq "Stable tag: ${FREE_VERSION}" "$free/readme.txt"
+          test -f "$free/omni-icon.php"
+          grep -Fq "require_once __DIR__ . '/jooosi-icon.php';" "$free/omni-icon.php"
           test -f "$free/composer.json"
           test -f "$free/vendor/scoper-autoload.php"
           test -f "$free/dist/integration/divi/module.json"
@@ -244,10 +246,12 @@ jobs:
       - name: Create Free plugin archive
         shell: bash
         run: |
-          mkdir -p jooosi-icon-free-zip/jooosi-icon
-          cp -a jooosi-icon-free-prefixed/. jooosi-icon-free-zip/jooosi-icon/
+          # Keep the existing WordPress.org directory slug so updates retain
+          # the legacy plugin path and can run the compatibility loader.
+          mkdir -p jooosi-icon-free-zip/omni-icon
+          cp -a jooosi-icon-free-prefixed/. jooosi-icon-free-zip/omni-icon/
           cd jooosi-icon-free-zip
-          zip -qr "../jooosi-icon-${FREE_VERSION}-free.zip" jooosi-icon -x "*.git*" "*.DS_Store*"
+          zip -qr "../jooosi-icon-${FREE_VERSION}-free.zip" omni-icon -x "*.git*" "*.DS_Store*"
 
       - name: Upload Free plugin artifact
         uses: actions/upload-artifact@v4
