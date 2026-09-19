@@ -22,7 +22,6 @@
 /AGENTS.md
 /components.d.ts
 /components.json
-/composer.json
 /composer.lock
 /package.json
 /package-lock.json

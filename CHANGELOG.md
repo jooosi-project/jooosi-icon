@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Include `composer.json` in release packages for runtime discovery.
+
 ## [1.0.20] - 2026-09-19
 
 ### Added
