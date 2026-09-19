@@ -8,18 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Symfony\Component\Config\Definition\BaseNode;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Extension\ConfigurationExtensionInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Extension\Extension;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\EnvPlaceholderParameterBag;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use JooosiIconDeps\Symfony\Component\Config\Definition\BaseNode;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Extension\ConfigurationExtensionInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Extension\Extension;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\EnvPlaceholderParameterBag;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 /**
  * Merges extension configs into the container builder.
  *

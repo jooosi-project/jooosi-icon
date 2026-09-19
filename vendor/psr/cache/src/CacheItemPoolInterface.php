@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\Psr\Cache;
+namespace JooosiIconDeps\Psr\Cache;
 
 /**
  * CacheItemPoolInterface generates CacheItemInterface objects.

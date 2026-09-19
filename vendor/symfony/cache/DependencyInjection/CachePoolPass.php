@@ -8,22 +8,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\Cache\DependencyInjection;
 
-use OmniIconDeps\Symfony\Component\Cache\Adapter\AbstractAdapter;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\ArrayAdapter;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\ChainAdapter;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\NullAdapter;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\ParameterNormalizer;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\TagAwareAdapter;
-use OmniIconDeps\Symfony\Component\Cache\Messenger\EarlyExpirationDispatcher;
-use OmniIconDeps\Symfony\Component\Cache\PruneableInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\AbstractAdapter;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\ArrayAdapter;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\ChainAdapter;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\NullAdapter;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\ParameterNormalizer;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use JooosiIconDeps\Symfony\Component\Cache\Messenger\EarlyExpirationDispatcher;
+use JooosiIconDeps\Symfony\Component\Cache\PruneableInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */

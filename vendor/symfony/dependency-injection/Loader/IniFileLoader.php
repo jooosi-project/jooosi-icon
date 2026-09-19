@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Loader;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Loader;
 
-use OmniIconDeps\Symfony\Component\Config\Util\XmlUtils;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Config\Util\XmlUtils;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 /**
  * IniFileLoader loads parameters from INI files.
  *

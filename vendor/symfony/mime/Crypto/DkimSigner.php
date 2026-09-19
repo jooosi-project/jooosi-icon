@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\Crypto;
+namespace JooosiIconDeps\Symfony\Component\Mime\Crypto;
 
-use OmniIconDeps\Symfony\Component\Mime\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Mime\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\Mime\Header\UnstructuredHeader;
-use OmniIconDeps\Symfony\Component\Mime\Message;
-use OmniIconDeps\Symfony\Component\Mime\Part\AbstractPart;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\Mime\Header\UnstructuredHeader;
+use JooosiIconDeps\Symfony\Component\Mime\Message;
+use JooosiIconDeps\Symfony\Component\Mime\Part\AbstractPart;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  *

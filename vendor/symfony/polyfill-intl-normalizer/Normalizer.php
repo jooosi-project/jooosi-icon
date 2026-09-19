@@ -112,13 +112,14 @@ class Normalizer
                 $K = \true;
                 break;
             default:
-                if (\defined('OmniIconDeps\Normalizer::NONE') && \Normalizer::NONE == $form) {
+                if (\defined('JooosiIconDeps\Normalizer::NONE') && \Normalizer::NONE == $form) {
                     return $s;
                 }
                 if (80000 > \PHP_VERSION_ID) {
                     return \false;
                 }
-                throw new \ValueError('normalizer_normalize(): Argument #2 ($form) must be a a valid normalization form');
+                // the doubled article was fixed in PHP 8.6
+                throw new \ValueError('normalizer_normalize(): Argument #2 ($form) must be a ' . (80600 > \PHP_VERSION_ID ? 'a ' : '') . 'valid normalization form');
         }
         if ('' === $s) {
             return '';

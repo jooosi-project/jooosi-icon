@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime;
+namespace JooosiIconDeps\Symfony\Component\Mime;
 
-use OmniIconDeps\Symfony\Component\Mime\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\Mime\Header\Headers;
-use OmniIconDeps\Symfony\Component\Mime\Part\AbstractPart;
-use OmniIconDeps\Symfony\Component\Mime\Part\TextPart;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\Mime\Header\Headers;
+use JooosiIconDeps\Symfony\Component\Mime\Part\AbstractPart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\TextPart;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */

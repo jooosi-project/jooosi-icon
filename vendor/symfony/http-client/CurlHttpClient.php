@@ -8,20 +8,20 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Psr\Log\LoggerAwareInterface;
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\CurlClientState;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\PushedResponse;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\CurlResponse;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\ResponseStream;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Psr\Log\LoggerAwareInterface;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\CurlClientState;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\PushedResponse;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\CurlResponse;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\ResponseStream;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 /**
  * A performant implementation of the HttpClientInterface contracts based on the curl extension.
  *
@@ -79,6 +79,8 @@ final class CurlHttpClient implements HttpClientInterface, LoggerAwareInterface,
         $host = parse_url($authority, \PHP_URL_HOST);
         $port = parse_url($authority, \PHP_URL_PORT) ?: ('http:' === $scheme ? 80 : 443);
         $proxy = self::getProxyUrl($options['proxy'], $url);
+        $noProxy = $options['no_proxy'] ?? $_SERVER['no_proxy'] ?? $_SERVER['NO_PROXY'] ?? '';
+        self::checkHttpsProxySupport($proxy, $url, $noProxy);
         $url = implode('', $url);
         if (!isset($options['normalized_headers']['user-agent'])) {
             $options['headers'][] = 'User-Agent: Symfony HttpClient (Curl)';
@@ -93,8 +95,9 @@ final class CurlHttpClient implements HttpClientInterface, LoggerAwareInterface,
             \CURLOPT_COOKIEFILE => '',
             // Keep track of cookies during redirects
             \CURLOPT_TIMEOUT => 0,
-            \CURLOPT_PROXY => $proxy,
-            \CURLOPT_NOPROXY => $options['no_proxy'] ?? $_SERVER['no_proxy'] ?? $_SERVER['NO_PROXY'] ?? '',
+            // Always set, so that curl doesn't resolve the proxy from its own environment
+            \CURLOPT_PROXY => $proxy ?? '',
+            \CURLOPT_NOPROXY => $noProxy,
             \CURLOPT_SSL_VERIFYPEER => $options['verify_peer'],
             \CURLOPT_SSL_VERIFYHOST => $options['verify_host'] ? 2 : 0,
             \CURLOPT_CAINFO => $options['cafile'],
@@ -265,15 +268,15 @@ final class CurlHttpClient implements HttpClientInterface, LoggerAwareInterface,
             $curlopts += [\CURLOPT_SHARE => $this->multi->share];
         }
         foreach ($curlopts as $opt => $value) {
-            if (\PHP_INT_SIZE === 8 && \defined('OmniIconDeps\CURLOPT_INFILESIZE_LARGE') && \CURLOPT_INFILESIZE === $opt && $value >= 1 << 31) {
-                $opt = \OmniIconDeps\CURLOPT_INFILESIZE_LARGE;
+            if (\PHP_INT_SIZE === 8 && \defined('CURLOPT_INFILESIZE_LARGE') && \CURLOPT_INFILESIZE === $opt && $value >= 1 << 31) {
+                $opt = \CURLOPT_INFILESIZE_LARGE;
             }
             if (null !== $value && !curl_setopt($ch, $opt, $value) && \CURLOPT_CERTINFO !== $opt && (!\defined('CURLOPT_HEADEROPT') || \CURLOPT_HEADEROPT !== $opt)) {
                 $constantName = $this->findConstantName($opt);
                 throw new TransportException(\sprintf('Curl option "%s" is not supported.', $constantName ?? $opt));
             }
         }
-        return $pushedResponse ?? new CurlResponse($this->multi, $ch, $options, $this->logger, $method, self::createRedirectResolver($options, $authority), CurlClientState::$curlVersion['version_number'], $url, $ntlmOriginKey);
+        return $pushedResponse ?? new CurlResponse($this->multi, $ch, $options, $this->logger, $method, self::createRedirectResolver($options, $authority, $noProxy), CurlClientState::$curlVersion['version_number'], $url, $ntlmOriginKey);
     }
     public function stream(ResponseInterface|iterable $responses, ?float $timeout = null): ResponseStreamInterface
     {
@@ -337,17 +340,17 @@ final class CurlHttpClient implements HttpClientInterface, LoggerAwareInterface,
      *
      * Work around CVE-2018-1000007: Authorization and Cookie headers should not follow redirects - fixed in Curl 7.64
      */
-    private static function createRedirectResolver(array $options, string $authority): \Closure
+    private static function createRedirectResolver(array $options, string $authority, string $noProxy): \Closure
     {
         $redirectHeaders = [];
         if (0 < $options['max_redirects']) {
             $redirectHeaders['authority'] = $authority;
             $redirectHeaders['with_auth'] = $redirectHeaders['no_auth'] = array_filter($options['headers'], static fn($h) => 0 !== stripos($h, 'Host:'));
             if (isset($options['normalized_headers']['authorization'][0]) || isset($options['normalized_headers']['cookie'][0])) {
-                $redirectHeaders['no_auth'] = array_filter($options['headers'], static fn($h) => 0 !== stripos($h, 'Authorization:') && 0 !== stripos($h, 'Cookie:'));
+                $redirectHeaders['no_auth'] = array_filter($redirectHeaders['no_auth'], static fn($h) => 0 !== stripos($h, 'Authorization:') && 0 !== stripos($h, 'Cookie:'));
             }
         }
-        return static function ($ch, string $location, bool $noContent) use (&$redirectHeaders, $options) {
+        return static function ($ch, string $location, bool $noContent) use (&$redirectHeaders, $options, $noProxy) {
             try {
                 $location = self::parseUrl($location);
                 $url = self::parseUrl(curl_getinfo($ch, \CURLINFO_EFFECTIVE_URL));
@@ -366,9 +369,34 @@ final class CurlHttpClient implements HttpClientInterface, LoggerAwareInterface,
             } elseif ($noContent && $redirectHeaders) {
                 curl_setopt($ch, \CURLOPT_HTTPHEADER, $redirectHeaders['with_auth']);
             }
-            curl_setopt($ch, \CURLOPT_PROXY, self::getProxyUrl($options['proxy'], $url));
+            $proxy = self::getProxyUrl($options['proxy'], $url);
+            self::checkHttpsProxySupport($proxy, $url, $noProxy);
+            curl_setopt($ch, \CURLOPT_PROXY, $proxy ?? '');
             return implode('', $url);
         };
+    }
+    /**
+     * Rejects "https://" proxies that curl cannot connect to over TLS.
+     *
+     * Curl older than 7.50.2 connects to them in cleartext instead, leaking the proxy
+     * credentials and the CONNECT metadata on the wire.
+     */
+    private static function checkHttpsProxySupport(?string $proxy, array $url, string $noProxy): void
+    {
+        if (null === $proxy || 0 !== stripos($proxy, 'https://')) {
+            return;
+        }
+        if (CurlClientState::$curlVersion['features'] & (\defined('CURL_VERSION_HTTPS_PROXY') ? \CURL_VERSION_HTTPS_PROXY : 1 << 21)) {
+            return;
+        }
+        $host = parse_url($url['authority'], \PHP_URL_HOST);
+        // Matching "no_proxy" should follow the behavior of curl
+        foreach (preg_split('/[\s,]+/', $noProxy, -1, \PREG_SPLIT_NO_EMPTY) as $rule) {
+            if ('*' === $rule || $host === $rule || str_ends_with($host, '.' . ltrim($rule, '.'))) {
+                return;
+            }
+        }
+        throw new TransportException('Cannot use an "https://" proxy: the installed curl does not support HTTPS proxies and could connect to it in cleartext; curl 7.52 or higher is required.');
     }
     private function findConstantName(int $opt): ?string
     {

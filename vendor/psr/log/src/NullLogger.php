@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\Psr\Log;
+namespace JooosiIconDeps\Psr\Log;
 
 /**
  * This Logger can be used to avoid conditional log calls.

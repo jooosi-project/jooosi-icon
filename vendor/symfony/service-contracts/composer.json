@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OmniIconDeps\\Symfony\\Contracts\\Service\\": ""
+            "JooosiIconDeps\\Symfony\\Contracts\\Service\\": ""
         },
         "exclude-from-classmap": [
             "\/Test\/"

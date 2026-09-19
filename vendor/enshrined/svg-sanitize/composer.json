@@ -14,12 +14,12 @@
     },
     "autoload": {
         "psr-4": {
-            "OmniIconDeps\\enshrined\\svgSanitize\\": "src"
+            "JooosiIconDeps\\enshrined\\svgSanitize\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "OmniIconDeps\\enshrined\\svgSanitize\\Tests\\": "tests"
+            "JooosiIconDeps\\enshrined\\svgSanitize\\Tests\\": "tests"
         }
     },
     "require": {

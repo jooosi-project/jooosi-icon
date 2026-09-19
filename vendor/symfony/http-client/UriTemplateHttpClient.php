@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 class UriTemplateHttpClient implements HttpClientInterface, ResetInterface
 {
     use DecoratorTrait;
@@ -54,14 +54,14 @@ class UriTemplateHttpClient implements HttpClientInterface, ResetInterface
      */
     private function createExpanderFromPopularVendors(): \Closure
     {
-        if (class_exists(\OmniIconDeps\GuzzleHttp\UriTemplate\UriTemplate::class)) {
-            return \OmniIconDeps\GuzzleHttp\UriTemplate\UriTemplate::expand(...);
+        if (class_exists(\JooosiIconDeps\GuzzleHttp\UriTemplate\UriTemplate::class)) {
+            return \JooosiIconDeps\GuzzleHttp\UriTemplate\UriTemplate::expand(...);
         }
-        if (class_exists(\OmniIconDeps\League\Uri\UriTemplate::class)) {
-            return static fn(string $url, array $vars): string => (new \OmniIconDeps\League\Uri\UriTemplate($url))->expand($vars);
+        if (class_exists(\JooosiIconDeps\League\Uri\UriTemplate::class)) {
+            return static fn(string $url, array $vars): string => (new \JooosiIconDeps\League\Uri\UriTemplate($url))->expand($vars);
         }
-        if (class_exists(\OmniIconDeps\Rize\UriTemplate::class)) {
-            return (new \OmniIconDeps\Rize\UriTemplate())->expand(...);
+        if (class_exists(\JooosiIconDeps\Rize\UriTemplate::class)) {
+            return (new \JooosiIconDeps\Rize\UriTemplate())->expand(...);
         }
         throw new \LogicException('Support for URI template requires a vendor to expand the URI. Run "composer require guzzlehttp/uri-template" or pass your own expander \Closure implementation.');
     }

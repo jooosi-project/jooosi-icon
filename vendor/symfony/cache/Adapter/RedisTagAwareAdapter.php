@@ -8,22 +8,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Predis\Connection\Aggregate\ClusterInterface;
-use OmniIconDeps\Predis\Connection\Aggregate\PredisCluster;
-use OmniIconDeps\Predis\Connection\Aggregate\ReplicationInterface;
-use OmniIconDeps\Predis\Connection\Replication\ReplicationInterface as Predis2ReplicationInterface;
-use OmniIconDeps\Predis\Response\ErrorInterface;
-use OmniIconDeps\Predis\Response\Status;
+use JooosiIconDeps\Predis\Connection\Aggregate\ClusterInterface;
+use JooosiIconDeps\Predis\Connection\Aggregate\PredisCluster;
+use JooosiIconDeps\Predis\Connection\Aggregate\ReplicationInterface;
+use JooosiIconDeps\Predis\Connection\Replication\ReplicationInterface as Predis2ReplicationInterface;
+use JooosiIconDeps\Predis\Response\ErrorInterface;
+use JooosiIconDeps\Predis\Response\Status;
 use Relay\Relay;
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\DeflateMarshaller;
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\TagAwareMarshaller;
-use OmniIconDeps\Symfony\Component\Cache\Traits\RedisTrait;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\DeflateMarshaller;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\TagAwareMarshaller;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\RedisTrait;
 /**
  * Stores tag id <> cache id relationship as a Redis Set.
  *
@@ -56,13 +56,13 @@ class RedisTagAwareAdapter extends AbstractTagAwareAdapter
      */
     private string $redisEvictionPolicy;
     private string $namespace;
-    public function __construct(\Redis|Relay|\RedisArray|\RedisCluster|\OmniIconDeps\Predis\ClientInterface $redis, string $namespace = '', int $defaultLifetime = 0, ?MarshallerInterface $marshaller = null)
+    public function __construct(\Redis|Relay|\RedisArray|\RedisCluster|\JooosiIconDeps\Predis\ClientInterface $redis, string $namespace = '', int $defaultLifetime = 0, ?MarshallerInterface $marshaller = null)
     {
-        if ($redis instanceof \OmniIconDeps\Predis\ClientInterface && $redis->getConnection() instanceof ClusterInterface && !$redis->getConnection() instanceof PredisCluster) {
+        if ($redis instanceof \JooosiIconDeps\Predis\ClientInterface && $redis->getConnection() instanceof ClusterInterface && !$redis->getConnection() instanceof PredisCluster) {
             throw new InvalidArgumentException(\sprintf('Unsupported Predis cluster connection: only "%s" is, "%s" given.', PredisCluster::class, get_debug_type($redis->getConnection())));
         }
         $isRelay = $redis instanceof Relay;
-        if ($isRelay || \defined('OmniIconDeps\Redis::OPT_COMPRESSION') && \in_array($redis::class, [\Redis::class, \RedisArray::class, \RedisCluster::class], \true)) {
+        if ($isRelay || \defined('JooosiIconDeps\Redis::OPT_COMPRESSION') && \in_array($redis::class, [\Redis::class, \RedisArray::class, \RedisCluster::class], \true)) {
             $compression = $redis->getOption($isRelay ? Relay::OPT_COMPRESSION : \Redis::OPT_COMPRESSION);
             foreach (\is_array($compression) ? $compression : [$compression] as $c) {
                 if ($isRelay ? Relay::COMPRESSION_NONE : \Redis::COMPRESSION_NONE !== $c) {
@@ -131,7 +131,7 @@ class RedisTagAwareAdapter extends AbstractTagAwareAdapter
 EOLUA;
         $results = $this->pipeline(function () use ($ids, $lua) {
             foreach ($ids as $id) {
-                yield 'eval' => $this->redis instanceof \OmniIconDeps\Predis\ClientInterface ? [$lua, 1, $id] : [$lua, [$id], 1];
+                yield 'eval' => $this->redis instanceof \JooosiIconDeps\Predis\ClientInterface ? [$lua, 1, $id] : [$lua, [$id], 1];
             }
         });
         foreach ($results as $id => $result) {
@@ -193,13 +193,13 @@ EOLUA;
             return redis.call('SSCAN', '{'..id..'}'..id, '0', 'COUNT', 5000)
 EOLUA;
         $results = $this->pipeline(function () use ($tagIds, $lua) {
-            if ($this->redis instanceof \OmniIconDeps\Predis\ClientInterface) {
+            if ($this->redis instanceof \JooosiIconDeps\Predis\ClientInterface) {
                 $prefix = $this->redis->getOptions()->prefix ? $this->redis->getOptions()->prefix->getPrefix() : '';
             } elseif (\is_array($prefix = $this->redis->getOption($this->redis instanceof Relay ? Relay::OPT_PREFIX : \Redis::OPT_PREFIX) ?? '')) {
                 $prefix = current($prefix);
             }
             foreach ($tagIds as $id) {
-                yield 'eval' => $this->redis instanceof \OmniIconDeps\Predis\ClientInterface ? [$lua, 1, $id, $prefix] : [$lua, [$id, $prefix], 1];
+                yield 'eval' => $this->redis instanceof \JooosiIconDeps\Predis\ClientInterface ? [$lua, 1, $id, $prefix] : [$lua, [$id, $prefix], 1];
             }
         });
         $lua = <<<'EOLUA'
@@ -223,7 +223,7 @@ EOLUA;
                 $this->doDelete($ids);
                 $evalArgs = [$id, $cursor];
                 array_splice($evalArgs, 1, 0, $ids);
-                if ($this->redis instanceof \OmniIconDeps\Predis\ClientInterface) {
+                if ($this->redis instanceof \JooosiIconDeps\Predis\ClientInterface) {
                     array_unshift($evalArgs, $lua, 1);
                 } else {
                     $evalArgs = [$lua, $evalArgs, 1];
@@ -245,7 +245,7 @@ EOLUA;
         }
         $hosts = $this->getHosts();
         $host = reset($hosts);
-        if ($host instanceof \OmniIconDeps\Predis\Client) {
+        if ($host instanceof \JooosiIconDeps\Predis\Client) {
             $connection = $host->getConnection();
             // Predis supports info command only on the master in replication environments
             if ($connection instanceof ReplicationInterface) {

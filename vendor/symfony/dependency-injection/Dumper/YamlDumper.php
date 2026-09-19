@@ -8,26 +8,26 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Dumper;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Dumper;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Alias;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\AbstractArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Parameter;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\Expression;
-use OmniIconDeps\Symfony\Component\Yaml\Dumper as YmlDumper;
-use OmniIconDeps\Symfony\Component\Yaml\Parser;
-use OmniIconDeps\Symfony\Component\Yaml\Tag\TaggedValue;
-use OmniIconDeps\Symfony\Component\Yaml\Yaml;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Alias;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\AbstractArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Parameter;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\Expression;
+use JooosiIconDeps\Symfony\Component\Yaml\Dumper as YmlDumper;
+use JooosiIconDeps\Symfony\Component\Yaml\Parser;
+use JooosiIconDeps\Symfony\Component\Yaml\Tag\TaggedValue;
+use JooosiIconDeps\Symfony\Component\Yaml\Yaml;
 /**
  * YamlDumper dumps a service container as a YAML string.
  *

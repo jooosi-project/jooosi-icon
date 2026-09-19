@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * Allows turning ResponseInterface instances to PHP streams.
  *

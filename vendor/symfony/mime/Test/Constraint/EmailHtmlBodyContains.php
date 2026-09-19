@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\Test\Constraint;
+namespace JooosiIconDeps\Symfony\Component\Mime\Test\Constraint;
 
-use OmniIconDeps\PHPUnit\Framework\Constraint\Constraint;
-use OmniIconDeps\Symfony\Component\Mime\Message;
-use OmniIconDeps\Symfony\Component\Mime\RawMessage;
+use JooosiIconDeps\PHPUnit\Framework\Constraint\Constraint;
+use JooosiIconDeps\Symfony\Component\Mime\Message;
+use JooosiIconDeps\Symfony\Component\Mime\RawMessage;
 final class EmailHtmlBodyContains extends Constraint
 {
     private string $expectedText;

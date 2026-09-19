@@ -8,33 +8,35 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Traits;
+namespace JooosiIconDeps\Symfony\Component\Cache\Traits;
 
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\BgsaveTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\CopyTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\FtTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\GeosearchTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\GetrangeTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\GetWithMetaTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\HsetTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\IsTrackedTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\MoveTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\NullableReturnTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\PfcountTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\Relay11Trait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\Relay121Trait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\Relay12Trait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\Relay20Trait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\Relay21Trait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\Relay22Trait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\Relay\SwapdbTrait;
-use OmniIconDeps\Symfony\Component\VarExporter\LazyObjectInterface;
-use OmniIconDeps\Symfony\Component\VarExporter\LazyProxyTrait;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\BgsaveTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\CopyTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\FtTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\GeosearchTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\GetrangeTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\GetWithMetaTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\HsetTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\IsTrackedTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\MoveTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\NullableReturnTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\PfcountTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\Relay11Trait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\Relay121Trait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\Relay12Trait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\Relay20Trait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\Relay21Trait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\Relay22Trait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\Relay30Trait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\Relay40Trait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\Relay\SwapdbTrait;
+use JooosiIconDeps\Symfony\Component\VarExporter\LazyObjectInterface;
+use JooosiIconDeps\Symfony\Component\VarExporter\LazyProxyTrait;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 // Help opcache.preload discover always-needed symbols
-class_exists(\OmniIconDeps\Symfony\Component\VarExporter\Internal\Hydrator::class);
-class_exists(\OmniIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectRegistry::class);
-class_exists(\OmniIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectState::class);
+class_exists(\JooosiIconDeps\Symfony\Component\VarExporter\Internal\Hydrator::class);
+class_exists(\JooosiIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectRegistry::class);
+class_exists(\JooosiIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectState::class);
 /**
  * @internal
  */
@@ -61,17 +63,47 @@ class RelayProxy extends \Relay\Relay implements ResetInterface, LazyObjectInter
     use Relay20Trait;
     use Relay21Trait;
     use Relay22Trait;
+    use Relay30Trait;
+    use Relay40Trait;
     use SwapdbTrait;
     private const LAZY_OBJECT_PROPERTY_SCOPES = [];
-    public function __construct($host = null, $port = 6379, $connect_timeout = 0.0, $command_timeout = 0.0, #[\SensitiveParameter] $context = [], $database = 0)
+    public function __construct(
+        $host = null,
+        $port = 6379,
+        $connect_timeout = 0.0,
+        $command_timeout = 0.0,
+        #[\SensitiveParameter]
+        $context = [],
+        $database = 0
+    )
     {
-        return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->__construct(...\func_get_args());
+        ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->__construct(...\func_get_args());
     }
-    public function connect($host, $port = 6379, $timeout = 0.0, $persistent_id = null, $retry_interval = 0, $read_timeout = 0.0, #[\SensitiveParameter] $context = [], $database = 0): bool
+    public function connect(
+        $host,
+        $port = 6379,
+        $timeout = 0.0,
+        $persistent_id = null,
+        $retry_interval = 0,
+        $read_timeout = 0.0,
+        #[\SensitiveParameter]
+        $context = [],
+        $database = 0
+    ): bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->connect(...\func_get_args());
     }
-    public function pconnect($host, $port = 6379, $timeout = 0.0, $persistent_id = null, $retry_interval = 0, $read_timeout = 0.0, #[\SensitiveParameter] $context = [], $database = 0): bool
+    public function pconnect(
+        $host,
+        $port = 6379,
+        $timeout = 0.0,
+        $persistent_id = null,
+        $retry_interval = 0,
+        $read_timeout = 0.0,
+        #[\SensitiveParameter]
+        $context = [],
+        $database = 0
+    ): bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->pconnect(...\func_get_args());
     }
@@ -215,7 +247,10 @@ class RelayProxy extends \Relay\Relay implements ResetInterface, LazyObjectInter
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->rawCommand(...\func_get_args());
     }
-    public function auth(#[\SensitiveParameter] $auth): bool
+    public function auth(
+        #[\SensitiveParameter]
+        $auth
+    ): bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->auth(...\func_get_args());
     }
@@ -259,7 +294,17 @@ class RelayProxy extends \Relay\Relay implements ResetInterface, LazyObjectInter
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->restore(...\func_get_args());
     }
-    public function migrate($host, $port, $key, $dstdb, $timeout, $copy = \false, $replace = \false, #[\SensitiveParameter] $credentials = null): \Relay\Relay|bool
+    public function migrate(
+        $host,
+        $port,
+        $key,
+        $dstdb,
+        $timeout,
+        $copy = \false,
+        $replace = \false,
+        #[\SensitiveParameter]
+        $credentials = null
+    ): \Relay\Relay|bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->migrate(...\func_get_args());
     }
@@ -762,10 +807,6 @@ class RelayProxy extends \Relay\Relay implements ResetInterface, LazyObjectInter
     public function wait($replicas, $timeout): \Relay\Relay|false|int
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->wait(...\func_get_args());
-    }
-    public function unwatch(): \Relay\Relay|bool
-    {
-        return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->unwatch(...\func_get_args());
     }
     public function discard(): bool
     {

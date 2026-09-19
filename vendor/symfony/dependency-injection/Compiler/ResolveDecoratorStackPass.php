@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Alias;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Alias;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
@@ -74,7 +74,7 @@ class ResolveDecoratorStackPass implements CompilerPassInterface
         foreach ($stacks[$id] as $k => $definition) {
             if ($definition instanceof ChildDefinition && isset($stacks[$definition->getParent()])) {
                 $path[] = $definition->getParent();
-                $definition = unserialize(serialize($definition));
+                $definition = unserialize(serialize($definition), ['allowed_classes' => \true]);
                 // deep clone
             } elseif ($definition instanceof Definition) {
                 $definitions[$decoratedId = $prefix . $k] = $definition;

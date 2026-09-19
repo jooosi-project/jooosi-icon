@@ -8,20 +8,20 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache;
+namespace JooosiIconDeps\Symfony\Component\Cache;
 
-use OmniIconDeps\Psr\Cache\CacheItemInterface;
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\Exception\LogicException;
-use OmniIconDeps\Symfony\Contracts\Cache\ItemInterface;
+use JooosiIconDeps\Psr\Cache\CacheItemInterface;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\LogicException;
+use JooosiIconDeps\Symfony\Contracts\Cache\ItemInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
 final class CacheItem implements ItemInterface
 {
     private const METADATA_EXPIRY_OFFSET = 1527506807;
-    private const VALUE_WRAPPER = 'OmniIconDeps\©';
+    private const VALUE_WRAPPER = 'JooosiIconDeps\©';
     protected string $key;
     protected mixed $value = null;
     protected bool $isHit = \false;

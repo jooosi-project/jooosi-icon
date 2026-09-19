@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\Service;
+namespace JooosiIconDeps\Symfony\Contracts\Service;
 
-use OmniIconDeps\Psr\Container\ContainerInterface;
+use JooosiIconDeps\Psr\Container\ContainerInterface;
 /**
  * A ServiceProviderInterface exposes the identifiers and the types of services provided by a container.
  *

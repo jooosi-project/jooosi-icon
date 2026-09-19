@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps;
+namespace JooosiIconDeps;
 
 if ('cli-server' !== \PHP_SAPI) {
     // safe guard against unwanted execution
@@ -167,6 +167,7 @@ switch (\parse_url($vars['REQUEST_URI'], \PHP_URL_PATH)) {
                 \header($header);
             }
         }
+        break;
 }
 \header('Content-Type: application/json', \true);
 echo $json;

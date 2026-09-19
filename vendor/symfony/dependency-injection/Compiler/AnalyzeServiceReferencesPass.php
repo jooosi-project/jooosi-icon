@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\Expression;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\Expression;
 /**
  * Run this pass before passes that need to know more about the relation of
  * your services.
@@ -94,9 +94,9 @@ class AnalyzeServiceReferencesPass extends AbstractRecursivePass
         if ($value instanceof Reference) {
             $targetId = $this->getDefinitionId((string) $value);
             $targetDefinition = null !== $targetId ? $this->container->getDefinition($targetId) : null;
-            $this->graph->connect($this->currentId, $this->currentDefinition, $targetId, $targetDefinition, $value, $this->lazy || $this->hasProxyDumper && $targetDefinition?->isLazy(), ContainerInterface::IGNORE_ON_UNINITIALIZED_REFERENCE === $value->getInvalidBehavior(), $this->byConstructor, $this->byMultiUseArgument);
+            $this->graph->connect($this->currentId, $this->currentDefinition, $targetId, $targetDefinition, $value, $this->lazy || $this->hasProxyDumper && $targetDefinition?->isLazy(), ContainerInterface::IGNORE_ON_UNINITIALIZED_REFERENCE === $value->getInvalidBehavior(), $this->byConstructor, $this->byMultiUseArgument, $inExpression);
             if ($inExpression) {
-                $this->graph->connect('.internal.reference_in_expression', null, $targetId, $targetDefinition, $value, $this->lazy || $targetDefinition?->isLazy(), \true, $this->byConstructor, $this->byMultiUseArgument);
+                $this->graph->connect('.internal.reference_in_expression', null, $targetId, $targetDefinition, $value, $this->lazy || $targetDefinition?->isLazy(), \true, $this->byConstructor, $this->byMultiUseArgument, \true);
             }
             return $value;
         }

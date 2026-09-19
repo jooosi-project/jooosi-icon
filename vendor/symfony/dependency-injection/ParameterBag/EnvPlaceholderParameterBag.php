@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class EnvPlaceholderParameterBag extends \OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag
+class EnvPlaceholderParameterBag extends \JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag
 {
     private string $envPlaceholderUniquePrefix;
     private array $envPlaceholders = [];
@@ -57,7 +57,7 @@ class EnvPlaceholderParameterBag extends \OmniIconDeps\Symfony\Component\Depende
     public function getEnvPlaceholderUniquePrefix(): string
     {
         if (!isset($this->envPlaceholderUniquePrefix)) {
-            $reproducibleEntropy = unserialize(serialize($this->parameters));
+            $reproducibleEntropy = unserialize(serialize($this->parameters), ['allowed_classes' => \true]);
             array_walk_recursive($reproducibleEntropy, static function (&$v) {
                 $v = null;
             });

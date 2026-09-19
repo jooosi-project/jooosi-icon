@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\DataCollector;
+namespace JooosiIconDeps\Symfony\Component\Cache\DataCollector;
 
-use OmniIconDeps\Symfony\Component\Cache\Adapter\TraceableAdapter;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\TraceableAdapterEvent;
-use OmniIconDeps\Symfony\Component\HttpFoundation\Request;
-use OmniIconDeps\Symfony\Component\HttpFoundation\Response;
-use OmniIconDeps\Symfony\Component\HttpKernel\DataCollector\DataCollector;
-use OmniIconDeps\Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\TraceableAdapter;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\TraceableAdapterEvent;
+use JooosiIconDeps\Symfony\Component\HttpFoundation\Request;
+use JooosiIconDeps\Symfony\Component\HttpFoundation\Response;
+use JooosiIconDeps\Symfony\Component\HttpKernel\DataCollector\DataCollector;
+use JooosiIconDeps\Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>

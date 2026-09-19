@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\enshrined\svgSanitize\Exceptions;
+namespace JooosiIconDeps\enshrined\svgSanitize\Exceptions;
 
 use Exception;
 class NestingException extends \Exception

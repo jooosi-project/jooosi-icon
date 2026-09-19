@@ -12,5 +12,5 @@ return array(
     '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
     '662a729f963d39afe703c9d9b7ab4a8c' => $vendorDir . '/symfony/polyfill-php83/bootstrap.php',
     '3c9ebf3d7a29b377eb2a8001857b1f68' => $vendorDir . '/nabasa/vp-wp/vp-wp.php',
-    '6bc9a8ebc6cdcbf9bf200e06834cd174' => $baseDir . '/constant.php',
+    '6ad553eb072f74234cd11ae3b678a5a0' => $baseDir . '/constant.php',
 );

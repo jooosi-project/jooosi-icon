@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\Cache\DependencyInjection;
 
-use OmniIconDeps\Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\TraceableAdapter;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\TraceableTagAwareAdapter;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\TraceableAdapter;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\TraceableTagAwareAdapter;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
 /**
  * Inject a data collector to all the cache services to be able to get detailed statistics.
  *

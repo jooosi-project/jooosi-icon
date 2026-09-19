@@ -8,17 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterCircularReferenceException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterCircularReferenceException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
 /**
  * Holds parameters.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ParameterBag implements \OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
+class ParameterBag implements \JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
 {
     protected $parameters = [];
     protected $resolved = \false;
@@ -33,6 +33,8 @@ class ParameterBag implements \OmniIconDeps\Symfony\Component\DependencyInjectio
     public function clear()
     {
         $this->parameters = [];
+        $this->deprecatedParameters = [];
+        $this->resolved = \false;
     }
     /**
      * @return void
@@ -65,10 +67,10 @@ class ParameterBag implements \OmniIconDeps\Symfony\Component\DependencyInjectio
                 }
             }
             $nonNestedAlternative = null;
-            if (!\count($alternatives) && str_contains($name, '.')) {
+            if (!$alternatives && str_contains($name, '.')) {
                 $namePartsLength = array_map('strlen', explode('.', $name));
                 $key = substr($name, 0, -1 * (1 + array_pop($namePartsLength)));
-                while (\count($namePartsLength)) {
+                while ($namePartsLength) {
                     if ($this->has($key)) {
                         if (\is_array($this->get($key))) {
                             $nonNestedAlternative = $key;
@@ -195,7 +197,7 @@ class ParameterBag implements \OmniIconDeps\Symfony\Component\DependencyInjectio
                 throw new ParameterCircularReferenceException(array_keys($resolving));
             }
             $resolving[$key] = \true;
-            return $this->resolved ? $this->get($key) : $this->resolveValue($this->get($key), $resolving);
+            return $this->resolved ? $this->escapeValue($this->get($key)) : $this->resolveValue($this->get($key), $resolving);
         }
         return preg_replace_callback('/%%|%([^%\s]+)%/', function ($match) use ($resolving, $value) {
             // skip %%
@@ -212,7 +214,7 @@ class ParameterBag implements \OmniIconDeps\Symfony\Component\DependencyInjectio
             }
             $resolved = (string) $resolved;
             $resolving[$key] = \true;
-            return $this->isResolved() ? $resolved : $this->resolveString($resolved, $resolving);
+            return $this->isResolved() ? $this->escapeValue($resolved) : $this->resolveString($resolved, $resolving);
         }, $value);
     }
     /**

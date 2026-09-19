@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Dumper;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Dumper;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Parameter;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Parameter;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
 /**
  * GraphvizDumper dumps a service container as a graphviz file.
  *

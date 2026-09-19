@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Internal;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Internal;
 
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\CurlResponse;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\CurlResponse;
 /**
  * Internal representation of the cURL client's state.
  *

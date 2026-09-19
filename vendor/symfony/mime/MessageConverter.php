@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime;
+namespace JooosiIconDeps\Symfony\Component\Mime;
 
-use OmniIconDeps\Symfony\Component\Mime\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\Mime\Part\DataPart;
-use OmniIconDeps\Symfony\Component\Mime\Part\Multipart\AlternativePart;
-use OmniIconDeps\Symfony\Component\Mime\Part\Multipart\MixedPart;
-use OmniIconDeps\Symfony\Component\Mime\Part\Multipart\RelatedPart;
-use OmniIconDeps\Symfony\Component\Mime\Part\TextPart;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\Mime\Part\DataPart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\Multipart\AlternativePart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\Multipart\MixedPart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\Multipart\RelatedPart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\TextPart;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */

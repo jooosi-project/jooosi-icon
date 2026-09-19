@@ -8,17 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Psr\Cache\CacheItemInterface;
-use OmniIconDeps\Psr\Cache\InvalidArgumentException;
-use OmniIconDeps\Psr\Log\LoggerAwareInterface;
-use OmniIconDeps\Psr\Log\LoggerAwareTrait;
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\Cache\PruneableInterface;
-use OmniIconDeps\Symfony\Component\Cache\ResettableInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
-use OmniIconDeps\Symfony\Contracts\Cache\TagAwareCacheInterface;
+use JooosiIconDeps\Psr\Cache\CacheItemInterface;
+use JooosiIconDeps\Psr\Cache\InvalidArgumentException;
+use JooosiIconDeps\Psr\Log\LoggerAwareInterface;
+use JooosiIconDeps\Psr\Log\LoggerAwareTrait;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\Cache\PruneableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\ResettableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
+use JooosiIconDeps\Symfony\Contracts\Cache\TagAwareCacheInterface;
 /**
  * Implements simple and robust tag-based invalidation suitable for use with volatile caches.
  *
@@ -154,7 +154,14 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
             }
         }
         $tagVersions = null;
-        return (self::$setCacheItemTags)($bufferedItems, $itemTags);
+        $items = (self::$setCacheItemTags)($bufferedItems, $itemTags);
+        foreach ($keys as $key) {
+            // PHP casts numeric strings to integers when they are used as array keys
+            if (\is_string($key) && $key === (string) (int) $key) {
+                return $this->yieldRequestedKeys($keys, $items);
+            }
+        }
+        return $items;
     }
     public function clear(string $prefix = ''): bool
     {
@@ -304,5 +311,12 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
             unset($this->knownTagVersions[$tag]);
         }
         return $tagVersions;
+    }
+    private function yieldRequestedKeys(array $keys, array $items): \Generator
+    {
+        $keys = array_combine($keys, $keys);
+        foreach ($items as $key => $item) {
+            yield $keys[$key] ?? $key => $item;
+        }
     }
 }

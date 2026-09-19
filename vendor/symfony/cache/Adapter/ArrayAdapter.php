@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Psr\Cache\CacheItemInterface;
-use OmniIconDeps\Psr\Log\LoggerAwareInterface;
-use OmniIconDeps\Psr\Log\LoggerAwareTrait;
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\ResettableInterface;
-use OmniIconDeps\Symfony\Contracts\Cache\CacheInterface;
+use JooosiIconDeps\Psr\Cache\CacheItemInterface;
+use JooosiIconDeps\Psr\Log\LoggerAwareInterface;
+use JooosiIconDeps\Psr\Log\LoggerAwareTrait;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\ResettableInterface;
+use JooosiIconDeps\Symfony\Contracts\Cache\CacheInterface;
 /**
  * An in-memory cache storage.
  *
@@ -123,6 +123,9 @@ class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInter
     }
     public function deleteItems(array $keys): bool
     {
+        foreach ($keys as $key) {
+            \assert('' !== CacheItem::validateKey($key));
+        }
         foreach ($keys as $key) {
             $this->deleteItem($key);
         }
@@ -288,7 +291,7 @@ class ArrayAdapter implements AdapterInterface, CacheInterface, LoggerAwareInter
         }
         if (\is_string($value) && isset($value[2]) && ':' === $value[1]) {
             try {
-                $value = unserialize($value);
+                $value = unserialize($value, ['allowed_classes' => \true]);
             } catch (\Exception $e) {
                 CacheItem::log($this->logger, 'Failed to unserialize key "{key}": ' . $e->getMessage(), ['key' => $key, 'exception' => $e, 'cache-adapter' => get_debug_type($this)]);
                 $value = \false;

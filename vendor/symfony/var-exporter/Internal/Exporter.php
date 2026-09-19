@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter\Internal;
+namespace JooosiIconDeps\Symfony\Component\VarExporter\Internal;
 
-use OmniIconDeps\Symfony\Component\VarExporter\Exception\NotInstantiableTypeException;
+use JooosiIconDeps\Symfony\Component\VarExporter\Exception\NotInstantiableTypeException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *
@@ -74,6 +74,14 @@ class Exporter
             $properties = [];
             $sleep = null;
             $proto = Registry::$prototypes[$class];
+            if (null === $proto && !$value instanceof \Serializable && method_exists($class, '__unserialize')) {
+                // The class cannot be instantiated empty; let serialize()/unserialize()
+                // deal with reconstructing the whole value.
+                ++$objectsCount;
+                $objectsPool[$value] = [$id = \count($objectsPool), serialize($value), [], 0];
+                $value = new Reference($id);
+                goto handle_value;
+            }
             if ($reflector->hasMethod('__serialize')) {
                 if (!$reflector->getMethod('__serialize')->isPublic()) {
                     throw new \Error(\sprintf('Call to %s method "%s::__serialize()".', $reflector->getMethod('__serialize')->isProtected() ? 'protected' : 'private', $class));

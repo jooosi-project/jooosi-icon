@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\HttpClient\Exception;
+namespace JooosiIconDeps\Symfony\Contracts\HttpClient\Exception;
 
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * Base interface for HTTP-related exceptions.
  *

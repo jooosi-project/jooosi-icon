@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Loader;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Loader;
 
-use OmniIconDeps\Symfony\Component\Config\Loader\Loader;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\Config\Loader\Loader;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * ClosureLoader loads service definitions from a PHP closure.
  *

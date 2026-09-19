@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\DependencyInjection\TypedReference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\TypedReference;
 /**
  * Trait that allows a generic method to find and sort service by priority option in the tag.
  *
@@ -54,6 +54,7 @@ trait PriorityTaggedServiceTrait
             }
             $defaultPriority = null;
             $defaultIndex = null;
+            $indexes = [];
             $definition = $container->getDefinition($serviceId);
             $class = $definition->getClass();
             $class = $container->getParameterBag()->resolveValue($class) ?: null;
@@ -93,6 +94,10 @@ trait PriorityTaggedServiceTrait
                 }
                 $decorated = $definition->getTag('container.decorator')[0]['id'] ?? null;
                 $index ??= $defaultIndex ?? $defaultIndex = $decorated ?? $serviceId;
+                if (isset($indexes[$index])) {
+                    continue;
+                }
+                $indexes[$index] = \true;
                 $services[] = [$priority, ++$i, $index, $serviceId, $class];
             }
         }

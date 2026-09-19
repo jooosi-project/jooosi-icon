@@ -8,25 +8,25 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Amp\CancelledException;
-use OmniIconDeps\Amp\Http\Client\DelegateHttpClient;
-use OmniIconDeps\Amp\Http\Client\InterceptedHttpClient;
-use OmniIconDeps\Amp\Http\Client\PooledHttpClient;
-use OmniIconDeps\Amp\Http\Client\Request;
-use OmniIconDeps\Amp\Http\Tunnel\Http1TunnelConnector;
-use OmniIconDeps\Amp\Promise;
-use OmniIconDeps\Psr\Log\LoggerAwareInterface;
-use OmniIconDeps\Psr\Log\LoggerAwareTrait;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\AmpClientState;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\AmpResponse;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\ResponseStream;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Amp\CancelledException;
+use JooosiIconDeps\Amp\Http\Client\DelegateHttpClient;
+use JooosiIconDeps\Amp\Http\Client\InterceptedHttpClient;
+use JooosiIconDeps\Amp\Http\Client\PooledHttpClient;
+use JooosiIconDeps\Amp\Http\Client\Request;
+use JooosiIconDeps\Amp\Http\Tunnel\Http1TunnelConnector;
+use JooosiIconDeps\Amp\Promise;
+use JooosiIconDeps\Psr\Log\LoggerAwareInterface;
+use JooosiIconDeps\Psr\Log\LoggerAwareTrait;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\AmpClientState;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\AmpResponse;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\ResponseStream;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 if (!interface_exists(DelegateHttpClient::class)) {
     throw new \LogicException('You cannot use "Symfony\Component\HttpClient\AmpHttpClient" as the "amphp/http-client" package is not installed. Try running "composer require amphp/http-client:^4.2.1".');
 }

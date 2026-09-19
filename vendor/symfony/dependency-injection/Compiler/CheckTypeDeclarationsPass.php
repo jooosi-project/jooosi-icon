@@ -8,23 +8,23 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\RewindableGenerator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Container;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidParameterTypeException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ExpressionLanguage;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Parameter;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\EnvPlaceholderParameterBag;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ServiceLocator;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\Expression;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\RewindableGenerator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Container;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidParameterTypeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ExpressionLanguage;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Parameter;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\EnvPlaceholderParameterBag;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ServiceLocator;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\Expression;
 /**
  * Checks whether injected parameters are compatible with type declarations.
  *

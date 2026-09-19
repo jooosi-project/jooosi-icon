@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 /**
  * Eases with writing decorators.
  *

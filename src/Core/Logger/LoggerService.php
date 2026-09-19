@@ -1,15 +1,16 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Logger;
+namespace JooosiIcon\Core\Logger;
 
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIconDeps\Psr\Log\AbstractLogger;
-use OmniIconDeps\Psr\Log\LogLevel;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIconDeps\Psr\Log\AbstractLogger;
+use JooosiIconDeps\Psr\Log\LogLevel;
 use Stringable;
 use Throwable;
 /**
- * PSR-3 compatible logger service for OmniIcon plugin
+ * PSR-3 compatible logger service for JooosiIcon plugin
  * 
  * Provides centralized logging with support for different log levels,
  * context data, exception handling, and WordPress debug mode awareness.
@@ -39,8 +40,9 @@ final class LoggerService extends AbstractLogger
     private string $prefix;
     public function __construct()
     {
-        $this->enabled = apply_filters('omni-icon/service/logger:enabled', defined('WP_DEBUG') && \WP_DEBUG);
-        $this->prefix = 'OmniIcon';
+        $enabled = apply_filters('jooosi-icon/service/logger:enabled', defined('WP_DEBUG') && \WP_DEBUG);
+        $this->enabled = (bool) apply_filters_deprecated('omni-icon/service/logger:enabled', [$enabled], JOOOSI_ICON::VERSION, 'jooosi-icon/service/logger:enabled');
+        $this->prefix = 'JooosiIcon';
     }
     /**
      * Logs with an arbitrary level
@@ -72,7 +74,7 @@ final class LoggerService extends AbstractLogger
         // Add component prefix if provided
         if (isset($context['component'])) {
             $component = $context['component'];
-            if ($component instanceof \OmniIcon\Core\Logger\LogComponent) {
+            if ($component instanceof \JooosiIcon\Core\Logger\LogComponent) {
                 $parts[] = '[' . $component->value . ']';
             } elseif (is_string($component)) {
                 $parts[] = '[' . $component . ']';

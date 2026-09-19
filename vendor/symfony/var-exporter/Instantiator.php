@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter;
+namespace JooosiIconDeps\Symfony\Component\VarExporter;
 
-use OmniIconDeps\Symfony\Component\VarExporter\Exception\ExceptionInterface;
-use OmniIconDeps\Symfony\Component\VarExporter\Exception\NotInstantiableTypeException;
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\Registry;
+use JooosiIconDeps\Symfony\Component\VarExporter\Exception\ExceptionInterface;
+use JooosiIconDeps\Symfony\Component\VarExporter\Exception\NotInstantiableTypeException;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\Registry;
 /**
  * A utility class to create objects without calling their constructor.
  *
@@ -46,9 +46,9 @@ final class Instantiator
         } elseif (null === Registry::$prototypes[$class]) {
             throw new NotInstantiableTypeException($class);
         } elseif ($reflector->implementsInterface('Serializable') && !method_exists($class, '__unserialize')) {
-            $instance = unserialize('C:' . \strlen($class) . ':"' . $class . '":0:{}');
+            $instance = unserialize('C:' . \strlen($class) . ':"' . $class . '":0:{}', ['allowed_classes' => \true]);
         } else {
-            $instance = unserialize('O:' . \strlen($class) . ':"' . $class . '":0:{}');
+            $instance = unserialize('O:' . \strlen($class) . ':"' . $class . '":0:{}', ['allowed_classes' => \true]);
         }
         return $properties || $scopedProperties ? Hydrator::hydrate($instance, $properties, $scopedProperties) : $instance;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps;
+namespace JooosiIconDeps;
 
 /*
  * This file is part of the Symfony package.
@@ -10,7 +10,7 @@ namespace OmniIconDeps;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-if (!\function_exists('OmniIconDeps\trigger_deprecation')) {
+if (!\function_exists('JooosiIconDeps\trigger_deprecation')) {
     /**
      * Triggers a silenced deprecation notice.
      *

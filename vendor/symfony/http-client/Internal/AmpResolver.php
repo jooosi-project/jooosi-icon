@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Internal;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Internal;
 
-use OmniIconDeps\Amp\Dns;
-use OmniIconDeps\Amp\Dns\Record;
-use OmniIconDeps\Amp\Promise;
-use OmniIconDeps\Amp\Success;
+use JooosiIconDeps\Amp\Dns;
+use JooosiIconDeps\Amp\Dns\Record;
+use JooosiIconDeps\Amp\Promise;
+use JooosiIconDeps\Amp\Success;
 /**
  * Handles local overrides for the DNS resolver.
  *

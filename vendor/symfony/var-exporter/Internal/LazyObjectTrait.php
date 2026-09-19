@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter\Internal;
+namespace JooosiIconDeps\Symfony\Component\VarExporter\Internal;
 
-use OmniIconDeps\Symfony\Component\Serializer\Attribute\Ignore;
+use JooosiIconDeps\Symfony\Component\Serializer\Attribute\Ignore;
 if (\PHP_VERSION_ID >= 80300) {
     /**
      * @internal

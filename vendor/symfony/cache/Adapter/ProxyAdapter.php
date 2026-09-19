@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Psr\Cache\CacheItemInterface;
-use OmniIconDeps\Psr\Cache\CacheItemPoolInterface;
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\Cache\PruneableInterface;
-use OmniIconDeps\Symfony\Component\Cache\ResettableInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\ProxyTrait;
-use OmniIconDeps\Symfony\Contracts\Cache\CacheInterface;
+use JooosiIconDeps\Psr\Cache\CacheItemInterface;
+use JooosiIconDeps\Psr\Cache\CacheItemPoolInterface;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\Cache\PruneableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\ResettableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\ProxyTrait;
+use JooosiIconDeps\Symfony\Contracts\Cache\CacheInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
@@ -34,7 +34,7 @@ class ProxyAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
     public function __construct(CacheItemPoolInterface $pool, string $namespace = '', int $defaultLifetime = 0)
     {
         $this->pool = $pool;
-        $this->poolHash = spl_object_hash($pool);
+        $this->poolHash = spl_object_id($pool);
         if ('' !== $namespace) {
             \assert('' !== CacheItem::validateKey($namespace));
             $this->namespace = $namespace;

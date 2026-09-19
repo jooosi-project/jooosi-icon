@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OmniIconDeps\\Symfony\\Contracts\\Cache\\": ""
+            "JooosiIconDeps\\Symfony\\Contracts\\Cache\\": ""
         }
     },
     "minimum-stability": "dev",

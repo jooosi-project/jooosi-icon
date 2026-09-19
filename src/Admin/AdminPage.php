@@ -1,13 +1,13 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Admin;
+namespace JooosiIcon\Admin;
 
 defined('ABSPATH') || exit;
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Hook;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIcon\Services\ViteService;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Services\ViteService;
 /**
  * Service for registering and managing admin pages
  */
@@ -23,7 +23,7 @@ class AdminPage
     #[Hook('admin_menu', priority: 10)]
     public function add_admin_menu(): void
     {
-        $hook = add_menu_page(__('Omni Icon', 'omni-icon'), __('Omni Icon', 'omni-icon'), 'manage_options', OMNI_ICON::TEXT_DOMAIN, fn() => $this->render(), 'data:image/svg+xml;base64,' . base64_encode(file_get_contents(dirname(OMNI_ICON::FILE) . '/omni-icon.svg')), 100);
+        $hook = add_menu_page(__('Jooosi Icon', 'jooosi-icon'), __('Jooosi Icon', 'jooosi-icon'), 'manage_options', JOOOSI_ICON::TEXT_DOMAIN, fn() => $this->render(), 'data:image/svg+xml;base64,' . base64_encode(file_get_contents(dirname(JOOOSI_ICON::FILE) . '/jooosi-icon.svg')), 100);
         add_action('load-' . $hook, fn() => $this->init_hooks());
     }
     /**
@@ -31,16 +31,18 @@ class AdminPage
      */
     public static function get_page_url(): string
     {
-        return add_query_arg(['page' => OMNI_ICON::TEXT_DOMAIN], admin_url('admin.php'));
+        return add_query_arg(['page' => JOOOSI_ICON::TEXT_DOMAIN], admin_url('admin.php'));
     }
     /**
      * Render the admin page
      */
     private function render(): void
     {
-        do_action('omni-icon/admin:render.before');
-        echo '<div id="omni-icon-app"></div>';
-        do_action('omni-icon/admin:render.after');
+        do_action('jooosi-icon/admin:render.before');
+        do_action_deprecated('omni-icon/admin:render.before', [], JOOOSI_ICON::VERSION, 'jooosi-icon/admin:render.before');
+        echo '<div id="jooosi-icon-app"></div>';
+        do_action('jooosi-icon/admin:render.after');
+        do_action_deprecated('omni-icon/admin:render.after', [], JOOOSI_ICON::VERSION, 'jooosi-icon/admin:render.after');
     }
     /**
      * Initialize hooks for the admin page
@@ -54,11 +56,14 @@ class AdminPage
      */
     private function enqueue_scripts(): void
     {
-        do_action('omni-icon/admin:enqueue_scripts.before');
+        do_action('jooosi-icon/admin:enqueue_scripts.before');
+        do_action_deprecated('omni-icon/admin:enqueue_scripts.before', [], JOOOSI_ICON::VERSION, 'jooosi-icon/admin:enqueue_scripts.before');
         // Enqueue admin app
-        $this->viteService->enqueue_asset('resources/admin/admin-app/index.jsx', ['handle' => 'omni-icon-admin', 'in_footer' => \true, 'dependencies' => ['react', 'react-dom', 'wp-element', 'wp-components', 'wp-i18n', 'wp-data']]);
+        $this->viteService->enqueue_asset('resources/admin/admin-app/index.jsx', ['handle' => 'jooosi-icon-admin', 'in_footer' => \true, 'dependencies' => ['react', 'react-dom', 'wp-element', 'wp-components', 'wp-i18n', 'wp-data']]);
         // Pass data to JavaScript
-        wp_localize_script('omni-icon-admin', 'omniIconAdmin', ['apiUrl' => rest_url('omni-icon/v1/admin/local-icon'), 'nonce' => wp_create_nonce('wp_rest'), 'version' => OMNI_ICON::VERSION]);
-        do_action('omni-icon/admin:enqueue_scripts.after');
+        $admin_data = ['apiUrl' => rest_url(JOOOSI_ICON::REST_NAMESPACE . '/admin/local-icon'), 'nonce' => wp_create_nonce('wp_rest'), 'version' => JOOOSI_ICON::VERSION];
+        wp_localize_script('jooosi-icon-admin', 'jooosiIconAdmin', $admin_data);
+        do_action('jooosi-icon/admin:enqueue_scripts.after');
+        do_action_deprecated('omni-icon/admin:enqueue_scripts.after', [], JOOOSI_ICON::VERSION, 'jooosi-icon/admin:enqueue_scripts.after');
     }
 }

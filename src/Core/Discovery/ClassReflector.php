@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
 use ReflectionAttribute;
 use ReflectionClass;
@@ -51,7 +51,7 @@ final class ClassReflector
             if ($reflectionMethod->getDeclaringClass()->getName() !== $this->reflectionClass->getName()) {
                 continue;
             }
-            $methods[] = new \OmniIcon\Core\Discovery\MethodReflector($reflectionMethod);
+            $methods[] = new \JooosiIcon\Core\Discovery\MethodReflector($reflectionMethod);
         }
         return $methods;
     }

@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\HtmlToTextConverter;
+namespace JooosiIconDeps\Symfony\Component\Mime\HtmlToTextConverter;
 
-use OmniIconDeps\League\HTMLToMarkdown\HtmlConverter;
-use OmniIconDeps\League\HTMLToMarkdown\HtmlConverterInterface;
+use JooosiIconDeps\League\HTMLToMarkdown\HtmlConverter;
+use JooosiIconDeps\League\HTMLToMarkdown\HtmlConverterInterface;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */

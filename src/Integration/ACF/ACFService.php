@@ -1,15 +1,15 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Integration\ACF;
+namespace JooosiIcon\Integration\ACF;
 
 use Bricks\Integrations\Dynamic_Data\Providers as BricksProvider;
 use Bricks\Integrations\Dynamic_Data\Providers\Provider_Acf as BricksProviderAcf;
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Hook;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIcon\Integration\ACF\Fields\IconField;
-use OmniIcon\Services\ViteService;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Integration\ACF\Fields\IconField;
+use JooosiIcon\Services\ViteService;
 use function acf_register_field_type;
 /**
  * Service for registering and managing ACF integration
@@ -23,7 +23,7 @@ class ACFService
     /**
      * Register the ACF custom field type
      *
-     * Registers Omni Icon field type for ACF when ACF is active.
+     * Registers Jooosi Icon field type for ACF when ACF is active.
      */
     #[Hook('acf/include_field_types', priority: 10)]
     public function register_field_type(): void
@@ -51,7 +51,7 @@ class ACFService
             if (!$bricks_acf) {
                 return;
             }
-            $bricks_acf->tags = array_merge($bricks_acf->tags, ['omni_icon' => ['name' => '{omni_icon}', 'label' => esc_html__('Omni Icon', 'bricks'), 'group' => 'ACF', 'provider' => 'acf', 'queryFiltersExcludeTag' => \true]]);
+            $bricks_acf->tags = array_merge($bricks_acf->tags, ['jooosi_icon' => ['name' => '{jooosi_icon}', 'label' => esc_html__('Jooosi Icon', 'bricks'), 'group' => 'ACF', 'provider' => 'acf', 'queryFiltersExcludeTag' => \true]]);
         }
     }
     /**
@@ -64,11 +64,11 @@ class ACFService
         if (!function_exists('acf_register_field_type')) {
             return;
         }
-        // Enqueue omni-icon web component
-        $this->viteService->enqueue_asset('resources/webcomponents/omni-icon.ts', ['handle' => OMNI_ICON::TEXT_DOMAIN . ':web-component:omni-icon', 'in_footer' => \true]);
+        // Enqueue jooosi-icon web component
+        $this->viteService->enqueue_asset('resources/webcomponents/jooosi-icon.ts', ['handle' => JOOOSI_ICON::TEXT_DOMAIN . ':web-component:jooosi-icon', 'in_footer' => \true]);
         // Enqueue Gutenberg icon block styles (reuse for ACF)
-        $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/editor.css', ['handle' => OMNI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles']);
+        $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/editor.css', ['handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles']);
         // Enqueue ACF field editor integration script
-        $this->viteService->enqueue_asset('resources/integration/acf/editor.ts', ['handle' => OMNI_ICON::TEXT_DOMAIN . ':integration-acf-editor', 'in_footer' => \true, 'dependencies' => ['wp-element', 'wp-components', 'wp-i18n', 'wp-data', 'react', 'react-dom']]);
+        $this->viteService->enqueue_asset('resources/integration/acf/editor.ts', ['handle' => JOOOSI_ICON::TEXT_DOMAIN . ':integration-acf-editor', 'in_footer' => \true, 'dependencies' => ['wp-element', 'wp-components', 'wp-i18n', 'wp-data', 'react', 'react-dom']]);
     }
 }

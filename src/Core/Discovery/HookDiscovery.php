@@ -1,26 +1,26 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
 defined('ABSPATH') || exit;
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Discovery\Attributes\Hook;
-final class HookDiscovery implements \OmniIcon\Core\Discovery\Discovery
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
+final class HookDiscovery implements \JooosiIcon\Core\Discovery\Discovery
 {
-    use \OmniIcon\Core\Discovery\IsDiscovery;
+    use \JooosiIcon\Core\Discovery\IsDiscovery;
     /** @var array<array<string, mixed>> */
     private array $hooks = [];
     /** @var array<string> Track registered hooks to avoid duplicates */
     private array $registeredHooks = [];
     public function __construct(private Container $container)
     {
-        $this->discoveryItems = new \OmniIcon\Core\Discovery\DiscoveryItems();
+        $this->discoveryItems = new \JooosiIcon\Core\Discovery\DiscoveryItems();
     }
     /**
      * @param ClassReflector $classReflector
      */
-    public function discover(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \OmniIcon\Core\Discovery\ClassReflector $classReflector): void
+    public function discover(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \JooosiIcon\Core\Discovery\ClassReflector $classReflector): void
     {
         foreach ($classReflector->getPublicMethods() as $methodReflector) {
             $hookAttributes = $methodReflector->getAttributes(Hook::class);

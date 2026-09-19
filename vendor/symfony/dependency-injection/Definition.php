@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\BoundArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\OutOfBoundsException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\BoundArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\OutOfBoundsException;
 /**
  * Definition represents a service definition.
  *
@@ -216,7 +216,7 @@ class Definition
      */
     public function replaceArgument(int|string $index, mixed $argument): static
     {
-        if (0 === \count($this->arguments)) {
+        if (!$this->arguments) {
             throw new OutOfBoundsException(\sprintf('Cannot replace arguments for class "%s" if none have been configured yet.', $this->class));
         }
         if (\is_int($index) && ($index < 0 || $index > \count($this->arguments) - 1)) {

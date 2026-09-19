@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\Service;
+namespace JooosiIconDeps\Symfony\Contracts\Service;
 
-use OmniIconDeps\Psr\Container\ContainerInterface;
-use OmniIconDeps\Symfony\Contracts\Service\Attribute\Required;
-use OmniIconDeps\Symfony\Contracts\Service\Attribute\SubscribedService;
+use JooosiIconDeps\Psr\Container\ContainerInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\Attribute\Required;
+use JooosiIconDeps\Symfony\Contracts\Service\Attribute\SubscribedService;
 trigger_deprecation('symfony/contracts', 'v3.5', '"%s" is deprecated, use "ServiceMethodsSubscriberTrait" instead.', ServiceSubscriberTrait::class);
 /**
  * Implementation of ServiceSubscriberInterface that determines subscribed services

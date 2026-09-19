@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Exception;
+namespace JooosiIconDeps\Symfony\Component\Cache\Exception;
 
-use OmniIconDeps\Psr\Cache\CacheException as Psr6CacheInterface;
-use OmniIconDeps\Psr\SimpleCache\CacheException as SimpleCacheInterface;
+use JooosiIconDeps\Psr\Cache\CacheException as Psr6CacheInterface;
+use JooosiIconDeps\Psr\SimpleCache\CacheException as SimpleCacheInterface;
 if (interface_exists(SimpleCacheInterface::class)) {
     class LogicException extends \LogicException implements Psr6CacheInterface, SimpleCacheInterface
     {

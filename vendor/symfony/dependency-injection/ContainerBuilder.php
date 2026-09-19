@@ -8,45 +8,45 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection;
 
-use OmniIconDeps\Composer\InstalledVersions;
-use OmniIconDeps\Symfony\Component\Config\Resource\ClassExistenceResource;
-use OmniIconDeps\Symfony\Component\Config\Resource\ComposerResource;
-use OmniIconDeps\Symfony\Component\Config\Resource\DirectoryResource;
-use OmniIconDeps\Symfony\Component\Config\Resource\FileExistenceResource;
-use OmniIconDeps\Symfony\Component\Config\Resource\FileResource;
-use OmniIconDeps\Symfony\Component\Config\Resource\GlobResource;
-use OmniIconDeps\Symfony\Component\Config\Resource\ReflectionClassResource;
-use OmniIconDeps\Symfony\Component\Config\Resource\ResourceInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\AbstractArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\LazyClosure;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\RewindableGenerator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\Target;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\Compiler;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\PassConfig;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\ResolveEnvPlaceholdersPass;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\LazyProxy\Instantiator\InstantiatorInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\LazyProxy\Instantiator\LazyServiceInstantiator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\LazyProxy\Instantiator\RealServiceInstantiator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\EnvPlaceholderParameterBag;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\Expression;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
+use JooosiIconDeps\Composer\InstalledVersions;
+use JooosiIconDeps\Symfony\Component\Config\Resource\ClassExistenceResource;
+use JooosiIconDeps\Symfony\Component\Config\Resource\ComposerResource;
+use JooosiIconDeps\Symfony\Component\Config\Resource\DirectoryResource;
+use JooosiIconDeps\Symfony\Component\Config\Resource\FileExistenceResource;
+use JooosiIconDeps\Symfony\Component\Config\Resource\FileResource;
+use JooosiIconDeps\Symfony\Component\Config\Resource\GlobResource;
+use JooosiIconDeps\Symfony\Component\Config\Resource\ReflectionClassResource;
+use JooosiIconDeps\Symfony\Component\Config\Resource\ResourceInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\AbstractArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\LazyClosure;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\RewindableGenerator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\Target;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\Compiler;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\ResolveEnvPlaceholdersPass;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\LazyProxy\Instantiator\InstantiatorInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\LazyProxy\Instantiator\LazyServiceInstantiator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\LazyProxy\Instantiator\RealServiceInstantiator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\EnvPlaceholderParameterBag;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\Expression;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 /**
  * ContainerBuilder is a DI container that provides an API to easily describe services.
  *
@@ -883,7 +883,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      */
     private function createService(Definition $definition, array &$inlineServices, bool $isConstructorArgument = \false, ?string $id = null, bool|object $tryProxy = \true): mixed
     {
-        if (null === $id && isset($inlineServices[$h = spl_object_hash($definition)])) {
+        if (null === $id && isset($inlineServices[$h = "\x00" . spl_object_id($definition)])) {
             return $inlineServices[$h];
         }
         if ($definition instanceof ChildDefinition) {
@@ -903,7 +903,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
             if ($callable instanceof Reference || $callable instanceof Definition) {
                 $callable = [$callable, '__invoke'];
             }
-            if (\is_array($callable) && ('Closure' !== $class || $callable[0] instanceof Reference || $callable[0] instanceof Definition && !isset($inlineServices[spl_object_hash($callable[0])]))) {
+            if (\is_array($callable) && ('Closure' !== $class || $callable[0] instanceof Reference || $callable[0] instanceof Definition && !isset($inlineServices["\x00" . spl_object_id($callable[0])]))) {
                 $initializer = function () use ($callable, &$inlineServices) {
                     return $this->doResolveServices($callable[0], $inlineServices);
                 };
@@ -913,14 +913,14 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
             }
         }
         if (\true === $tryProxy && $definition->isLazy() && ['Closure', 'fromCallable'] !== $definition->getFactory() && !$tryProxy = !($proxy = $this->proxyInstantiator ??= new LazyServiceInstantiator()) || $proxy instanceof RealServiceInstantiator) {
-            $proxy = $proxy->instantiateProxy($this, (clone $definition)->setClass($class)->setTags(($definition->hasTag('proxy') ? ['proxy' => $parameterBag->resolveValue($definition->getTag('proxy'))] : []) + $definition->getTags()), $id, function ($proxy = \false) use ($definition, &$inlineServices, $id) {
+            $proxy = $proxy->instantiateProxy($this, (clone $definition)->setClass($class)->setTags(($definition->hasTag('proxy') ? ['proxy' => $parameterBag->resolveValue($definition->getTag('proxy'))] : []) + $definition->getTags()), $id ?? $class, function ($proxy = \false) use ($definition, &$inlineServices, $id) {
                 return $this->createService($definition, $inlineServices, \true, $id, $proxy);
             });
             $this->shareService($definition, $proxy, $id, $inlineServices);
             return $proxy;
         }
         if (null !== $definition->getFile()) {
-            require_once $parameterBag->resolveValue($definition->getFile());
+            require_once $parameterBag->unescapeValue($parameterBag->resolveValue($definition->getFile()));
         }
         $arguments = $definition->getArguments();
         if (null !== $factory = $definition->getFactory()) {
@@ -968,34 +968,46 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
                 $lastWitherIndex = $k;
             }
         }
-        if (null === $lastWitherIndex && (\true === $tryProxy || !$definition->isLazy())) {
-            // share only if proxying failed, or if not a proxy, and if no withers are found
-            $this->shareService($definition, $service, $id, $inlineServices);
-        }
-        $properties = $this->doResolveServices($parameterBag->unescapeValue($parameterBag->resolveValue($definition->getProperties())), $inlineServices);
-        foreach ($properties as $name => $value) {
-            $service->{$name} = $value;
-        }
-        foreach ($definition->getMethodCalls() as $k => $call) {
-            $service = $this->callMethod($service, $call, $inlineServices);
-            if ($lastWitherIndex === $k && (\true === $tryProxy || !$definition->isLazy())) {
-                // share only if proxying failed, or if not a proxy, and this is the last wither
+        try {
+            if (null === $lastWitherIndex && (\true === $tryProxy || !$definition->isLazy())) {
+                // share only if proxying failed, or if not a proxy, and if no withers are found
                 $this->shareService($definition, $service, $id, $inlineServices);
             }
-        }
-        if ($callable = $definition->getConfigurator()) {
-            if (\is_array($callable)) {
-                $callable[0] = $parameterBag->resolveValue($callable[0]);
-                if ($callable[0] instanceof Reference) {
-                    $callable[0] = $this->doGet((string) $callable[0], $callable[0]->getInvalidBehavior(), $inlineServices);
-                } elseif ($callable[0] instanceof Definition) {
-                    $callable[0] = $this->createService($callable[0], $inlineServices);
+            $properties = $this->doResolveServices($parameterBag->unescapeValue($parameterBag->resolveValue($definition->getProperties())), $inlineServices);
+            foreach ($properties as $name => $value) {
+                $service->{$name} = $value;
+            }
+            foreach ($definition->getMethodCalls() as $k => $call) {
+                $service = $this->callMethod($service, $call, $inlineServices);
+                if ($lastWitherIndex === $k && (\true === $tryProxy || !$definition->isLazy())) {
+                    // share only if proxying failed, or if not a proxy, and this is the last wither
+                    $this->shareService($definition, $service, $id, $inlineServices);
                 }
             }
-            if (!\is_callable($callable)) {
-                throw new InvalidArgumentException(\sprintf('The configure callable for class "%s" is not a callable.', get_debug_type($service)));
+            if ($callable = $definition->getConfigurator()) {
+                if (\is_array($callable)) {
+                    $callable[0] = $parameterBag->resolveValue($callable[0]);
+                    if ($callable[0] instanceof Reference) {
+                        $callable[0] = $this->doGet((string) $callable[0], $callable[0]->getInvalidBehavior(), $inlineServices);
+                    } elseif ($callable[0] instanceof Definition) {
+                        $callable[0] = $this->createService($callable[0], $inlineServices);
+                    }
+                }
+                if (!\is_callable($callable)) {
+                    throw new InvalidArgumentException(\sprintf('The configure callable for class "%s" is not a callable.', get_debug_type($service)));
+                }
+                $callable($service);
             }
-            $callable($service);
+        } catch (\Throwable $e) {
+            // evict the partially-configured instance, but only if this frame shared it; in the
+            // proxy-initializer frame, the cached proxy must stay so a retry re-runs the initializer
+            if (\true === $tryProxy || !$definition->isLazy()) {
+                unset($inlineServices[$id ?? "\x00" . spl_object_id($definition)]);
+                if (null !== $id) {
+                    unset($this->services[$id], $this->privates[$id]);
+                }
+            }
+            throw $e;
         }
         return $service;
     }
@@ -1423,7 +1435,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     }
     private function shareService(Definition $definition, mixed $service, ?string $id, array &$inlineServices): void
     {
-        $inlineServices[$id ?? spl_object_hash($definition)] = $service;
+        $inlineServices[$id ?? "\x00" . spl_object_id($definition)] = $service;
         if (null !== $id && $definition->isShared()) {
             if ($definition->isPrivate() && $this->isCompiled()) {
                 $this->privates[$id] = $service;

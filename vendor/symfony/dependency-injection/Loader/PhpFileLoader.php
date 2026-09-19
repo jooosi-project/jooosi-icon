@@ -8,19 +8,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Loader;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Loader;
 
-use OmniIconDeps\Symfony\Component\Config\Builder\ConfigBuilderGenerator;
-use OmniIconDeps\Symfony\Component\Config\Builder\ConfigBuilderGeneratorInterface;
-use OmniIconDeps\Symfony\Component\Config\Builder\ConfigBuilderInterface;
-use OmniIconDeps\Symfony\Component\Config\FileLocatorInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\When;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Container;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Extension\ConfigurationExtensionInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use JooosiIconDeps\Symfony\Component\Config\Builder\ConfigBuilderGenerator;
+use JooosiIconDeps\Symfony\Component\Config\Builder\ConfigBuilderGeneratorInterface;
+use JooosiIconDeps\Symfony\Component\Config\Builder\ConfigBuilderInterface;
+use JooosiIconDeps\Symfony\Component\Config\FileLocatorInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\When;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Container;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Extension\ConfigurationExtensionInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 /**
  * PhpFileLoader loads service definitions from a PHP file.
  *

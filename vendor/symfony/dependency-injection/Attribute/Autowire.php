@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Attribute;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\Expression;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\Expression;
 /**
  * Attribute to tell a parameter how to be autowired.
  *

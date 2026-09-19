@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache;
+namespace JooosiIconDeps\Symfony\Component\Cache;
 
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 /**
  * Resets a pool's local state.
  */

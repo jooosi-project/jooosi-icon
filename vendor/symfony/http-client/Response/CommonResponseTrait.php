@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\ClientException;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\JsonException;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\RedirectionException;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\ServerException;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\ClientException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\JsonException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\RedirectionException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\ServerException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
 /**
  * Implements common logic for response classes.
  *

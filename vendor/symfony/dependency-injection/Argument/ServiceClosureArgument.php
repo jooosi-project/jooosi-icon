@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Argument;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Argument;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 /**
  * Represents a service wrapped in a memoizing closure.
  *

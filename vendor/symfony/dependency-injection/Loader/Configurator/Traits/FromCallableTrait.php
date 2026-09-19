@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\FromCallableConfigurator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\Expression;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\FromCallableConfigurator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\Expression;
 trait FromCallableTrait
 {
     final public function fromCallable(string|array|ReferenceConfigurator|Expression $callable): FromCallableConfigurator

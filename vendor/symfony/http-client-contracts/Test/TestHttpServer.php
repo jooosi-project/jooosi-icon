@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\HttpClient\Test;
+namespace JooosiIconDeps\Symfony\Contracts\HttpClient\Test;
 
-use OmniIconDeps\Symfony\Component\Process\PhpExecutableFinder;
-use OmniIconDeps\Symfony\Component\Process\Process;
+use JooosiIconDeps\Symfony\Component\Process\PhpExecutableFinder;
+use JooosiIconDeps\Symfony\Component\Process\Process;
 class TestHttpServer
 {
     private static array $process = [];

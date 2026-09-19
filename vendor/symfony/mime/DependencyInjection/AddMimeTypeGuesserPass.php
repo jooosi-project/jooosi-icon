@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\Mime\DependencyInjection;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
 /**
  * Registers custom mime types guessers.
  *

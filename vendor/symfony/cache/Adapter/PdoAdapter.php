@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\DefaultMarshaller;
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
-use OmniIconDeps\Symfony\Component\Cache\PruneableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\DefaultMarshaller;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
+use JooosiIconDeps\Symfony\Component\Cache\PruneableInterface;
 class PdoAdapter extends AbstractAdapter implements PruneableInterface
 {
     private const MAX_KEY_LENGTH = 255;
@@ -50,7 +50,14 @@ class PdoAdapter extends AbstractAdapter implements PruneableInterface
      * @throws InvalidArgumentException When PDO error mode is not PDO::ERRMODE_EXCEPTION
      * @throws InvalidArgumentException When namespace contains invalid characters
      */
-    public function __construct(#[\SensitiveParameter] \PDO|string $connOrDsn, string $namespace = '', int $defaultLifetime = 0, array $options = [], ?MarshallerInterface $marshaller = null)
+    public function __construct(
+        #[\SensitiveParameter]
+        \PDO|string $connOrDsn,
+        string $namespace = '',
+        int $defaultLifetime = 0,
+        array $options = [],
+        ?MarshallerInterface $marshaller = null
+    )
     {
         if (\is_string($connOrDsn) && str_contains($connOrDsn, '://')) {
             throw new InvalidArgumentException(\sprintf('Usage of Doctrine DBAL URL with "%s" is not supported. Use a PDO DSN or "%s" instead.', __CLASS__, DoctrineDbalAdapter::class));

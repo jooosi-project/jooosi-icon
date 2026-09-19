@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\Service\Attribute;
+namespace JooosiIconDeps\Symfony\Contracts\Service\Attribute;
 
-use OmniIconDeps\Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
-use OmniIconDeps\Symfony\Contracts\Service\ServiceSubscriberInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
+use JooosiIconDeps\Symfony\Contracts\Service\ServiceSubscriberInterface;
 /**
  * For use as the return value for {@see ServiceSubscriberInterface}.
  *

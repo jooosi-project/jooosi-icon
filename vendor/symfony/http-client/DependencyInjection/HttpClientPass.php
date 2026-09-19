@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\DependencyInjection;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\HttpClient\TraceableHttpClient;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\HttpClient\TraceableHttpClient;
 final class HttpClientPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void

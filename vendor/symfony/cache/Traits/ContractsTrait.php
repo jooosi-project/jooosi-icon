@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Traits;
+namespace JooosiIconDeps\Symfony\Component\Cache\Traits;
 
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\AdapterInterface;
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\LockRegistry;
-use OmniIconDeps\Symfony\Contracts\Cache\CacheInterface;
-use OmniIconDeps\Symfony\Contracts\Cache\CacheTrait;
-use OmniIconDeps\Symfony\Contracts\Cache\ItemInterface;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\AdapterInterface;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\LockRegistry;
+use JooosiIconDeps\Symfony\Contracts\Cache\CacheInterface;
+use JooosiIconDeps\Symfony\Contracts\Cache\CacheTrait;
+use JooosiIconDeps\Symfony\Contracts\Cache\ItemInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *
@@ -64,7 +64,6 @@ trait ContractsTrait
                 unset($metadata[CacheItem::METADATA_EXPIRY], $metadata[CacheItem::METADATA_CTIME], $metadata[CacheItem::METADATA_TAGS]);
             }
         }, null, CacheItem::class);
-        $this->callbackWrapper ??= LockRegistry::compute(...);
         return $this->contractsGet($pool, $key, function (CacheItem $item, bool &$save) use ($pool, $callback, $setMetadata, &$metadata, $key, $beta) {
             // don't wrap nor save recursive calls
             if (isset($this->computing[$key])) {

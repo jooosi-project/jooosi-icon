@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime;
+namespace JooosiIconDeps\Symfony\Component\Mime;
 
-use OmniIconDeps\Symfony\Component\Mime\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\LogicException;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
@@ -58,7 +58,7 @@ class RawMessage
         }
         if (\is_resource($this->message)) {
             rewind($this->message);
-            while ($line = fgets($this->message)) {
+            while (\false !== $line = fgets($this->message)) {
                 yield $line;
             }
             return;

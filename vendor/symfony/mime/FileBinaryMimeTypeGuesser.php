@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime;
+namespace JooosiIconDeps\Symfony\Component\Mime;
 
-use OmniIconDeps\Symfony\Component\Mime\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Mime\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\LogicException;
 /**
  * Guesses the MIME type with the binary "file" (only available on *nix).
  *
@@ -38,7 +38,7 @@ class FileBinaryMimeTypeGuesser implements MimeTypeGuesserInterface
         if (null !== $supported) {
             return $supported;
         }
-        if ('\\' === \DIRECTORY_SEPARATOR || !\function_exists('shell_exec') || !\function_exists('escapeshellarg') && !\function_exists('OmniIconDeps\escapeshellarg')) {
+        if ('\\' === \DIRECTORY_SEPARATOR || !\function_exists('shell_exec') || !\function_exists('escapeshellarg') && !\function_exists('JooosiIconDeps\escapeshellarg')) {
             return $supported = \false;
         }
         return $supported = '' !== trim(shell_exec('command -v file') ?: '');

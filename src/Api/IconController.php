@@ -1,16 +1,16 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Api;
+namespace JooosiIcon\Api;
 
 defined('ABSPATH') || exit;
-use OmniIcon\Core\Discovery\Attributes\Controller;
-use OmniIcon\Core\Discovery\Attributes\Route;
-use OmniIcon\Services\IconService;
+use JooosiIcon\Core\Discovery\Attributes\Controller;
+use JooosiIcon\Core\Discovery\Attributes\Route;
+use JooosiIcon\Services\IconService;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_Error;
-#[Controller(namespace: 'omni-icon/v1', prefix: 'icon')]
+#[Controller(namespace: 'jooosi-icon/v1', prefix: 'icon')]
 final class IconController
 {
     /**
@@ -23,7 +23,7 @@ final class IconController
     }
     /**
      * Get a single icon by name
-     * URL format: /wp-json/omni-icon/v1/icon/item/{prefix}/{name}
+     * URL format: /wp-json/jooosi-icon/v1/icon/item/{prefix}/{name}
      * The / separator is converted to : internally for the icon service
      *
      * @param WP_REST_Request $request
@@ -45,7 +45,7 @@ final class IconController
     /**
      * Get SVG content for a single icon by name
      * Returns raw SVG with image/svg+xml content type
-     * URL format: /wp-json/omni-icon/v1/icon/{prefix}/{name}.svg
+     * URL format: /wp-json/jooosi-icon/v1/icon/{prefix}/{name}.svg
      * The / separator is converted to : internally for the icon service
      *
      * @param WP_REST_Request $request

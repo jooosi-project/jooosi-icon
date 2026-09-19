@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\enshrined\svgSanitize;
+namespace JooosiIconDeps\enshrined\svgSanitize;
 
 class Helper
 {

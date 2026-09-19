@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Marshaller;
+namespace JooosiIconDeps\Symfony\Component\Cache\Marshaller;
 
-use OmniIconDeps\Symfony\Component\Cache\Exception\CacheException;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\CacheException;
 /**
  * Compresses values using gzdeflate().
  *
@@ -21,7 +21,7 @@ class DeflateMarshaller implements MarshallerInterface
     private MarshallerInterface $marshaller;
     public function __construct(MarshallerInterface $marshaller)
     {
-        if (!\function_exists('gzdeflate') && !\function_exists('OmniIconDeps\gzdeflate')) {
+        if (!\function_exists('gzdeflate') && !\function_exists('JooosiIconDeps\gzdeflate')) {
             throw new CacheException('The "zlib" PHP extension is not loaded.');
         }
         $this->marshaller = $marshaller;

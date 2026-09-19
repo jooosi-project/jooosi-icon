@@ -10,9 +10,9 @@
  */
 namespace Symfony\Component\HttpClient\Retry;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\AsyncContext;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\AsyncContext;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 /**
  * Decides to retry the request when HTTP status codes belong to the given list of codes.
  *

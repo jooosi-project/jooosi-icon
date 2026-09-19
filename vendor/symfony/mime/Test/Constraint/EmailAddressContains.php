@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\Test\Constraint;
+namespace JooosiIconDeps\Symfony\Component\Mime\Test\Constraint;
 
-use OmniIconDeps\PHPUnit\Framework\Constraint\Constraint;
-use OmniIconDeps\Symfony\Component\Mime\Header\MailboxHeader;
-use OmniIconDeps\Symfony\Component\Mime\Header\MailboxListHeader;
-use OmniIconDeps\Symfony\Component\Mime\RawMessage;
+use JooosiIconDeps\PHPUnit\Framework\Constraint\Constraint;
+use JooosiIconDeps\Symfony\Component\Mime\Header\MailboxHeader;
+use JooosiIconDeps\Symfony\Component\Mime\Header\MailboxListHeader;
+use JooosiIconDeps\Symfony\Component\Mime\RawMessage;
 final class EmailAddressContains extends Constraint
 {
     private string $headerName;

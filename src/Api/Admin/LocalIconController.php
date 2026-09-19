@@ -1,15 +1,15 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Api\Admin;
+namespace JooosiIcon\Api\Admin;
 
-use OmniIcon\Core\Discovery\Attributes\Controller;
-use OmniIcon\Core\Discovery\Attributes\Route;
-use OmniIcon\Services\LocalIconService;
+use JooosiIcon\Core\Discovery\Attributes\Controller;
+use JooosiIcon\Core\Discovery\Attributes\Route;
+use JooosiIcon\Services\LocalIconService;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_Error;
-#[Controller(namespace: 'omni-icon/v1', prefix: 'admin/local-icon')]
+#[Controller(namespace: 'jooosi-icon/v1', prefix: 'admin/local-icon')]
 final class LocalIconController
 {
     /**
@@ -34,7 +34,7 @@ final class LocalIconController
         $files = isset($_FILES['icon']) ? $_FILES['icon'] : null;
         // Check if file(s) were uploaded
         if (empty($files)) {
-            return new WP_Error('no_file', __('No file uploaded', 'omni-icon'), ['status' => 400]);
+            return new WP_Error('no_file', __('No file uploaded', 'jooosi-icon'), ['status' => 400]);
         }
         // Get optional icon set (subdirectory) - WP_REST_Request handles sanitization
         $icon_set = $request->get_param('icon_set');
@@ -56,7 +56,7 @@ final class LocalIconController
                 // Check mime type
                 $mime_type = $this->localIconService->detect_mime($file['tmp_name']);
                 if ($mime_type !== 'image/svg+xml') {
-                    $errors[] = ['filename' => $file['name'], 'message' => __('Invalid file type. Only SVG files are allowed.', 'omni-icon')];
+                    $errors[] = ['filename' => $file['name'], 'message' => __('Invalid file type. Only SVG files are allowed.', 'jooosi-icon')];
                     continue;
                 }
                 // Upload and sanitize the icon
@@ -69,7 +69,7 @@ final class LocalIconController
                 }
             }
             // Return combined results
-            return new WP_REST_Response(['success' => $uploaded_count > 0, 'message' => sprintf(__('%d of %d icons uploaded successfully', 'omni-icon'), $uploaded_count, $total_files), 'uploaded_count' => $uploaded_count, 'total_count' => $total_files, 'results' => $results, 'errors' => $errors]);
+            return new WP_REST_Response(['success' => $uploaded_count > 0, 'message' => sprintf(__('%d of %d icons uploaded successfully', 'jooosi-icon'), $uploaded_count, $total_files), 'uploaded_count' => $uploaded_count, 'total_count' => $total_files, 'results' => $results, 'errors' => $errors]);
         } else {
             // Handle single file upload (backward compatibility)
             // Sanitize file array fields
@@ -77,7 +77,7 @@ final class LocalIconController
             // check mime type with LocalIconService
             $mime_type = $this->localIconService->detect_mime($file['tmp_name']);
             if ($mime_type !== 'image/svg+xml') {
-                return new WP_Error('invalid_file_type', __('Invalid file type. Only SVG files are allowed.', 'omni-icon'), ['status' => 400]);
+                return new WP_Error('invalid_file_type', __('Invalid file type. Only SVG files are allowed.', 'jooosi-icon'), ['status' => 400]);
             }
             // Upload and sanitize the icon
             $result = $this->localIconService->upload_svg($file, $icon_set);
@@ -138,7 +138,7 @@ final class LocalIconController
         $icon_name = $request->get_param('icon_name');
         $target_set = $request->get_param('target_set');
         if (empty($icon_name)) {
-            return new WP_Error('missing_icon_name', __('Icon name is required', 'omni-icon'), ['status' => 400]);
+            return new WP_Error('missing_icon_name', __('Icon name is required', 'jooosi-icon'), ['status' => 400]);
         }
         $result = $this->localIconService->move_icon($icon_name, $target_set);
         if (!$result['success']) {
@@ -157,7 +157,7 @@ final class LocalIconController
     {
         $set_name = $request->get_param('set_name');
         if (empty($set_name)) {
-            return new WP_Error('missing_set_name', __('Set name is required', 'omni-icon'), ['status' => 400]);
+            return new WP_Error('missing_set_name', __('Set name is required', 'jooosi-icon'), ['status' => 400]);
         }
         $result = $this->localIconService->create_set($set_name);
         if (!$result['success']) {
@@ -177,7 +177,7 @@ final class LocalIconController
         $old_name = $request->get_param('set_name');
         $new_name = $request->get_param('new_name');
         if (empty($new_name)) {
-            return new WP_Error('missing_new_name', __('New name is required', 'omni-icon'), ['status' => 400]);
+            return new WP_Error('missing_new_name', __('New name is required', 'jooosi-icon'), ['status' => 400]);
         }
         $result = $this->localIconService->rename_set($old_name, $new_name);
         if (!$result['success']) {
@@ -195,7 +195,7 @@ final class LocalIconController
     public function clear_cache(WP_REST_Request $request): WP_REST_Response|WP_Error
     {
         $this->localIconService->clear_cache();
-        return new WP_REST_Response(['success' => \true, 'message' => __('Cache cleared successfully', 'omni-icon')]);
+        return new WP_REST_Response(['success' => \true, 'message' => __('Cache cleared successfully', 'jooosi-icon')]);
     }
     /**
      * Delete a custom icon

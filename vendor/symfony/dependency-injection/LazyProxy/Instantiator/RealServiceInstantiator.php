@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\LazyProxy\Instantiator;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\LazyProxy\Instantiator;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
 /**
  * Noop proxy instantiator - produces the real service instead of a proxy instance.
  *

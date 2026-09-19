@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\HttpClient;
+namespace JooosiIconDeps\Symfony\Contracts\HttpClient;
 
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Test\HttpClientTestCase;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Test\HttpClientTestCase;
 /**
  * Provides flexible methods for requesting HTTP resources synchronously or asynchronously.
  *

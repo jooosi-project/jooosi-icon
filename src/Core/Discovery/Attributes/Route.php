@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery\Attributes;
+namespace JooosiIcon\Core\Discovery\Attributes;
 
 use Attribute;
 #[Attribute(Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]

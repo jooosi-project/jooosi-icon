@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter;
+namespace JooosiIconDeps\Symfony\Component\VarExporter;
 
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\Hydrator as InternalHydrator;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\Hydrator as InternalHydrator;
 /**
  * Utility class to hydrate the properties of an object.
  *

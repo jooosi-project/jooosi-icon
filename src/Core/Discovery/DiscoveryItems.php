@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
 use ArrayIterator;
 use IteratorAggregate;
@@ -10,7 +10,7 @@ final class DiscoveryItems implements IteratorAggregate
 {
     /** @var array<string, array<mixed>> */
     private array $items = [];
-    public function add(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, mixed $item): void
+    public function add(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, mixed $item): void
     {
         $locationKey = $discoveryLocation->namespace . '|' . $discoveryLocation->path;
         if (!isset($this->items[$locationKey])) {

@@ -8,18 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Psr\Log\LoggerAwareInterface;
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\AsyncContext;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\AsyncResponse;
-use OmniIconDeps\Symfony\Component\HttpFoundation\IpUtils;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ChunkInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Psr\Log\LoggerAwareInterface;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\AsyncContext;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\AsyncResponse;
+use JooosiIconDeps\Symfony\Component\HttpFoundation\IpUtils;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ChunkInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 /**
  * Decorator that blocks requests to private networks by default.
  *

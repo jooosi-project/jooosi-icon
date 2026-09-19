@@ -8,24 +8,24 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Loader;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Loader;
 
-use OmniIconDeps\Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
-use OmniIconDeps\Symfony\Component\Config\Exception\LoaderLoadException;
-use OmniIconDeps\Symfony\Component\Config\FileLocatorInterface;
-use OmniIconDeps\Symfony\Component\Config\Loader\FileLoader as BaseFileLoader;
-use OmniIconDeps\Symfony\Component\Config\Loader\Loader;
-use OmniIconDeps\Symfony\Component\Config\Resource\GlobResource;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Alias;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\AsAlias;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\Exclude;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\When;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\RegisterAutoconfigureAttributesPass;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
+use JooosiIconDeps\Symfony\Component\Config\Exception\LoaderLoadException;
+use JooosiIconDeps\Symfony\Component\Config\FileLocatorInterface;
+use JooosiIconDeps\Symfony\Component\Config\Loader\FileLoader as BaseFileLoader;
+use JooosiIconDeps\Symfony\Component\Config\Loader\Loader;
+use JooosiIconDeps\Symfony\Component\Config\Resource\GlobResource;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Alias;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\AsAlias;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\Exclude;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\When;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\RegisterAutoconfigureAttributesPass;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
 /**
  * FileLoader is the abstract class used by all built-in loaders that are file based.
  *
@@ -114,7 +114,7 @@ abstract class FileLoader extends BaseFileLoader
             foreach (['Arguments', 'Properties', 'MethodCalls', 'Configurator', 'Factory', 'Bindings'] as $key) {
                 $serialized = serialize($prototype->{'get' . $key}());
                 if (strpos($serialized, 'O:48:"Symfony\Component\DependencyInjection\Definition"') || strpos($serialized, 'O:53:"Symfony\Component\DependencyInjection\ChildDefinition"')) {
-                    $getPrototype = static fn() => $getPrototype()->{'set' . $key}(unserialize($serialized));
+                    $getPrototype = static fn() => $getPrototype()->{'set' . $key}(unserialize($serialized, ['allowed_classes' => \true]));
                 }
             }
         }

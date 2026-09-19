@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection;
 
-use OmniIconDeps\Psr\Container\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use JooosiIconDeps\Psr\Container\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 /**
  * Turns public and "container.reversible" services back to their ids.
  *

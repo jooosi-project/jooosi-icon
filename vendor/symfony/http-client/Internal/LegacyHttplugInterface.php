@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Internal;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Internal;
 
-use OmniIconDeps\Http\Client\HttpClient;
-use OmniIconDeps\Http\Message\RequestFactory;
-use OmniIconDeps\Http\Message\StreamFactory;
-use OmniIconDeps\Http\Message\UriFactory;
+use JooosiIconDeps\Http\Client\HttpClient;
+use JooosiIconDeps\Http\Message\RequestFactory;
+use JooosiIconDeps\Http\Message\StreamFactory;
+use JooosiIconDeps\Http\Message\UriFactory;
 if (interface_exists(RequestFactory::class)) {
     /**
      * @internal

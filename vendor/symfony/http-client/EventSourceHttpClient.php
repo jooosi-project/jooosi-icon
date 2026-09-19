@@ -8,18 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\DataChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\ServerSentEvent;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\EventSourceException;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\AsyncContext;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\AsyncResponse;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ChunkInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\DataChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\ServerSentEvent;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\EventSourceException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\AsyncContext;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\AsyncResponse;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ChunkInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 /**
  * @author Antoine Bluchet <soyuka@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>
@@ -47,6 +47,7 @@ final class EventSourceHttpClient implements HttpClientInterface, ResetInterface
             public ?string $lastEventId = null;
             public float $reconnectionTime;
             public ?float $lastError = null;
+            public bool $firstChunkSeen = \false;
         };
         $state->reconnectionTime = $this->reconnectionTime;
         if ($accept = self::normalizeHeaders($options['headers'] ?? [])['accept'] ?? []) {
@@ -94,7 +95,10 @@ final class EventSourceHttpClient implements HttpClientInterface, ResetInterface
                 } else {
                     $context->passthru();
                 }
-                yield $chunk;
+                if (!$state->firstChunkSeen) {
+                    $state->firstChunkSeen = \true;
+                    yield $chunk;
+                }
                 return;
             }
             if ($chunk->isLast()) {

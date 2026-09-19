@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OmniIconDeps\\Psr\\Cache\\": "src\/"
+            "JooosiIconDeps\\Psr\\Cache\\": "src\/"
         }
     },
     "extra": {

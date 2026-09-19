@@ -8,18 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use OmniIconDeps\Symfony\Component\Config\Loader\ParamConfigurator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Alias;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\AbstractArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Parameter;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\Expression;
+use JooosiIconDeps\Symfony\Component\Config\Loader\ParamConfigurator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Alias;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\AbstractArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Parameter;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\Expression;
 abstract class AbstractConfigurator
 {
     public const FACTORY = 'unknown';

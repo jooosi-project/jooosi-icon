@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\Part;
+namespace JooosiIconDeps\Symfony\Component\Mime\Part;
 
-use OmniIconDeps\Symfony\Component\Mime\Message;
-use OmniIconDeps\Symfony\Component\Mime\RawMessage;
+use JooosiIconDeps\Symfony\Component\Mime\Message;
+use JooosiIconDeps\Symfony\Component\Mime\RawMessage;
 /**
  * @final
  *

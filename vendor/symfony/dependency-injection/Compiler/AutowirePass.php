@@ -8,23 +8,23 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Symfony\Component\Config\Resource\ClassExistenceResource;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\Autowire;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\AutowireCallable;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\MapDecorated;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\Target;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\AutowiringFailedException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\DependencyInjection\TypedReference;
-use OmniIconDeps\Symfony\Component\VarExporter\ProxyHelper;
+use JooosiIconDeps\Symfony\Component\Config\Resource\ClassExistenceResource;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\Autowire;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\AutowireCallable;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\MapDecorated;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\Target;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\AutowiringFailedException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\TypedReference;
+use JooosiIconDeps\Symfony\Component\VarExporter\ProxyHelper;
 /**
  * Inspects existing service definitions and wires the autowired ones using the type hints of their classes.
  *
@@ -87,7 +87,12 @@ class AutowirePass extends AbstractRecursivePass
     protected function processValue(mixed $value, bool $isRoot = \false): mixed
     {
         if ($value instanceof Autowire) {
-            return $this->processValue($this->container->getParameterBag()->resolveValue($value->value));
+            $value = $this->processValue($this->container->getParameterBag()->resolveValue($value->value));
+            // count env vars referenced by the attribute right away, so that removing the
+            // owning service (e.g. unused with an unrelated autowiring error) does not later
+            // report the env var as never used
+            $this->container->resolveEnvPlaceholders($value);
+            return $value;
         }
         if ($value instanceof AutowireDecorated || $value instanceof MapDecorated) {
             $definition = $this->container->getDefinition($this->currentId);

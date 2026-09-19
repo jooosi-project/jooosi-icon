@@ -1,13 +1,13 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery\Attributes;
+namespace JooosiIcon\Core\Discovery\Attributes;
 
 use Attribute;
 #[Attribute(Attribute::TARGET_CLASS)]
 final class Controller
 {
-    public function __construct(public string $namespace = 'omni-icon/v1', public string $prefix = '', public array $middleware = [])
+    public function __construct(public string $namespace = 'jooosi-icon/v1', public string $prefix = '', public array $middleware = [])
     {
     }
 }

@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\DataChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\LastChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ChunkInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\DataChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\LastChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ChunkInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * A DTO to work with AsyncResponse.
  *

@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection;
 
-use OmniIconDeps\Psr\Cache\CacheItemPoolInterface;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\ExpressionLanguage as BaseExpressionLanguage;
+use JooosiIconDeps\Psr\Cache\CacheItemPoolInterface;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\ExpressionLanguage as BaseExpressionLanguage;
 if (!class_exists(BaseExpressionLanguage::class)) {
     return;
 }

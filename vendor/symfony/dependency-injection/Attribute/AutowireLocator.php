@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Attribute;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\TypedReference;
-use OmniIconDeps\Symfony\Contracts\Service\Attribute\SubscribedService;
-use OmniIconDeps\Symfony\Contracts\Service\ServiceSubscriberInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\TypedReference;
+use JooosiIconDeps\Symfony\Contracts\Service\Attribute\SubscribedService;
+use JooosiIconDeps\Symfony\Contracts\Service\ServiceSubscriberInterface;
 /**
  * Autowires a service locator based on a tag name or an explicit list of key => service-type pairs.
  */

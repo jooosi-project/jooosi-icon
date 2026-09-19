@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter;
+namespace JooosiIconDeps\Symfony\Component\VarExporter;
 
-use OmniIconDeps\Symfony\Component\Serializer\Attribute\Ignore;
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\Hydrator;
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectRegistry as Registry;
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectState;
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectTrait;
+use JooosiIconDeps\Symfony\Component\Serializer\Attribute\Ignore;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\Hydrator;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectRegistry as Registry;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectState;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectTrait;
 trait LazyGhostTrait
 {
     use LazyObjectTrait;

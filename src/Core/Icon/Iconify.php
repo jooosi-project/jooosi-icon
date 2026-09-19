@@ -9,17 +9,17 @@ declare (strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Modified for OmniIcon WordPress plugin.
+ * Modified for JooosiIcon WordPress plugin.
  */
-namespace OmniIcon\Core\Icon;
+namespace JooosiIcon\Core\Icon;
 
-use OmniIconDeps\Psr\Cache\CacheItemPoolInterface;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\JsonException;
-use OmniIconDeps\Symfony\Component\HttpClient\HttpClient;
-use OmniIconDeps\Symfony\Component\HttpClient\ScopingHttpClient;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIcon\Core\Icon\Exception\HttpClientNotInstalledException;
-use OmniIcon\Core\Icon\Exception\IconNotFoundException;
+use JooosiIconDeps\Psr\Cache\CacheItemPoolInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\JsonException;
+use JooosiIconDeps\Symfony\Component\HttpClient\HttpClient;
+use JooosiIconDeps\Symfony\Component\HttpClient\ScopingHttpClient;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIcon\Core\Icon\Exception\HttpClientNotInstalledException;
+use JooosiIcon\Core\Icon\Exception\IconNotFoundException;
 /**
  * Client for fetching icons from Iconify API.
  *
@@ -47,7 +47,7 @@ final class Iconify
     {
         return $this->sets()[$prefix] ?? throw new \RuntimeException(\sprintf('The icon prefix "%s" does not exist on iconify.design.', $prefix));
     }
-    public function fetchIcon(string $prefix, string $name): \OmniIcon\Core\Icon\Icon
+    public function fetchIcon(string $prefix, string $name): \JooosiIcon\Core\Icon\Icon
     {
         if (!isset($this->sets()[$prefix])) {
             throw new IconNotFoundException(\sprintf('The icon "%s:%s" does not exist on iconify.design.', $prefix, $name));
@@ -70,7 +70,7 @@ final class Iconify
         }
         $height = $data['icons'][$name]['height'] ?? $data['height'] ?? $this->sets()[$prefix]['height'] ?? null;
         $width = $data['icons'][$name]['width'] ?? $data['width'] ?? $this->sets()[$prefix]['width'] ?? null;
-        return new \OmniIcon\Core\Icon\Icon($data['icons'][$name]['body'], ['xmlns' => self::ATTR_XMLNS_URL, 'viewBox' => \sprintf('0 0 %s %s', $width ?? $height ?? self::DEFAULT_ICON_WIDTH, $height ?? $width ?? self::DEFAULT_ICON_HEIGHT)]);
+        return new \JooosiIcon\Core\Icon\Icon($data['icons'][$name]['body'], ['xmlns' => self::ATTR_XMLNS_URL, 'viewBox' => \sprintf('0 0 %s %s', $width ?? $height ?? self::DEFAULT_ICON_WIDTH, $height ?? $width ?? self::DEFAULT_ICON_HEIGHT)]);
     }
     public function fetchIcons(string $prefix, array $names): array
     {
@@ -99,7 +99,7 @@ final class Iconify
             }
             $height = $iconData['height'] ?? $data['height'] ??= $this->sets()[$prefix]['height'] ?? null;
             $width = $iconData['width'] ?? $data['width'] ??= $this->sets()[$prefix]['width'] ?? null;
-            $icons[$iconName] = new \OmniIcon\Core\Icon\Icon($iconData['body'], ['xmlns' => self::ATTR_XMLNS_URL, 'viewBox' => \sprintf('0 0 %d %d', $width ?? $height ?? self::DEFAULT_ICON_WIDTH, $height ?? $width ?? self::DEFAULT_ICON_HEIGHT)]);
+            $icons[$iconName] = new \JooosiIcon\Core\Icon\Icon($iconData['body'], ['xmlns' => self::ATTR_XMLNS_URL, 'viewBox' => \sprintf('0 0 %d %d', $width ?? $height ?? self::DEFAULT_ICON_WIDTH, $height ?? $width ?? self::DEFAULT_ICON_HEIGHT)]);
         }
         return $icons;
     }

@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache;
+namespace JooosiIconDeps\Symfony\Component\Cache;
 
-use OmniIconDeps\Psr\Cache\CacheException as Psr6CacheException;
-use OmniIconDeps\Psr\Cache\CacheItemPoolInterface;
-use OmniIconDeps\Psr\SimpleCache\CacheException as SimpleCacheException;
-use OmniIconDeps\Psr\SimpleCache\CacheInterface;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\AdapterInterface;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\Traits\ProxyTrait;
-use OmniIconDeps\Symfony\Contracts\Cache\ItemInterface;
+use JooosiIconDeps\Psr\Cache\CacheException as Psr6CacheException;
+use JooosiIconDeps\Psr\Cache\CacheItemPoolInterface;
+use JooosiIconDeps\Psr\SimpleCache\CacheException as SimpleCacheException;
+use JooosiIconDeps\Psr\SimpleCache\CacheInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\AdapterInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\ProxyTrait;
+use JooosiIconDeps\Symfony\Contracts\Cache\ItemInterface;
 /**
  * Turns a PSR-6 cache into a PSR-16 one.
  *
@@ -130,12 +130,12 @@ class Psr16Cache implements CacheInterface, PruneableInterface, ResettableInterf
             foreach ($items as $key => $item) {
                 $values[$key] = $item->isHit() ? $item->get() : $default;
             }
-            return $values;
+            return $this->withRequestedKeys($keys, $values);
         }
         foreach ($items as $key => $item) {
             $values[$key] = $item->isHit() ? (self::$packCacheItem)($item) : $default;
         }
-        return $values;
+        return $this->withRequestedKeys($keys, $values);
     }
     public function setMultiple($values, $ttl = null): bool
     {
@@ -204,6 +204,23 @@ class Psr16Cache implements CacheInterface, PruneableInterface, ResettableInterf
             throw $e;
         } catch (Psr6CacheException $e) {
             throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+    private function withRequestedKeys(array $keys, array $values): iterable
+    {
+        foreach ($keys as $key) {
+            // PHP casts numeric strings to integers when they are used as array keys
+            if (\is_string($key) && $key === (string) (int) $key) {
+                return $this->yieldRequestedKeys($keys, $values);
+            }
+        }
+        return $values;
+    }
+    private function yieldRequestedKeys(array $keys, array $values): \Generator
+    {
+        $keys = array_combine($keys, $keys);
+        foreach ($values as $key => $value) {
+            yield $keys[$key] ?? $key => $value;
         }
     }
 }

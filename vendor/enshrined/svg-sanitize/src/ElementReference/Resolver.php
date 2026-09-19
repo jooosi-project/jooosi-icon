@@ -1,10 +1,10 @@
 <?php
 
-namespace OmniIconDeps\enshrined\svgSanitize\ElementReference;
+namespace JooosiIconDeps\enshrined\svgSanitize\ElementReference;
 
-use OmniIconDeps\enshrined\svgSanitize\data\XPath;
-use OmniIconDeps\enshrined\svgSanitize\Exceptions\NestingException;
-use OmniIconDeps\enshrined\svgSanitize\Helper;
+use JooosiIconDeps\enshrined\svgSanitize\data\XPath;
+use JooosiIconDeps\enshrined\svgSanitize\Exceptions\NestingException;
+use JooosiIconDeps\enshrined\svgSanitize\Helper;
 class Resolver
 {
     /**

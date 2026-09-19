@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Attribute;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class AsDecorator
 {

@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\Header;
+namespace JooosiIconDeps\Symfony\Component\Mime\Header;
 
-use OmniIconDeps\Symfony\Component\Mime\Address;
-use OmniIconDeps\Symfony\Component\Mime\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\Mime\Address;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\LogicException;
 /**
  * A collection of headers.
  *
@@ -148,7 +148,7 @@ final class Headers
         self::checkHeaderClass($header);
         $header->setMaxLineLength($this->lineLength);
         $name = strtolower($header->getName());
-        if (\in_array($name, self::UNIQUE_HEADERS, \true) && isset($this->headers[$name]) && \count($this->headers[$name]) > 0) {
+        if (\in_array($name, self::UNIQUE_HEADERS, \true) && isset($this->headers[$name]) && $this->headers[$name]) {
             throw new LogicException(\sprintf('Impossible to set header "%s" as it\'s already defined and must be unique.', $header->getName()));
         }
         $this->headers[$name][] = $header;

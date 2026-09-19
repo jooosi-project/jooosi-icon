@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps;
+namespace JooosiIconDeps;
 
 /*
  * This file is part of the Symfony package.

@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\HttpClient;
+namespace JooosiIconDeps\Symfony\Contracts\HttpClient;
 
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 /**
  * A (lazily retrieved) HTTP response.
  *

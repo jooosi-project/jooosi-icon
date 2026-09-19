@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\enshrined\svgSanitize\data;
+namespace JooosiIconDeps\enshrined\svgSanitize\data;
 
 /**
  * Class AttributeInterface

@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime;
+namespace JooosiIconDeps\Symfony\Component\Mime;
 
-use OmniIconDeps\Symfony\Component\Mime\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\Mime\Part\AbstractPart;
-use OmniIconDeps\Symfony\Component\Mime\Part\DataPart;
-use OmniIconDeps\Symfony\Component\Mime\Part\File;
-use OmniIconDeps\Symfony\Component\Mime\Part\Multipart\AlternativePart;
-use OmniIconDeps\Symfony\Component\Mime\Part\Multipart\MixedPart;
-use OmniIconDeps\Symfony\Component\Mime\Part\Multipart\RelatedPart;
-use OmniIconDeps\Symfony\Component\Mime\Part\TextPart;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\Mime\Part\AbstractPart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\DataPart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\File;
+use JooosiIconDeps\Symfony\Component\Mime\Part\Multipart\AlternativePart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\Multipart\MixedPart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\Multipart\RelatedPart;
+use JooosiIconDeps\Symfony\Component\Mime\Part\TextPart;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
@@ -419,6 +419,7 @@ class Email extends Message
             $names = array_filter(array_unique($names));
         }
         $otherParts = $relatedParts = [];
+        $cidReplacements = [];
         foreach ($this->attachments as $part) {
             foreach ($names as $name) {
                 if ($name !== $part->getName() && (!$part->hasContentId() || $name !== $part->getContentId())) {
@@ -427,14 +428,17 @@ class Email extends Message
                 if (isset($relatedParts[$name])) {
                     continue 2;
                 }
-                if ($name !== $part->getContentId()) {
-                    $html = str_replace('cid:' . $name, 'cid:' . $part->getContentId(), $html);
-                }
+                $cidReplacements['cid:' . $name] = 'cid:' . $part->getContentId();
                 $relatedParts[$name] = $part;
                 $part->setName($part->getName() ?? $part->getContentId())->asInline();
                 continue 2;
             }
             $otherParts[] = $part;
+        }
+        if ($cidReplacements) {
+            // all references are replaced at once as strtr() matches the longest name first and
+            // never replaces inside already substituted text, unlike successive str_replace() calls
+            $html = strtr($html, $cidReplacements);
         }
         if (null !== $htmlPart) {
             $htmlPart = new TextPart($html, $this->htmlCharset, 'html');

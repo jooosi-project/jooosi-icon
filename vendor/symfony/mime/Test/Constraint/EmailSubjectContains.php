@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\Test\Constraint;
+namespace JooosiIconDeps\Symfony\Component\Mime\Test\Constraint;
 
-use OmniIconDeps\PHPUnit\Framework\Constraint\Constraint;
-use OmniIconDeps\Symfony\Component\Mime\Email;
+use JooosiIconDeps\PHPUnit\Framework\Constraint\Constraint;
+use JooosiIconDeps\Symfony\Component\Mime\Email;
 final class EmailSubjectContains extends Constraint
 {
     public function __construct(private readonly string $expectedSubjectValue)

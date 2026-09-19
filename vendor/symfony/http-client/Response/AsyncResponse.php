@@ -8,17 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\ErrorChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\LastChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ChunkInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\ErrorChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\LastChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ChunkInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * Provides a single extension point to process a response's content stream.
  *
@@ -155,12 +155,17 @@ class AsyncResponse implements ResponseInterface, StreamableInterface
     public function __destruct()
     {
         $httpException = null;
-        if ($this->initializer && null === $this->getInfo('error') && !$this->hasThrown) {
-            try {
-                self::initialize($this, -0.0);
-                $this->getHeaders(\true);
-            } catch (HttpExceptionInterface $httpException) {
-                // no-op
+        if ($this->initializer && null === $this->getInfo('error')) {
+            if (!$this->hasThrown) {
+                try {
+                    self::initialize($this);
+                    $this->getHeaders(\true);
+                } catch (HttpExceptionInterface $httpException) {
+                    // no-op
+                }
+            } else {
+                // Ensure the wrapped response cannot throw on destruct either: an error was already thrown
+                $this->response->cancel();
             }
         }
         if ($this->passthru && null === $this->getInfo('error')) {
@@ -227,25 +232,31 @@ class AsyncResponse implements ResponseInterface, StreamableInterface
                         $r->content = fopen('php://memory', 'w+');
                     }
                 }
+                if (null !== $chunk->getError()) {
+                    // no-op
+                } elseif ($chunk->isFirst()) {
+                    $r->yieldedState = self::FIRST_CHUNK_YIELDED;
+                } elseif (null === $r->yieldedState && null === $chunk->getInformationalStatus()) {
+                    throw new \LogicException(\sprintf('Instance of "%s" is already consumed and cannot be managed by "%s". A decorated client should not call any of the response\'s methods in its "request()" method.', get_debug_type($response), $class ?? static::class));
+                }
                 $innerR = null;
                 if (!$r->passthru && !$innerR = null !== $chunk->getError() ? self::findInnerPassthru($r) : null) {
                     $r->stream = (static fn() => yield $chunk)();
                     yield from self::passthruStream($response, $r, $asyncMap);
                     continue;
                 }
-                if (null !== $chunk->getError()) {
-                    // no-op
-                } elseif ($chunk->isFirst()) {
-                    $r->yieldedState = self::FIRST_CHUNK_YIELDED;
-                } elseif (self::FIRST_CHUNK_YIELDED !== $r->yieldedState && null === $chunk->getInformationalStatus()) {
-                    throw new \LogicException(\sprintf('Instance of "%s" is already consumed and cannot be managed by "%s". A decorated client should not call any of the response\'s methods in its "request()" method.', get_debug_type($response), $class ?? static::class));
-                }
                 $innerR ??= $r;
                 foreach (self::passthru($innerR->client, $innerR, $chunk, $asyncMap) as $chunk) {
                     yield $r => $chunk;
                 }
-                if ($innerR->response !== $response && isset($asyncMap[$response])) {
-                    break;
+                if ($innerR->response !== $response) {
+                    if (null !== $innerR->shouldBuffer) {
+                        // nothing was ever yielded for the previous response: the new one didn't start yet
+                        $innerR->yieldedState = null;
+                    }
+                    if (isset($asyncMap[$response])) {
+                        break;
+                    }
                 }
             }
             if (null === $chunk) {

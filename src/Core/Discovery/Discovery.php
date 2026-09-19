@@ -1,12 +1,12 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
 interface Discovery
 {
-    public function discover(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \OmniIcon\Core\Discovery\ClassReflector $classReflector): void;
+    public function discover(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \JooosiIcon\Core\Discovery\ClassReflector $classReflector): void;
     public function apply(): void;
-    public function getItems(): \OmniIcon\Core\Discovery\DiscoveryItems;
-    public function setItems(\OmniIcon\Core\Discovery\DiscoveryItems $discoveryItems): void;
+    public function getItems(): \JooosiIcon\Core\Discovery\DiscoveryItems;
+    public function setItems(\JooosiIcon\Core\Discovery\DiscoveryItems $discoveryItems): void;
 }

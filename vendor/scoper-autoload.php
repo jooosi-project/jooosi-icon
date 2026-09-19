@@ -6,15 +6,19 @@ $loader = (static function () {
     // Backup the autoloaded Composer files
     $existingComposerAutoloadFiles = isset($GLOBALS['__composer_autoload_files']) ? $GLOBALS['__composer_autoload_files'] : [];
 
+    $GLOBALS['__composer_autoload_files'] = $GLOBALS['__composer_autoload_files_jooosi_icon_deps'] ?? [];
+
     $loader = require_once __DIR__.'/autoload.php';
     // Ensure InstalledVersions is available
     $installedVersionsPath = __DIR__.'/composer/InstalledVersions.php';
     if (file_exists($installedVersionsPath)) require_once $installedVersionsPath;
 
+    $GLOBALS['__composer_autoload_files_jooosi_icon_deps'] = $GLOBALS['__composer_autoload_files'];
+
     // Restore the backup and ensure the excluded files are properly marked as loaded
     $GLOBALS['__composer_autoload_files'] = \array_merge(
         $existingComposerAutoloadFiles,
-        \array_fill_keys(['b48cbeb76a71e226a23fa64ac2b94dc6', 'f598d06aa772fa33d905e87be6398fb1', '36dfd6ed9dd74e8062aa61f09caf8554', 'e69f7f6ee287b969198c3c9d6777bd38', '5928a00fa978807cf85d90ec3f4b0147', '0e6d7bf4a5811bfa5cf40c5ccd6fae6a', 'e4e9c4430b5a6c815e77a26074c8155a', '439927d75b11a5dc11560cd0ea0a9599', '662a729f963d39afe703c9d9b7ab4a8c', '349f46cdd3aa6f0d9979a148196c28e8', '54b9ab13bc86d8251a04a939888e357e', '299128432f1508b581080d7faecb94e6', 'b12cc48dd13968c20d14f4fdf56ced96', 'df0fb630b0bc80f94ae5f46644b0587b', '0f0a493ec6424b03b28812b12c3a3083', '2ce7b16f239603c90fab694e15bb9a83', '0728099c86c7da9b043674ffe354abee', 'd348f2569bd50bd17f658b9fced73856', '963ad795d6b67b0f3b5bdb455e2783ae', 'e071a82732d15e17758a292fa42671d2', '5d061a676f0194f3638848e71a903ec7', 'b2f9f3fd5c396f96fa6e1e2bd938d3d0'], true)
+        \array_fill_keys(['f598d06aa772fa33d905e87be6398fb1', 'b48cbeb76a71e226a23fa64ac2b94dc6', 'e69f7f6ee287b969198c3c9d6777bd38', '36dfd6ed9dd74e8062aa61f09caf8554', 'e4e9c4430b5a6c815e77a26074c8155a', '0e6d7bf4a5811bfa5cf40c5ccd6fae6a', '5928a00fa978807cf85d90ec3f4b0147', '439927d75b11a5dc11560cd0ea0a9599', '349f46cdd3aa6f0d9979a148196c28e8', '662a729f963d39afe703c9d9b7ab4a8c', '54b9ab13bc86d8251a04a939888e357e', 'df0fb630b0bc80f94ae5f46644b0587b', '0728099c86c7da9b043674ffe354abee', '5d061a676f0194f3638848e71a903ec7', '299128432f1508b581080d7faecb94e6', 'e071a82732d15e17758a292fa42671d2', '963ad795d6b67b0f3b5bdb455e2783ae', 'd348f2569bd50bd17f658b9fced73856', '2ce7b16f239603c90fab694e15bb9a83', 'b12cc48dd13968c20d14f4fdf56ced96', 'b2f9f3fd5c396f96fa6e1e2bd938d3d0', '0f0a493ec6424b03b28812b12c3a3083'], true)
     );
 
     return $loader;
@@ -29,76 +33,77 @@ if (!function_exists('humbug_phpscoper_expose_class')) {
         }
     }
 }
-humbug_phpscoper_expose_class('OMNI_ICON', 'OmniIconDeps\OMNI_ICON');
-humbug_phpscoper_expose_class('Normalizer', 'OmniIconDeps\Normalizer');
-humbug_phpscoper_expose_class('DateError', 'OmniIconDeps\DateError');
-humbug_phpscoper_expose_class('DateException', 'OmniIconDeps\DateException');
-humbug_phpscoper_expose_class('DateInvalidOperationException', 'OmniIconDeps\DateInvalidOperationException');
-humbug_phpscoper_expose_class('DateInvalidTimeZoneException', 'OmniIconDeps\DateInvalidTimeZoneException');
-humbug_phpscoper_expose_class('DateMalformedIntervalStringException', 'OmniIconDeps\DateMalformedIntervalStringException');
-humbug_phpscoper_expose_class('DateMalformedPeriodStringException', 'OmniIconDeps\DateMalformedPeriodStringException');
-humbug_phpscoper_expose_class('DateMalformedStringException', 'OmniIconDeps\DateMalformedStringException');
-humbug_phpscoper_expose_class('DateObjectError', 'OmniIconDeps\DateObjectError');
-humbug_phpscoper_expose_class('DateRangeError', 'OmniIconDeps\DateRangeError');
-humbug_phpscoper_expose_class('Override', 'OmniIconDeps\Override');
-humbug_phpscoper_expose_class('SQLite3Exception', 'OmniIconDeps\SQLite3Exception');
+humbug_phpscoper_expose_class('JOOOSI_ICON', 'JooosiIconDeps\JOOOSI_ICON');
+humbug_phpscoper_expose_class('Normalizer', 'JooosiIconDeps\Normalizer');
+humbug_phpscoper_expose_class('DateError', 'JooosiIconDeps\DateError');
+humbug_phpscoper_expose_class('DateException', 'JooosiIconDeps\DateException');
+humbug_phpscoper_expose_class('DateInvalidOperationException', 'JooosiIconDeps\DateInvalidOperationException');
+humbug_phpscoper_expose_class('DateInvalidTimeZoneException', 'JooosiIconDeps\DateInvalidTimeZoneException');
+humbug_phpscoper_expose_class('DateMalformedIntervalStringException', 'JooosiIconDeps\DateMalformedIntervalStringException');
+humbug_phpscoper_expose_class('DateMalformedPeriodStringException', 'JooosiIconDeps\DateMalformedPeriodStringException');
+humbug_phpscoper_expose_class('DateMalformedStringException', 'JooosiIconDeps\DateMalformedStringException');
+humbug_phpscoper_expose_class('DateObjectError', 'JooosiIconDeps\DateObjectError');
+humbug_phpscoper_expose_class('DateRangeError', 'JooosiIconDeps\DateRangeError');
+humbug_phpscoper_expose_class('Override', 'JooosiIconDeps\Override');
+humbug_phpscoper_expose_class('SQLite3Exception', 'JooosiIconDeps\SQLite3Exception');
+humbug_phpscoper_expose_class('ValueError', 'JooosiIconDeps\ValueError');
 
 // Function aliases. For more information see:
 // https://github.com/humbug/php-scoper/blob/master/docs/further-reading.md#function-aliases
-if (!function_exists('idn_to_ascii')) { function idn_to_ascii() { return \OmniIconDeps\idn_to_ascii(...func_get_args()); } }
-if (!function_exists('idn_to_utf8')) { function idn_to_utf8() { return \OmniIconDeps\idn_to_utf8(...func_get_args()); } }
-if (!function_exists('json_validate')) { function json_validate() { return \OmniIconDeps\json_validate(...func_get_args()); } }
-if (!function_exists('ldap_connect_wallet')) { function ldap_connect_wallet() { return \OmniIconDeps\ldap_connect_wallet(...func_get_args()); } }
-if (!function_exists('ldap_exop_sync')) { function ldap_exop_sync() { return \OmniIconDeps\ldap_exop_sync(...func_get_args()); } }
-if (!function_exists('mb_check_encoding')) { function mb_check_encoding() { return \OmniIconDeps\mb_check_encoding(...func_get_args()); } }
-if (!function_exists('mb_chr')) { function mb_chr() { return \OmniIconDeps\mb_chr(...func_get_args()); } }
-if (!function_exists('mb_convert_case')) { function mb_convert_case() { return \OmniIconDeps\mb_convert_case(...func_get_args()); } }
-if (!function_exists('mb_convert_encoding')) { function mb_convert_encoding() { return \OmniIconDeps\mb_convert_encoding(...func_get_args()); } }
-if (!function_exists('mb_convert_variables')) { function mb_convert_variables() { return \OmniIconDeps\mb_convert_variables(...func_get_args()); } }
-if (!function_exists('mb_decode_mimeheader')) { function mb_decode_mimeheader() { return \OmniIconDeps\mb_decode_mimeheader(...func_get_args()); } }
-if (!function_exists('mb_decode_numericentity')) { function mb_decode_numericentity() { return \OmniIconDeps\mb_decode_numericentity(...func_get_args()); } }
-if (!function_exists('mb_detect_encoding')) { function mb_detect_encoding() { return \OmniIconDeps\mb_detect_encoding(...func_get_args()); } }
-if (!function_exists('mb_detect_order')) { function mb_detect_order() { return \OmniIconDeps\mb_detect_order(...func_get_args()); } }
-if (!function_exists('mb_encode_mimeheader')) { function mb_encode_mimeheader() { return \OmniIconDeps\mb_encode_mimeheader(...func_get_args()); } }
-if (!function_exists('mb_encode_numericentity')) { function mb_encode_numericentity() { return \OmniIconDeps\mb_encode_numericentity(...func_get_args()); } }
-if (!function_exists('mb_encoding_aliases')) { function mb_encoding_aliases() { return \OmniIconDeps\mb_encoding_aliases(...func_get_args()); } }
-if (!function_exists('mb_get_info')) { function mb_get_info() { return \OmniIconDeps\mb_get_info(...func_get_args()); } }
-if (!function_exists('mb_http_input')) { function mb_http_input() { return \OmniIconDeps\mb_http_input(...func_get_args()); } }
-if (!function_exists('mb_http_output')) { function mb_http_output() { return \OmniIconDeps\mb_http_output(...func_get_args()); } }
-if (!function_exists('mb_internal_encoding')) { function mb_internal_encoding() { return \OmniIconDeps\mb_internal_encoding(...func_get_args()); } }
-if (!function_exists('mb_language')) { function mb_language() { return \OmniIconDeps\mb_language(...func_get_args()); } }
-if (!function_exists('mb_lcfirst')) { function mb_lcfirst() { return \OmniIconDeps\mb_lcfirst(...func_get_args()); } }
-if (!function_exists('mb_list_encodings')) { function mb_list_encodings() { return \OmniIconDeps\mb_list_encodings(...func_get_args()); } }
-if (!function_exists('mb_ltrim')) { function mb_ltrim() { return \OmniIconDeps\mb_ltrim(...func_get_args()); } }
-if (!function_exists('mb_ord')) { function mb_ord() { return \OmniIconDeps\mb_ord(...func_get_args()); } }
-if (!function_exists('mb_output_handler')) { function mb_output_handler() { return \OmniIconDeps\mb_output_handler(...func_get_args()); } }
-if (!function_exists('mb_parse_str')) { function mb_parse_str() { return \OmniIconDeps\mb_parse_str(...func_get_args()); } }
-if (!function_exists('mb_rtrim')) { function mb_rtrim() { return \OmniIconDeps\mb_rtrim(...func_get_args()); } }
-if (!function_exists('mb_scrub')) { function mb_scrub() { return \OmniIconDeps\mb_scrub(...func_get_args()); } }
-if (!function_exists('mb_str_pad')) { function mb_str_pad() { return \OmniIconDeps\mb_str_pad(...func_get_args()); } }
-if (!function_exists('mb_str_split')) { function mb_str_split() { return \OmniIconDeps\mb_str_split(...func_get_args()); } }
-if (!function_exists('mb_stripos')) { function mb_stripos() { return \OmniIconDeps\mb_stripos(...func_get_args()); } }
-if (!function_exists('mb_stristr')) { function mb_stristr() { return \OmniIconDeps\mb_stristr(...func_get_args()); } }
-if (!function_exists('mb_strlen')) { function mb_strlen() { return \OmniIconDeps\mb_strlen(...func_get_args()); } }
-if (!function_exists('mb_strpos')) { function mb_strpos() { return \OmniIconDeps\mb_strpos(...func_get_args()); } }
-if (!function_exists('mb_strrchr')) { function mb_strrchr() { return \OmniIconDeps\mb_strrchr(...func_get_args()); } }
-if (!function_exists('mb_strrichr')) { function mb_strrichr() { return \OmniIconDeps\mb_strrichr(...func_get_args()); } }
-if (!function_exists('mb_strripos')) { function mb_strripos() { return \OmniIconDeps\mb_strripos(...func_get_args()); } }
-if (!function_exists('mb_strrpos')) { function mb_strrpos() { return \OmniIconDeps\mb_strrpos(...func_get_args()); } }
-if (!function_exists('mb_strstr')) { function mb_strstr() { return \OmniIconDeps\mb_strstr(...func_get_args()); } }
-if (!function_exists('mb_strtolower')) { function mb_strtolower() { return \OmniIconDeps\mb_strtolower(...func_get_args()); } }
-if (!function_exists('mb_strtoupper')) { function mb_strtoupper() { return \OmniIconDeps\mb_strtoupper(...func_get_args()); } }
-if (!function_exists('mb_strwidth')) { function mb_strwidth() { return \OmniIconDeps\mb_strwidth(...func_get_args()); } }
-if (!function_exists('mb_substitute_character')) { function mb_substitute_character() { return \OmniIconDeps\mb_substitute_character(...func_get_args()); } }
-if (!function_exists('mb_substr')) { function mb_substr() { return \OmniIconDeps\mb_substr(...func_get_args()); } }
-if (!function_exists('mb_substr_count')) { function mb_substr_count() { return \OmniIconDeps\mb_substr_count(...func_get_args()); } }
-if (!function_exists('mb_trim')) { function mb_trim() { return \OmniIconDeps\mb_trim(...func_get_args()); } }
-if (!function_exists('mb_ucfirst')) { function mb_ucfirst() { return \OmniIconDeps\mb_ucfirst(...func_get_args()); } }
-if (!function_exists('normalizer_get_raw_decomposition')) { function normalizer_get_raw_decomposition() { return \OmniIconDeps\normalizer_get_raw_decomposition(...func_get_args()); } }
-if (!function_exists('normalizer_is_normalized')) { function normalizer_is_normalized() { return \OmniIconDeps\normalizer_is_normalized(...func_get_args()); } }
-if (!function_exists('normalizer_normalize')) { function normalizer_normalize() { return \OmniIconDeps\normalizer_normalize(...func_get_args()); } }
-if (!function_exists('str_decrement')) { function str_decrement() { return \OmniIconDeps\str_decrement(...func_get_args()); } }
-if (!function_exists('str_increment')) { function str_increment() { return \OmniIconDeps\str_increment(...func_get_args()); } }
-if (!function_exists('stream_context_set_options')) { function stream_context_set_options() { return \OmniIconDeps\stream_context_set_options(...func_get_args()); } }
+if (!function_exists('idn_to_ascii')) { function idn_to_ascii() { return \JooosiIconDeps\idn_to_ascii(...func_get_args()); } }
+if (!function_exists('idn_to_utf8')) { function idn_to_utf8() { return \JooosiIconDeps\idn_to_utf8(...func_get_args()); } }
+if (!function_exists('json_validate')) { function json_validate() { return \JooosiIconDeps\json_validate(...func_get_args()); } }
+if (!function_exists('ldap_connect_wallet')) { function ldap_connect_wallet() { return \JooosiIconDeps\ldap_connect_wallet(...func_get_args()); } }
+if (!function_exists('ldap_exop_sync')) { function ldap_exop_sync() { return \JooosiIconDeps\ldap_exop_sync(...func_get_args()); } }
+if (!function_exists('mb_check_encoding')) { function mb_check_encoding() { return \JooosiIconDeps\mb_check_encoding(...func_get_args()); } }
+if (!function_exists('mb_chr')) { function mb_chr() { return \JooosiIconDeps\mb_chr(...func_get_args()); } }
+if (!function_exists('mb_convert_case')) { function mb_convert_case() { return \JooosiIconDeps\mb_convert_case(...func_get_args()); } }
+if (!function_exists('mb_convert_encoding')) { function mb_convert_encoding() { return \JooosiIconDeps\mb_convert_encoding(...func_get_args()); } }
+if (!function_exists('mb_convert_variables')) { function mb_convert_variables() { return \JooosiIconDeps\mb_convert_variables(...func_get_args()); } }
+if (!function_exists('mb_decode_mimeheader')) { function mb_decode_mimeheader() { return \JooosiIconDeps\mb_decode_mimeheader(...func_get_args()); } }
+if (!function_exists('mb_decode_numericentity')) { function mb_decode_numericentity() { return \JooosiIconDeps\mb_decode_numericentity(...func_get_args()); } }
+if (!function_exists('mb_detect_encoding')) { function mb_detect_encoding() { return \JooosiIconDeps\mb_detect_encoding(...func_get_args()); } }
+if (!function_exists('mb_detect_order')) { function mb_detect_order() { return \JooosiIconDeps\mb_detect_order(...func_get_args()); } }
+if (!function_exists('mb_encode_mimeheader')) { function mb_encode_mimeheader() { return \JooosiIconDeps\mb_encode_mimeheader(...func_get_args()); } }
+if (!function_exists('mb_encode_numericentity')) { function mb_encode_numericentity() { return \JooosiIconDeps\mb_encode_numericentity(...func_get_args()); } }
+if (!function_exists('mb_encoding_aliases')) { function mb_encoding_aliases() { return \JooosiIconDeps\mb_encoding_aliases(...func_get_args()); } }
+if (!function_exists('mb_get_info')) { function mb_get_info() { return \JooosiIconDeps\mb_get_info(...func_get_args()); } }
+if (!function_exists('mb_http_input')) { function mb_http_input() { return \JooosiIconDeps\mb_http_input(...func_get_args()); } }
+if (!function_exists('mb_http_output')) { function mb_http_output() { return \JooosiIconDeps\mb_http_output(...func_get_args()); } }
+if (!function_exists('mb_internal_encoding')) { function mb_internal_encoding() { return \JooosiIconDeps\mb_internal_encoding(...func_get_args()); } }
+if (!function_exists('mb_language')) { function mb_language() { return \JooosiIconDeps\mb_language(...func_get_args()); } }
+if (!function_exists('mb_lcfirst')) { function mb_lcfirst() { return \JooosiIconDeps\mb_lcfirst(...func_get_args()); } }
+if (!function_exists('mb_list_encodings')) { function mb_list_encodings() { return \JooosiIconDeps\mb_list_encodings(...func_get_args()); } }
+if (!function_exists('mb_ltrim')) { function mb_ltrim() { return \JooosiIconDeps\mb_ltrim(...func_get_args()); } }
+if (!function_exists('mb_ord')) { function mb_ord() { return \JooosiIconDeps\mb_ord(...func_get_args()); } }
+if (!function_exists('mb_output_handler')) { function mb_output_handler() { return \JooosiIconDeps\mb_output_handler(...func_get_args()); } }
+if (!function_exists('mb_parse_str')) { function mb_parse_str() { return \JooosiIconDeps\mb_parse_str(...func_get_args()); } }
+if (!function_exists('mb_rtrim')) { function mb_rtrim() { return \JooosiIconDeps\mb_rtrim(...func_get_args()); } }
+if (!function_exists('mb_scrub')) { function mb_scrub() { return \JooosiIconDeps\mb_scrub(...func_get_args()); } }
+if (!function_exists('mb_str_pad')) { function mb_str_pad() { return \JooosiIconDeps\mb_str_pad(...func_get_args()); } }
+if (!function_exists('mb_str_split')) { function mb_str_split() { return \JooosiIconDeps\mb_str_split(...func_get_args()); } }
+if (!function_exists('mb_stripos')) { function mb_stripos() { return \JooosiIconDeps\mb_stripos(...func_get_args()); } }
+if (!function_exists('mb_stristr')) { function mb_stristr() { return \JooosiIconDeps\mb_stristr(...func_get_args()); } }
+if (!function_exists('mb_strlen')) { function mb_strlen() { return \JooosiIconDeps\mb_strlen(...func_get_args()); } }
+if (!function_exists('mb_strpos')) { function mb_strpos() { return \JooosiIconDeps\mb_strpos(...func_get_args()); } }
+if (!function_exists('mb_strrchr')) { function mb_strrchr() { return \JooosiIconDeps\mb_strrchr(...func_get_args()); } }
+if (!function_exists('mb_strrichr')) { function mb_strrichr() { return \JooosiIconDeps\mb_strrichr(...func_get_args()); } }
+if (!function_exists('mb_strripos')) { function mb_strripos() { return \JooosiIconDeps\mb_strripos(...func_get_args()); } }
+if (!function_exists('mb_strrpos')) { function mb_strrpos() { return \JooosiIconDeps\mb_strrpos(...func_get_args()); } }
+if (!function_exists('mb_strstr')) { function mb_strstr() { return \JooosiIconDeps\mb_strstr(...func_get_args()); } }
+if (!function_exists('mb_strtolower')) { function mb_strtolower() { return \JooosiIconDeps\mb_strtolower(...func_get_args()); } }
+if (!function_exists('mb_strtoupper')) { function mb_strtoupper() { return \JooosiIconDeps\mb_strtoupper(...func_get_args()); } }
+if (!function_exists('mb_strwidth')) { function mb_strwidth() { return \JooosiIconDeps\mb_strwidth(...func_get_args()); } }
+if (!function_exists('mb_substitute_character')) { function mb_substitute_character() { return \JooosiIconDeps\mb_substitute_character(...func_get_args()); } }
+if (!function_exists('mb_substr')) { function mb_substr() { return \JooosiIconDeps\mb_substr(...func_get_args()); } }
+if (!function_exists('mb_substr_count')) { function mb_substr_count() { return \JooosiIconDeps\mb_substr_count(...func_get_args()); } }
+if (!function_exists('mb_trim')) { function mb_trim() { return \JooosiIconDeps\mb_trim(...func_get_args()); } }
+if (!function_exists('mb_ucfirst')) { function mb_ucfirst() { return \JooosiIconDeps\mb_ucfirst(...func_get_args()); } }
+if (!function_exists('normalizer_get_raw_decomposition')) { function normalizer_get_raw_decomposition() { return \JooosiIconDeps\normalizer_get_raw_decomposition(...func_get_args()); } }
+if (!function_exists('normalizer_is_normalized')) { function normalizer_is_normalized() { return \JooosiIconDeps\normalizer_is_normalized(...func_get_args()); } }
+if (!function_exists('normalizer_normalize')) { function normalizer_normalize() { return \JooosiIconDeps\normalizer_normalize(...func_get_args()); } }
+if (!function_exists('str_decrement')) { function str_decrement() { return \JooosiIconDeps\str_decrement(...func_get_args()); } }
+if (!function_exists('str_increment')) { function str_increment() { return \JooosiIconDeps\str_increment(...func_get_args()); } }
+if (!function_exists('stream_context_set_options')) { function stream_context_set_options() { return \JooosiIconDeps\stream_context_set_options(...func_get_args()); } }
 
 return $loader;

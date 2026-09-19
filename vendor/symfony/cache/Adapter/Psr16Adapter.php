@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Psr\SimpleCache\CacheInterface;
-use OmniIconDeps\Symfony\Component\Cache\PruneableInterface;
-use OmniIconDeps\Symfony\Component\Cache\ResettableInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\ProxyTrait;
+use JooosiIconDeps\Psr\SimpleCache\CacheInterface;
+use JooosiIconDeps\Symfony\Component\Cache\PruneableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\ResettableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\ProxyTrait;
 /**
  * Turns a PSR-16 cache into a PSR-6 one.
  *

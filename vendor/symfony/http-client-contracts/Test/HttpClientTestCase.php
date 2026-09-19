@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\HttpClient\Test;
+namespace JooosiIconDeps\Symfony\Contracts\HttpClient\Test;
 
-use OmniIconDeps\PHPUnit\Framework\Attributes\RequiresPhpExtension;
-use OmniIconDeps\PHPUnit\Framework\Attributes\TestWith;
-use OmniIconDeps\PHPUnit\Framework\TestCase;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TimeoutExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use JooosiIconDeps\PHPUnit\Framework\Attributes\TestWith;
+use JooosiIconDeps\PHPUnit\Framework\TestCase;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TimeoutExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * A reference test suite for HttpClientInterface implementations.
  */
@@ -25,7 +25,7 @@ abstract class HttpClientTestCase extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
-        if (!\function_exists('ob_gzhandler') && !\function_exists('OmniIconDeps\ob_gzhandler')) {
+        if (!\function_exists('ob_gzhandler') && !\function_exists('JooosiIconDeps\ob_gzhandler')) {
             static::markTestSkipped('The "ob_gzhandler" function is not available.');
         }
         TestHttpServer::start();

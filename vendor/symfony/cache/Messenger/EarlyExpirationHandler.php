@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Messenger;
+namespace JooosiIconDeps\Symfony\Component\Cache\Messenger;
 
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ReverseContainer;
-use OmniIconDeps\Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ReverseContainer;
+use JooosiIconDeps\Symfony\Component\Messenger\Attribute\AsMessageHandler;
 /**
  * Computes cached values sent to a message bus.
  */

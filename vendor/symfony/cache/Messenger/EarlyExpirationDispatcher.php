@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Messenger;
+namespace JooosiIconDeps\Symfony\Component\Cache\Messenger;
 
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\AdapterInterface;
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ReverseContainer;
-use OmniIconDeps\Symfony\Component\Messenger\MessageBusInterface;
-use OmniIconDeps\Symfony\Component\Messenger\Stamp\HandledStamp;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\AdapterInterface;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ReverseContainer;
+use JooosiIconDeps\Symfony\Component\Messenger\MessageBusInterface;
+use JooosiIconDeps\Symfony\Component\Messenger\Stamp\HandledStamp;
 /**
  * Sends the computation of cached values to a message bus.
  */

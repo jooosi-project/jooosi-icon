@@ -1,15 +1,15 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Integration\Elementor\Widgets;
+namespace JooosiIcon\Integration\Elementor\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use OMNI_ICON;
-use OmniIcon\Plugin;
-use OmniIcon\Services\IconService;
+use JOOOSI_ICON;
+use JooosiIcon\Plugin;
+use JooosiIcon\Services\IconService;
 /**
- * Omni Icon widget for Elementor
+ * Jooosi Icon widget for Elementor
  *
  * Has feature parity with the Gutenberg Icon Block and Bricks Icon Element, supporting:
  * - Icon selection via prefix:name format (e.g., mdi:home, fa:github, lucide:star) and Icon Picker Modal / UI
@@ -17,7 +17,7 @@ use OmniIcon\Services\IconService;
  * - Custom color styling
  *
  * The widget extends Elementor's base Widget_Base class and renders icons using the
- * omni-icon web component.
+ * jooosi-icon web component.
  *
  * @see https://developers.elementor.com/docs/widgets/
  */
@@ -30,7 +30,7 @@ class IconWidget extends Widget_Base
      */
     public function get_name()
     {
-        return 'omni-icon';
+        return 'jooosi-icon';
     }
     /**
      * Get widget title.
@@ -39,7 +39,7 @@ class IconWidget extends Widget_Base
      */
     public function get_title()
     {
-        return esc_html__('Omni Icon', 'omni-icon');
+        return esc_html__('Jooosi Icon', 'jooosi-icon');
     }
     /**
      * Get widget icon.
@@ -57,7 +57,7 @@ class IconWidget extends Widget_Base
      */
     public function get_categories()
     {
-        return ['omni-icon', 'basic'];
+        return ['jooosi-icon', 'basic'];
     }
     /**
      * Get widget keywords.
@@ -66,7 +66,7 @@ class IconWidget extends Widget_Base
      */
     public function get_keywords()
     {
-        return ['icon', 'iconify', 'svg', 'omni', 'symbol'];
+        return ['icon', 'iconify', 'svg', 'jooosi', 'symbol'];
     }
     /**
      * Register widget controls.
@@ -74,22 +74,22 @@ class IconWidget extends Widget_Base
     protected function register_controls()
     {
         // Content Section
-        $this->start_controls_section('content_section', ['label' => esc_html__('Icon', 'omni-icon'), 'tab' => Controls_Manager::TAB_CONTENT]);
+        $this->start_controls_section('content_section', ['label' => esc_html__('Icon', 'jooosi-icon'), 'tab' => Controls_Manager::TAB_CONTENT]);
         // Icon Name control
-        $this->add_control('icon_name', ['label' => esc_html__('Icon Name', 'omni-icon'), 'type' => Controls_Manager::TEXT, 'default' => 'mdi:home', 'placeholder' => 'mdi:home', 'description' => esc_html__('Format: prefix:name (e.g., mdi:home, fa:github, lucide:star)', 'omni-icon'), 'dynamic' => ['active' => \true]]);
+        $this->add_control('icon_name', ['label' => esc_html__('Icon Name', 'jooosi-icon'), 'type' => Controls_Manager::TEXT, 'default' => 'mdi:home', 'placeholder' => 'mdi:home', 'description' => esc_html__('Format: prefix:name (e.g., mdi:home, fa:github, lucide:star)', 'jooosi-icon'), 'dynamic' => ['active' => \true]]);
         // Browse Icons Button
-        $this->add_control('icon_picker_button', ['type' => Controls_Manager::RAW_HTML, 'raw' => sprintf('<button type="button" class="oiel-icon-picker-button elementor-button elementor-button-default" style="width: 100%%; padding: 10px; margin-top: 10px;">%s</button>', esc_html__('Browse Icons', 'omni-icon')), 'content_classes' => 'oiel-icon-picker-wrapper']);
+        $this->add_control('icon_picker_button', ['type' => Controls_Manager::RAW_HTML, 'raw' => sprintf('<button type="button" class="oiel-icon-picker-button elementor-button elementor-button-default" style="width: 100%%; padding: 10px; margin-top: 10px;">%s</button>', esc_html__('Browse Icons', 'jooosi-icon')), 'content_classes' => 'oiel-icon-picker-wrapper']);
         $this->end_controls_section();
         // Style Section
-        $this->start_controls_section('style_section', ['label' => esc_html__('Style', 'omni-icon'), 'tab' => Controls_Manager::TAB_STYLE]);
+        $this->start_controls_section('style_section', ['label' => esc_html__('Style', 'jooosi-icon'), 'tab' => Controls_Manager::TAB_STYLE]);
         // Icon Color
-        $this->add_control('icon_color', ['label' => esc_html__('Color', 'omni-icon'), 'type' => Controls_Manager::COLOR, 'default' => 'currentColor', 'selectors' => ['{{WRAPPER}} omni-icon' => 'color: {{VALUE}};']]);
+        $this->add_control('icon_color', ['label' => esc_html__('Color', 'jooosi-icon'), 'type' => Controls_Manager::COLOR, 'default' => 'currentColor', 'selectors' => ['{{WRAPPER}} :is(jooosi-icon, omni-icon)' => 'color: {{VALUE}};']]);
         // Icon Width
-        $this->add_responsive_control('icon_width', ['label' => esc_html__('Width', 'omni-icon'), 'type' => Controls_Manager::SLIDER, 'size_units' => ['px', 'em', 'rem'], 'range' => ['px' => ['min' => 16, 'max' => 512, 'step' => 1], 'em' => ['min' => 1, 'max' => 32, 'step' => 0.1], 'rem' => ['min' => 1, 'max' => 32, 'step' => 0.1]], 'default' => ['unit' => 'px', 'size' => 24]]);
+        $this->add_responsive_control('icon_width', ['label' => esc_html__('Width', 'jooosi-icon'), 'type' => Controls_Manager::SLIDER, 'size_units' => ['px', 'em', 'rem'], 'range' => ['px' => ['min' => 16, 'max' => 512, 'step' => 1], 'em' => ['min' => 1, 'max' => 32, 'step' => 0.1], 'rem' => ['min' => 1, 'max' => 32, 'step' => 0.1]], 'default' => ['unit' => 'px', 'size' => 24]]);
         // Icon Height
-        $this->add_responsive_control('icon_height', ['label' => esc_html__('Height', 'omni-icon'), 'type' => Controls_Manager::SLIDER, 'size_units' => ['px', 'em', 'rem'], 'range' => ['px' => ['min' => 16, 'max' => 512, 'step' => 1], 'em' => ['min' => 1, 'max' => 32, 'step' => 0.1], 'rem' => ['min' => 1, 'max' => 32, 'step' => 0.1]], 'default' => ['unit' => 'px', 'size' => 24]]);
+        $this->add_responsive_control('icon_height', ['label' => esc_html__('Height', 'jooosi-icon'), 'type' => Controls_Manager::SLIDER, 'size_units' => ['px', 'em', 'rem'], 'range' => ['px' => ['min' => 16, 'max' => 512, 'step' => 1], 'em' => ['min' => 1, 'max' => 32, 'step' => 0.1], 'rem' => ['min' => 1, 'max' => 32, 'step' => 0.1]], 'default' => ['unit' => 'px', 'size' => 24]]);
         // Alignment
-        $this->add_responsive_control('align', ['label' => esc_html__('Alignment', 'omni-icon'), 'type' => Controls_Manager::CHOOSE, 'options' => ['left' => ['title' => esc_html__('Left', 'omni-icon'), 'icon' => 'eicon-text-align-left'], 'center' => ['title' => esc_html__('Center', 'omni-icon'), 'icon' => 'eicon-text-align-center'], 'right' => ['title' => esc_html__('Right', 'omni-icon'), 'icon' => 'eicon-text-align-right']], 'default' => 'left', 'selectors' => ['{{WRAPPER}}' => 'text-align: {{VALUE}};']]);
+        $this->add_responsive_control('align', ['label' => esc_html__('Alignment', 'jooosi-icon'), 'type' => Controls_Manager::CHOOSE, 'options' => ['left' => ['title' => esc_html__('Left', 'jooosi-icon'), 'icon' => 'eicon-text-align-left'], 'center' => ['title' => esc_html__('Center', 'jooosi-icon'), 'icon' => 'eicon-text-align-center'], 'right' => ['title' => esc_html__('Right', 'jooosi-icon'), 'icon' => 'eicon-text-align-right']], 'default' => 'left', 'selectors' => ['{{WRAPPER}}' => 'text-align: {{VALUE}};']]);
         $this->end_controls_section();
     }
     /**
@@ -102,7 +102,7 @@ class IconWidget extends Widget_Base
         // Show placeholder if no icon name is set
         if (empty($icon_name)) {
             echo '<div class="elementor-alert elementor-alert-info">';
-            echo esc_html__('Please enter an icon name in the format: prefix:name', 'omni-icon');
+            echo esc_html__('Please enter an icon name in the format: prefix:name', 'jooosi-icon');
             echo '</div>';
             return;
         }
@@ -137,14 +137,14 @@ class IconWidget extends Widget_Base
         $container = Plugin::get_instance()->container();
         $iconService = $container->get(IconService::class);
         $svg = $iconService->get_icon($icon_name, $attributes);
-        // Build attribute string for omni-icon element
+        // Build attribute string for jooosi-icon element
         $attrString = '';
         foreach ($attributes as $key => $value) {
             if ($value !== \false && $value !== null) {
                 $attrString .= sprintf(' %s="%s"', esc_attr($key), esc_attr($value));
             }
         }
-        // Render omni-icon with SSR support
+        // Render jooosi-icon with SSR support
         if ($svg !== null) {
             /*
              * Security: SVG content is sanitized by IconService->get_icon() using enshrined/svg-sanitize library.
@@ -152,10 +152,10 @@ class IconWidget extends Widget_Base
              * as it would break the SVG markup. We use render-time sanitization for defense-in-depth security.
              */
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG sanitized by enshrined/svg-sanitize, attributes escaped with esc_attr()
-            echo sprintf('<omni-icon data-prerendered%s>%s</omni-icon>', $attrString, $svg);
+            echo sprintf('<jooosi-icon data-prerendered%s>%s</jooosi-icon>', $attrString, $svg);
         } else {
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Attributes are escaped with esc_attr() above
-            echo sprintf('<omni-icon%s></omni-icon>', $attrString);
+            echo sprintf('<jooosi-icon%s></jooosi-icon>', $attrString);
         }
     }
     /**
@@ -171,7 +171,7 @@ class IconWidget extends Widget_Base
             #>
             <div class="elementor-alert elementor-alert-info">
                 <?php 
-        echo esc_html__('Please enter an icon name in the format: prefix:name', 'omni-icon');
+        echo esc_html__('Please enter an icon name in the format: prefix:name', 'jooosi-icon');
         ?>
             </div>
             <#
@@ -201,7 +201,7 @@ class IconWidget extends Widget_Base
         if (height) attrs += ` height="${height}${heightUnit}"`;
         if (color && color !== 'currentColor') attrs += ` color="${color}"`;
         #>
-        <omni-icon {{{ attrs }}}></omni-icon>
+        <jooosi-icon {{{ attrs }}}></jooosi-icon>
         <?php 
     }
 }

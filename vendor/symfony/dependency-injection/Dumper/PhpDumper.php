@@ -8,40 +8,40 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Dumper;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Dumper;
 
-use OmniIconDeps\Composer\Autoload\ClassLoader;
-use OmniIconDeps\Symfony\Component\Config\Resource\FileResource;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\AbstractArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\LazyClosure;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\CheckCircularReferencesPass;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Compiler\ServiceReferenceGraphNode;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Container;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\EnvParameterException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ExpressionLanguage;
-use OmniIconDeps\Symfony\Component\DependencyInjection\LazyProxy\PhpDumper\DumperInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\LazyProxy\PhpDumper\LazyServiceDumper;
-use OmniIconDeps\Symfony\Component\DependencyInjection\LazyProxy\PhpDumper\NullDumper;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Parameter;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ServiceLocator as BaseServiceLocator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\TypedReference;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Variable;
-use OmniIconDeps\Symfony\Component\ErrorHandler\DebugClassLoader;
-use OmniIconDeps\Symfony\Component\ExpressionLanguage\Expression;
+use JooosiIconDeps\Composer\Autoload\ClassLoader;
+use JooosiIconDeps\Symfony\Component\Config\Resource\FileResource;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\AbstractArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\IteratorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\LazyClosure;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\CheckCircularReferencesPass;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler\ServiceReferenceGraphNode;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Container;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\EnvParameterException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ExpressionLanguage;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\LazyProxy\PhpDumper\DumperInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\LazyProxy\PhpDumper\LazyServiceDumper;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\LazyProxy\PhpDumper\NullDumper;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Parameter;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ServiceLocator as BaseServiceLocator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\TypedReference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Variable;
+use JooosiIconDeps\Symfony\Component\ErrorHandler\DebugClassLoader;
+use JooosiIconDeps\Symfony\Component\ExpressionLanguage\Expression;
 /**
  * PhpDumper dumps a service container as a PHP class.
  *
@@ -80,6 +80,7 @@ class PhpDumper extends Dumper
     private array $inlinedRequires = [];
     private array $circularReferences = [];
     private array $singleUsePrivateIds = [];
+    private bool $sharesBeforeSetup = \false;
     private array $preload = [];
     private bool $addGetService = \false;
     private array $locatedIds = [];
@@ -220,9 +221,9 @@ class PhpDumper extends Dumper
             $fileTemplate = <<<EOF
 <?php
 
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\Argument\\RewindableGenerator;
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\ContainerInterface;
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\Exception\\RuntimeException;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\Argument\\RewindableGenerator;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\ContainerInterface;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\Exception\\RuntimeException;
 
 /*{$this->docStar}
  * @internal This class has been auto-generated by the Symfony Dependency Injection Component.
@@ -291,7 +292,7 @@ EOF;
 // This file has been auto-generated by the Symfony Dependency Injection Component
 // You can reference it in the "opcache.preload" php.ini setting on PHP >= 7.4 when preloading is desired
 
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\Dumper\\Preloader;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\Dumper\\Preloader;
 
 if (in_array(PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
     return;
@@ -398,7 +399,11 @@ EOF;
         foreach ($edges as $edge) {
             $node = $edge->getDestNode();
             $id = $node->getId();
-            if ($sourceId === $id && !$edge->isLazy() || !$node->getValue() instanceof Definition || $edge->isWeak()) {
+            // A direct self-reference is dumped as the local $instance, unless it comes from
+            // an expression: that compiles to a container lookup, which re-enters the factory
+            // unless the service is shared before its setup runs.
+            $selfReferenceIsInlined = !$edge->isFromExpression() || $edge->isReferencedByConstructor();
+            if ($sourceId === $id && !$edge->isLazy() && $selfReferenceIsInlined || !$node->getValue() instanceof Definition || $edge->isWeak()) {
                 continue;
             }
             if (isset($path[$id])) {
@@ -508,10 +513,11 @@ EOF;
             if (!$definition = $this->isProxyCandidate($definition, $asGhostObject, $id)) {
                 continue;
             }
-            if (isset($alreadyGenerated[$asGhostObject][$class = $definition->getClass()])) {
+            // the proxy class name derives from the "proxy" tags too, so one class can need several proxies
+            if (isset($alreadyGenerated[$asGhostObject][$class = $definition->getClass()][$tags = serialize($definition->getTag('proxy'))])) {
                 continue;
             }
-            $alreadyGenerated[$asGhostObject][$class] = \true;
+            $alreadyGenerated[$asGhostObject][$class][$tags] = \true;
             if ($this->container->isTrackingResources()) {
                 foreach (array_column($definition->getTag('proxy'), 'interface') ?: [$class] as $r) {
                     if (!$r = $this->container->getReflectionClass($r)) {
@@ -613,18 +619,24 @@ EOF;
             }
         }
         $shouldShareInline = !$isProxyCandidate && $definition->isShared() && !isset($this->singleUsePrivateIds[$id]) && null === $lastWitherIndex;
-        $serviceAccessor = \sprintf('$container->%s[%s]', $this->container->getDefinition($id)->isPublic() ? 'services' : 'privates', $this->doExport($id));
+        $serviceAccessor = $this->getServiceAccessor($id);
         $return = match (\true) {
             $shouldShareInline && !isset($this->circularReferences[$id]) && $isSimpleInstance => 'return ' . $serviceAccessor . ' = ',
-            $shouldShareInline && !isset($this->circularReferences[$id]) => $serviceAccessor . ' = $instance = ',
             $shouldShareInline || !$isSimpleInstance => '$instance = ',
             default => 'return ',
         };
         $code = $this->addNewInstance($definition, '        ' . $return, $id, $asGhostObject);
         if ($shouldShareInline && isset($this->circularReferences[$id])) {
+            // sharing before the service is fully configured is required to break the
+            // circular reference, but then a failing setter/configurator must evict it
+            $this->sharesBeforeSetup = !$isSimpleInstance;
             $code .= \sprintf("\n        if (isset(%s)) {\n            return %1\$s;\n        }\n\n        %s%1\$s = \$instance;\n", $serviceAccessor, $isSimpleInstance ? 'return ' : '');
         }
         return $code;
+    }
+    private function getServiceAccessor(string $id): string
+    {
+        return \sprintf('$container->%s[%s]', $this->container->getDefinition($id)->isPublic() ? 'services' : 'privates', $this->doExport($id));
     }
     private function isTrivialInstance(Definition $definition): bool
     {
@@ -682,6 +694,7 @@ EOF;
             if ($call[2] ?? \false) {
                 if (null !== $sharedNonLazyId && $lastWitherIndex === $k && 'instance' === $variableName) {
                     $witherAssignation = \sprintf('$container->%s[\'%s\'] = ', $definition->isPublic() ? 'services' : 'privates', $sharedNonLazyId);
+                    $this->sharesBeforeSetup = \true;
                 }
                 $witherAssignation .= \sprintf('$%s = ', $variableName);
             }
@@ -821,6 +834,11 @@ EOF;
                 $code .= $c;
             }
             $c = $this->addInlineService($id, $definition);
+            if ($this->sharesBeforeSetup) {
+                $this->sharesBeforeSetup = \false;
+                $c = implode("\n", array_map(static fn($line) => $line ? '    ' . $line : $line, explode("\n", $c)));
+                $c = \sprintf("        try {\n%s        } catch (\\Throwable \$e) {\n            unset(%s);\n\n            throw \$e;\n        }\n", $c, $this->getServiceAccessor($id));
+            }
             if (!$isProxyCandidate && !$definition->isShared()) {
                 $c = implode("\n", array_map(static fn($line) => $line ? '    ' . $line : $line, explode("\n", $c)));
                 $lazyloadInitialization = $definition->isLazy() ? ', $lazyLoad = true' : '';
@@ -927,13 +945,15 @@ EOTXT
                 $code .= "\n";
             }
             $code .= $this->addServiceProperties($inlineDef, $name);
-            $code .= $this->addServiceMethodCalls($inlineDef, $name, !$isProxyCandidate && $inlineDef->isShared() && !isset($this->singleUsePrivateIds[$id]) ? $id : null);
+            $code .= $this->addServiceMethodCalls($inlineDef, $name, !$isProxyCandidate && $inlineDef->isShared() && !isset($this->singleUsePrivateIds[$id]) && isset($this->circularReferences[$id]) ? $id : null);
             $code .= $this->addServiceConfigurator($inlineDef, $name);
         }
         if (!$isRootInstance || $isSimpleInstance) {
             return $code;
         }
-        return $code . "\n        return \$instance;\n";
+        // sharing only once the service is fully configured makes a construction failure atomic
+        $share = !$isProxyCandidate && $definition->isShared() && !isset($this->singleUsePrivateIds[$id]) && !isset($this->circularReferences[$id]);
+        return $code . "\n        return " . ($share ? $this->getServiceAccessor($id) . ' = ' : '') . "\$instance;\n";
     }
     private function addServices(?array &$services = null): string
     {
@@ -1047,14 +1067,14 @@ EOTXT
         $code = <<<EOF
 <?php
 {$namespaceLine}
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\Argument\\RewindableGenerator;
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\ContainerInterface;
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\Container;
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\Exception\\LogicException;
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\Exception\\ParameterNotFoundException;
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\Exception\\RuntimeException;
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\ParameterBag\\FrozenParameterBag;
-use OmniIconDeps\\Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBagInterface;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\Argument\\RewindableGenerator;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\ContainerInterface;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\Container;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\Exception\\LogicException;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\Exception\\ParameterNotFoundException;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\Exception\\RuntimeException;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\ParameterBag\\FrozenParameterBag;
+use JooosiIconDeps\\Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBagInterface;
 
 /*{$this->docStar}
  * @internal This class has been auto-generated by the Symfony Dependency Injection Component.
@@ -1661,7 +1681,7 @@ EOF;
             return $this->getExpressionLanguage()->compile((string) $value, ['container' => 'container']);
         } elseif ($value instanceof Parameter) {
             return $this->dumpParameter($value);
-        } elseif (\true === $interpolate && \is_string($value)) {
+        } elseif ($interpolate && \is_string($value)) {
             if (preg_match('/^%([^%]+)%$/', $value, $match)) {
                 // we do this to deal with non string values (Boolean, integer, ...)
                 // the preg_replace_callback converts them to strings
@@ -1818,7 +1838,7 @@ EOF;
     private function getExpressionLanguage(): ExpressionLanguage
     {
         if (!isset($this->expressionLanguage)) {
-            if (!class_exists(\OmniIconDeps\Symfony\Component\ExpressionLanguage\ExpressionLanguage::class)) {
+            if (!class_exists(\JooosiIconDeps\Symfony\Component\ExpressionLanguage\ExpressionLanguage::class)) {
                 throw new LogicException('Unable to use expressions as the Symfony ExpressionLanguage component is not installed. Try running "composer require symfony/expression-language".');
             }
             $providers = $this->container->getExpressionLanguageProviders();
@@ -1992,7 +2012,7 @@ EOF;
      */
     private static function stripComments(string $source): string
     {
-        if (!\function_exists('token_get_all') && !\function_exists('OmniIconDeps\token_get_all')) {
+        if (!\function_exists('token_get_all') && !\function_exists('JooosiIconDeps\token_get_all')) {
             return $source;
         }
         $rawChunk = '';

@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Symfony\Component\Cache\Exception\CacheException;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\DefaultMarshaller;
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\CacheException;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\DefaultMarshaller;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
 /**
  * @author Rob Frawley 2nd <rmf@src.run>
  * @author Nicolas Grekas <p@tchwork.com>
@@ -81,7 +81,11 @@ class MemcachedAdapter extends AbstractAdapter
      *
      * @throws \ErrorException When invalid options or servers are provided
      */
-    public static function createConnection(#[\SensitiveParameter] array|string $servers, array $options = []): \Memcached
+    public static function createConnection(
+        #[\SensitiveParameter]
+        array|string $servers,
+        array $options = []
+    ): \Memcached
     {
         if (\is_string($servers)) {
             $servers = [$servers];

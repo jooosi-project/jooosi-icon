@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection;
 
 trigger_deprecation('symfony/dependency-injection', '6.4', '"%s" is deprecated, use dependency injection instead.', ContainerAwareTrait::class);
 /**

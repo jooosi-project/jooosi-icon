@@ -8,17 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\DataCollector;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\DataCollector;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
-use OmniIconDeps\Symfony\Component\HttpClient\HttpClientTrait;
-use OmniIconDeps\Symfony\Component\HttpClient\TraceableHttpClient;
-use OmniIconDeps\Symfony\Component\HttpFoundation\Request;
-use OmniIconDeps\Symfony\Component\HttpFoundation\Response;
-use OmniIconDeps\Symfony\Component\HttpKernel\DataCollector\DataCollector;
-use OmniIconDeps\Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
-use OmniIconDeps\Symfony\Component\Process\Process;
-use OmniIconDeps\Symfony\Component\VarDumper\Caster\ImgStub;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Component\HttpClient\HttpClientTrait;
+use JooosiIconDeps\Symfony\Component\HttpClient\TraceableHttpClient;
+use JooosiIconDeps\Symfony\Component\HttpFoundation\Request;
+use JooosiIconDeps\Symfony\Component\HttpFoundation\Response;
+use JooosiIconDeps\Symfony\Component\HttpKernel\DataCollector\DataCollector;
+use JooosiIconDeps\Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
+use JooosiIconDeps\Symfony\Component\VarDumper\Caster\ImgStub;
 /**
  * @author Jérémy Romey <jeremy@free-agent.fr>
  */
@@ -141,16 +140,16 @@ final class HttpClientDataCollector extends DataCollector implements LateDataCol
             $port = parse_url($url, \PHP_URL_PORT) ?: (str_starts_with('http:', $url) ? 80 : 443);
             foreach ($trace['options']['resolve'] as $host => $ip) {
                 if (null !== $ip) {
-                    $command[] = '--resolve ' . escapeshellarg("{$host}:{$port}:{$ip}");
+                    $command[] = '--resolve ' . $this->escapeArgument("{$host}:{$port}:{$ip}");
                 }
             }
         }
         $dataArg = [];
         if ($json = $trace['options']['json'] ?? null) {
-            $dataArg[] = '--data-raw ' . $this->escapePayload(self::jsonEncode($json));
+            $dataArg[] = '--data-raw ' . $this->escapeArgument(self::jsonEncode($json));
         } elseif ($body = $trace['options']['body'] ?? null) {
             if (\is_string($body)) {
-                $dataArg[] = '--data-raw ' . $this->escapePayload($body);
+                $dataArg[] = '--data-raw ' . $this->escapeArgument($body);
             } elseif (\is_array($body)) {
                 try {
                     $body = self::normalizeBody($body);
@@ -161,7 +160,7 @@ final class HttpClientDataCollector extends DataCollector implements LateDataCol
                     return null;
                 }
                 foreach (explode('&', $body) as $value) {
-                    $dataArg[] = '--data-raw ' . $this->escapePayload(urldecode($value));
+                    $dataArg[] = '--data-raw ' . $this->escapeArgument(urldecode($value));
                 }
             } else {
                 return null;
@@ -183,25 +182,23 @@ final class HttpClientDataCollector extends DataCollector implements LateDataCol
             }
             if (preg_match('/^> ([A-Z]+)/', $line, $match)) {
                 $command[] = \sprintf('--request %s', $match[1]);
-                $command[] = \sprintf('--url %s', escapeshellarg($url));
+                $command[] = \sprintf('--url %s', $this->escapeArgument($url));
                 continue;
             }
-            $command[] = '--header ' . escapeshellarg($line);
+            $command[] = '--header ' . $this->escapeArgument($line);
         }
         if (null !== $dataArg) {
             $command[] = $dataArg;
         }
         return implode(" \\\n  ", $command);
     }
-    private function escapePayload(string $payload): string
+    /**
+     * The command joins its arguments with "\" line continuations, so it targets a POSIX
+     * shell on every platform. escapeshellarg() cannot be used: it drops bytes that are
+     * not valid in the current locale, and turns "%" into a space on Windows.
+     */
+    private function escapeArgument(string $value): string
     {
-        static $useProcess;
-        if ($useProcess ??= \function_exists('proc_open') && class_exists(Process::class)) {
-            return substr((new Process(['', $payload]))->getCommandLine(), 3);
-        }
-        if ('\\' === \DIRECTORY_SEPARATOR) {
-            return '"' . str_replace('"', '""', $payload) . '"';
-        }
-        return "'" . str_replace("'", "'\\''", $payload) . "'";
+        return "'" . str_replace("'", "'\\''", $value) . "'";
     }
 }

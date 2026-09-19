@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Internal;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Internal;
 
-use OmniIconDeps\Amp\Http\Client\Connection\Stream;
-use OmniIconDeps\Amp\Http\Client\EventListener;
-use OmniIconDeps\Amp\Http\Client\Request;
-use OmniIconDeps\Amp\Promise;
-use OmniIconDeps\Amp\Success;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Amp\Http\Client\Connection\Stream;
+use JooosiIconDeps\Amp\Http\Client\EventListener;
+use JooosiIconDeps\Amp\Http\Client\Request;
+use JooosiIconDeps\Amp\Promise;
+use JooosiIconDeps\Amp\Success;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *

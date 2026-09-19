@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\Psr\Log;
+namespace JooosiIconDeps\Psr\Log;
 
 /**
  * Basic Implementation of LoggerAwareInterface.

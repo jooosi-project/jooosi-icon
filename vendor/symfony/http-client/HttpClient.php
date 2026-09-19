@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Amp\Http\Client\Connection\ConnectionLimitingPool;
-use OmniIconDeps\Amp\Promise;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Amp\Http\Client\Connection\ConnectionLimitingPool;
+use JooosiIconDeps\Amp\Promise;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * A factory to instantiate the best possible HTTP client for the runtime.
  *

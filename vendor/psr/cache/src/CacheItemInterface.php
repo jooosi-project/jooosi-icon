@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\Psr\Cache;
+namespace JooosiIconDeps\Psr\Cache;
 
 /**
  * CacheItemInterface defines an interface for interacting with objects inside a cache.

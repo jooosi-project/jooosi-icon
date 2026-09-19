@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter\Internal;
+namespace JooosiIconDeps\Symfony\Component\VarExporter\Internal;
 
-use OmniIconDeps\Symfony\Component\VarExporter\Hydrator as PublicHydrator;
+use JooosiIconDeps\Symfony\Component\VarExporter\Hydrator as PublicHydrator;
 /**
  * Keeps the state of lazy objects.
  *

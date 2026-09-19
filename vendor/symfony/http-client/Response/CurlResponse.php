@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\FirstChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\InformationalChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\Canary;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\ClientState;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\CurlClientState;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\FirstChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\InformationalChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\Canary;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\ClientState;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\CurlClientState;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *
@@ -353,7 +353,15 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
                 $info['http_method'] = 'HEAD' === $info['http_method'] ? 'HEAD' : 'GET';
                 curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, $info['http_method']);
             }
-            if (null === $info['redirect_url'] = $resolveRedirect($ch, $location, $noContent)) {
+            try {
+                $info['redirect_url'] = $resolveRedirect($ch, $location, $noContent);
+            } catch (TransportException $e) {
+                // Exceptions must be reported through the response, they cannot escape a curl callback
+                $multi->handlesActivity[$id][] = null;
+                $multi->handlesActivity[$id][] = $e;
+                return 0;
+            }
+            if (null === $info['redirect_url']) {
                 $options['max_redirects'] = curl_getinfo($ch, \CURLINFO_REDIRECT_COUNT);
                 curl_setopt($ch, \CURLOPT_FOLLOWLOCATION, \false);
                 curl_setopt($ch, \CURLOPT_MAXREDIRS, $options['max_redirects']);

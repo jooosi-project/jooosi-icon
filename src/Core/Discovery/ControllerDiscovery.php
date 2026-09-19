@@ -1,17 +1,18 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
 defined('ABSPATH') || exit;
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Container\DependencyResolver;
-use OmniIcon\Core\Discovery\Attributes\Controller;
-use OmniIcon\Core\Discovery\Attributes\Route;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Container\DependencyResolver;
+use JooosiIcon\Core\Discovery\Attributes\Controller;
+use JooosiIcon\Core\Discovery\Attributes\Route;
 use WP_REST_Request;
-final class ControllerDiscovery implements \OmniIcon\Core\Discovery\Discovery
+final class ControllerDiscovery implements \JooosiIcon\Core\Discovery\Discovery
 {
-    use \OmniIcon\Core\Discovery\IsDiscovery;
+    use \JooosiIcon\Core\Discovery\IsDiscovery;
     /** @var array<string, array<string, mixed>> */
     private array $controllers = [];
     /** @var array<array<string, mixed>> */
@@ -19,10 +20,10 @@ final class ControllerDiscovery implements \OmniIcon\Core\Discovery\Discovery
     private DependencyResolver $dependencyResolver;
     public function __construct(private Container $container)
     {
-        $this->discoveryItems = new \OmniIcon\Core\Discovery\DiscoveryItems();
+        $this->discoveryItems = new \JooosiIcon\Core\Discovery\DiscoveryItems();
         $this->dependencyResolver = new DependencyResolver($container);
     }
-    public function discover(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \OmniIcon\Core\Discovery\ClassReflector $classReflector): void
+    public function discover(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \JooosiIcon\Core\Discovery\ClassReflector $classReflector): void
     {
         $controllerAttribute = $classReflector->getAttribute(Controller::class);
         if ($controllerAttribute === null) {
@@ -35,7 +36,7 @@ final class ControllerDiscovery implements \OmniIcon\Core\Discovery\Discovery
                 $routes[] = ['methodName' => $methodReflector->getName(), 'path' => $routeAttribute->path, 'methods' => $routeAttribute->methods, 'name' => $routeAttribute->name, 'middleware' => $routeAttribute->middleware ?? [], 'permission_callback' => $routeAttribute->permission_callback, 'args' => $routeAttribute->args ?? []];
             }
         }
-        $this->discoveryItems->add($discoveryLocation, ['className' => $classReflector->getName(), 'prefix' => $controllerAttribute->prefix ?? '', 'namespace' => $controllerAttribute->namespace ?? 'omni-icon/v1', 'middleware' => $controllerAttribute->middleware ?? [], 'routes' => $routes]);
+        $this->discoveryItems->add($discoveryLocation, ['className' => $classReflector->getName(), 'prefix' => $controllerAttribute->prefix ?? '', 'namespace' => $controllerAttribute->namespace ?? JOOOSI_ICON::REST_NAMESPACE, 'middleware' => $controllerAttribute->middleware ?? [], 'routes' => $routes]);
     }
     public function apply(): void
     {

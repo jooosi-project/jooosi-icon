@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php 
-namespace OmniIconDeps;
+namespace JooosiIconDeps;
 
 /*
  * Simple program that uses svg-sanitizer

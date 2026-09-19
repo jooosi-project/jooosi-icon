@@ -1,128 +1,133 @@
 {
-  "_IconItem-B2EBDE8j.js": {
-    "file": "assets/IconItem-B2EBDE8j.js",
+  "/home/runner/work/jooosi-icon/jooosi-icon/resources/integration/gutenberg/blocks/icon-block/iframe.css": {
+    "file": "assets/iframe-BX-nhKnP.css",
+    "src": "/home/runner/work/jooosi-icon/jooosi-icon/resources/integration/gutenberg/blocks/icon-block/iframe.css"
+  },
+  "/home/runner/work/jooosi-icon/jooosi-icon/resources/webcomponents/jooosi-icon.scss": {
+    "file": "assets/jooosi-icon-F-REsgnc.css",
+    "src": "/home/runner/work/jooosi-icon/jooosi-icon/resources/webcomponents/jooosi-icon.scss"
+  },
+  "_IconItem-pGilJWY4.js": {
+    "file": "assets/IconItem-pGilJWY4.js",
     "name": "IconItem",
     "imports": [
-      "_check-Bu5ZWIyZ.js"
+      "_check-BKtT3b-5.js"
     ]
   },
-  "_check-Bu5ZWIyZ.js": {
-    "file": "assets/check-Bu5ZWIyZ.js",
+  "_check-BKtT3b-5.js": {
+    "file": "assets/check-BKtT3b-5.js",
     "name": "check"
   },
   "_editor-m4MKDXlG.css": {
     "file": "assets/editor-m4MKDXlG.css",
     "src": "_editor-m4MKDXlG.css"
   },
-  "_preload-helper-4XLmkqGS.js": {
-    "file": "assets/preload-helper-4XLmkqGS.js",
+  "_preload-helper-BAlEavIC.js": {
+    "file": "assets/preload-helper-BAlEavIC.js",
     "name": "preload-helper"
   },
-  "_refresh-qV9H0Ate.js": {
-    "file": "assets/refresh-qV9H0Ate.js",
+  "_refresh-DMdExa4o.js": {
+    "file": "assets/refresh-DMdExa4o.js",
     "name": "refresh"
   },
   "resources/admin/admin-app/index.jsx": {
-    "file": "assets/admin/admin-app/index-DDXzULmR.js",
+    "file": "assets/admin/admin-app/index-CuBDlKI5.js",
     "name": "admin/admin-app/index",
     "src": "resources/admin/admin-app/index.jsx",
     "isEntry": true,
     "imports": [
-      "_check-Bu5ZWIyZ.js",
-      "_refresh-qV9H0Ate.js"
+      "_refresh-DMdExa4o.js",
+      "_check-BKtT3b-5.js"
     ],
     "css": [
-      "assets/index-CHIf_pop.css"
+      "assets/index-X9Tt8SOn.css"
     ]
   },
   "resources/integration/acf/editor.ts": {
-    "file": "assets/integration/acf/editor-DGB5BFY_.js",
+    "file": "assets/integration/acf/editor-CgPKoHSG.js",
     "name": "integration/acf/editor",
     "src": "resources/integration/acf/editor.ts",
     "isEntry": true,
     "imports": [
-      "_IconItem-B2EBDE8j.js",
-      "_check-Bu5ZWIyZ.js",
-      "_refresh-qV9H0Ate.js"
+      "_refresh-DMdExa4o.js",
+      "_IconItem-pGilJWY4.js"
     ],
     "css": [
-      "assets/editor-B6Xr8874.css"
+      "assets/editor-B41LYaMg.css"
     ]
   },
   "resources/integration/breakdance/editor.ts": {
-    "file": "assets/integration/breakdance/editor-Bw8ZtZia.js",
+    "file": "assets/integration/breakdance/editor-7OikeN7V.js",
     "name": "integration/breakdance/editor",
     "src": "resources/integration/breakdance/editor.ts",
     "isEntry": true,
     "imports": [
-      "_IconItem-B2EBDE8j.js",
-      "_check-Bu5ZWIyZ.js",
-      "_refresh-qV9H0Ate.js"
+      "_refresh-DMdExa4o.js",
+      "_IconItem-pGilJWY4.js",
+      "resources/webcomponents/jooosi-icon.ts",
+      "resources/webcomponents/jooosi-icon.ts"
     ],
     "css": [
       "assets/editor-U-mK1Xnb.css"
     ]
   },
   "resources/integration/bricks/editor.ts": {
-    "file": "assets/integration/bricks/editor-BOe8wAEM.js",
+    "file": "assets/integration/bricks/editor-BfR6dTdg.js",
     "name": "integration/bricks/editor",
     "src": "resources/integration/bricks/editor.ts",
     "isEntry": true,
     "imports": [
-      "_IconItem-B2EBDE8j.js",
-      "_check-Bu5ZWIyZ.js",
-      "_refresh-qV9H0Ate.js"
+      "_refresh-DMdExa4o.js",
+      "_IconItem-pGilJWY4.js"
     ],
     "css": [
       "assets/editor-BbAJQKNP.css"
     ]
   },
   "resources/integration/divi/editor.ts": {
-    "file": "assets/integration/divi/editor-DycR449B.js",
+    "file": "assets/integration/divi/editor-BGM6ZMvF.js",
     "name": "integration/divi/editor",
     "src": "resources/integration/divi/editor.ts",
     "isEntry": true,
     "imports": [
-      "_refresh-qV9H0Ate.js"
+      "_refresh-DMdExa4o.js"
     ],
     "css": [
-      "assets/editor-DE-uTIX2.css",
-      "assets/editor-m4MKDXlG.css",
-      "assets/integration/gutenberg/blocks/icon-block/css-BldsUdJp.css"
+      "assets/editor-BIgXI2re.css",
+      "assets/integration/gutenberg/blocks/icon-block/css-TNcpkVZo.css",
+      "assets/editor-m4MKDXlG.css"
     ]
   },
   "resources/integration/elementor/editor.ts": {
-    "file": "assets/integration/elementor/editor-CDxfrDjf.js",
+    "file": "assets/integration/elementor/editor-PdQTWePB.js",
     "name": "integration/elementor/editor",
     "src": "resources/integration/elementor/editor.ts",
     "isEntry": true,
     "imports": [
-      "_IconItem-B2EBDE8j.js",
-      "_check-Bu5ZWIyZ.js",
-      "_refresh-qV9H0Ate.js"
+      "_refresh-DMdExa4o.js",
+      "_IconItem-pGilJWY4.js"
     ],
     "css": [
       "assets/editor-m4MKDXlG.css"
     ]
   },
   "resources/integration/etch/editor-app.jsx": {
-    "file": "assets/editor-app-By3_GhwB.js",
+    "file": "assets/editor-app-Ddq8ZWAP.js",
     "name": "editor-app",
     "src": "resources/integration/etch/editor-app.jsx",
     "isDynamicEntry": true,
     "imports": [
-      "_IconItem-B2EBDE8j.js",
-      "_check-Bu5ZWIyZ.js",
-      "_refresh-qV9H0Ate.js"
+      "_refresh-DMdExa4o.js",
+      "_IconItem-pGilJWY4.js"
     ]
   },
   "resources/integration/etch/editor.ts": {
-    "file": "assets/integration/etch/editor-P735zK5M.js",
+    "file": "assets/integration/etch/editor-g8K0IGqh.js",
     "name": "integration/etch/editor",
     "src": "resources/integration/etch/editor.ts",
     "isEntry": true,
     "imports": [
-      "_preload-helper-4XLmkqGS.js"
+      "_preload-helper-BAlEavIC.js"
     ],
     "dynamicImports": [
       "resources/integration/etch/editor-app.jsx",
@@ -131,29 +136,29 @@
       "resources/integration/etch/modules/element-settings-panel.ts"
     ],
     "css": [
-      "assets/editor-Bc6tZcC2.css"
+      "assets/editor-CcWTS3FC.css"
     ]
   },
   "resources/integration/etch/modules/element-menu-button.ts": {
-    "file": "assets/element-menu-button-C11hQv_i.js",
+    "file": "assets/element-menu-button-CUgyNmW4.js",
     "name": "element-menu-button",
     "src": "resources/integration/etch/modules/element-menu-button.ts",
     "isDynamicEntry": true
   },
   "resources/integration/etch/modules/element-settings-panel.ts": {
-    "file": "assets/element-settings-panel-BT8eD30l.js",
+    "file": "assets/element-settings-panel-CyPvtSwR.js",
     "name": "element-settings-panel",
     "src": "resources/integration/etch/modules/element-settings-panel.ts",
     "isDynamicEntry": true
   },
   "resources/integration/etch/modules/webcomponent-injector.ts": {
-    "file": "assets/webcomponent-injector-DsXf2olS.js",
+    "file": "assets/webcomponent-injector-Da6Hoxhs.js",
     "name": "webcomponent-injector",
     "src": "resources/integration/etch/modules/webcomponent-injector.ts",
     "isDynamicEntry": true
   },
   "resources/integration/gutenberg/blocks/icon-block/editor.css": {
-    "file": "assets/integration/gutenberg/blocks/icon-block/css-BldsUdJp.css",
+    "file": "assets/integration/gutenberg/blocks/icon-block/css-TNcpkVZo.css",
     "name": "integration/gutenberg/blocks/icon-block/css",
     "names": [
       "integration/gutenberg/blocks/icon-block/css.css"
@@ -162,77 +167,83 @@
     "isEntry": true
   },
   "resources/integration/gutenberg/blocks/icon-block/iframe.ts": {
-    "file": "assets/integration/gutenberg/blocks/icon-block/iframe-D9xx5sJI.js",
+    "file": "assets/integration/gutenberg/blocks/icon-block/iframe-DKqebT4o.js",
     "name": "integration/gutenberg/blocks/icon-block/iframe",
     "src": "resources/integration/gutenberg/blocks/icon-block/iframe.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "resources/webcomponents/jooosi-icon.ts",
+      "resources/webcomponents/jooosi-icon.ts"
+    ],
+    "assets": [
+      "assets/jooosi-icon-F-REsgnc.css",
+      "assets/iframe-BX-nhKnP.css"
+    ]
   },
   "resources/integration/gutenberg/blocks/icon-block/index.jsx": {
-    "file": "assets/integration/gutenberg/blocks/icon-block-Bm4Gtphh.js",
+    "file": "assets/integration/gutenberg/blocks/icon-block-Db-oqOyo.js",
     "name": "integration/gutenberg/blocks/icon-block",
     "src": "resources/integration/gutenberg/blocks/icon-block/index.jsx",
     "isEntry": true,
     "imports": [
-      "_IconItem-B2EBDE8j.js",
-      "_check-Bu5ZWIyZ.js",
-      "_refresh-qV9H0Ate.js"
+      "_refresh-DMdExa4o.js",
+      "_IconItem-pGilJWY4.js"
     ],
     "css": [
-      "assets/integration/gutenberg/blocks/icon-block/css-BldsUdJp.css"
+      "assets/integration/gutenberg/blocks/icon-block/css-TNcpkVZo.css"
     ]
   },
   "resources/integration/livecanvas/editor.ts": {
-    "file": "assets/integration/livecanvas/editor-By6Se9TO.js",
+    "file": "assets/integration/livecanvas/editor-CbBD2Dft.js",
     "name": "integration/livecanvas/editor",
     "src": "resources/integration/livecanvas/editor.ts",
     "isEntry": true,
     "imports": [
-      "_IconItem-B2EBDE8j.js",
-      "_check-Bu5ZWIyZ.js",
-      "_refresh-qV9H0Ate.js"
+      "_refresh-DMdExa4o.js",
+      "_IconItem-pGilJWY4.js"
     ],
     "css": [
-      "assets/editor-iZs-igZA.css"
+      "assets/editor-CSLb0PXh.css"
     ]
   },
   "resources/webcomponents/ErrorObserver.css": {
-    "file": "assets/ErrorObserver-DlFfVRM7.css",
+    "file": "assets/ErrorObserver-Crdoy1Pv.css",
     "src": "resources/webcomponents/ErrorObserver.css"
   },
   "resources/webcomponents/ErrorObserver.ts": {
-    "file": "assets/ErrorObserver-C0eHL9P7.js",
+    "file": "assets/ErrorObserver-Db9zrwLv.js",
     "name": "ErrorObserver",
     "src": "resources/webcomponents/ErrorObserver.ts",
     "isDynamicEntry": true,
     "assets": [
-      "assets/ErrorObserver-DlFfVRM7.css"
+      "assets/ErrorObserver-Crdoy1Pv.css"
     ]
   },
-  "resources/webcomponents/OmniIconRenderer.ts": {
-    "file": "assets/OmniIconRenderer-CoEQCKwu.js",
-    "name": "OmniIconRenderer",
-    "src": "resources/webcomponents/OmniIconRenderer.ts",
+  "resources/webcomponents/JooosiIconRenderer.ts": {
+    "file": "assets/JooosiIconRenderer-Bky0MSHK.js",
+    "name": "JooosiIconRenderer",
+    "src": "resources/webcomponents/JooosiIconRenderer.ts",
     "isDynamicEntry": true,
     "imports": [
-      "_preload-helper-4XLmkqGS.js"
+      "_preload-helper-BAlEavIC.js"
     ],
     "dynamicImports": [
       "resources/webcomponents/ErrorObserver.ts"
     ]
   },
-  "resources/webcomponents/omni-icon.ts": {
-    "file": "assets/webcomponents/omni-icon-B5eF0mFf.js",
-    "name": "webcomponents/omni-icon",
-    "src": "resources/webcomponents/omni-icon.ts",
+  "resources/webcomponents/jooosi-icon.ts": {
+    "file": "assets/webcomponents/jooosi-icon-BXl09LM4.js",
+    "name": "webcomponents/jooosi-icon",
+    "src": "resources/webcomponents/jooosi-icon.ts",
     "isEntry": true,
     "imports": [
-      "_preload-helper-4XLmkqGS.js"
+      "_preload-helper-BAlEavIC.js"
     ],
     "dynamicImports": [
-      "resources/webcomponents/OmniIconRenderer.ts"
+      "resources/webcomponents/JooosiIconRenderer.ts"
     ],
     "css": [
-      "assets/omni-icon-QmP5ZpKA.css"
+      "assets/jooosi-icon-F-REsgnc.css"
     ]
   }
 }

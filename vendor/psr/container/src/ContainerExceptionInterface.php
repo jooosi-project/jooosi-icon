@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\Psr\Container;
+namespace JooosiIconDeps\Psr\Container;
 
 use Throwable;
 /**

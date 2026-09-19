@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Config;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Config;
 
-use OmniIconDeps\Symfony\Component\Config\Resource\ResourceInterface;
-use OmniIconDeps\Symfony\Component\Config\ResourceCheckerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\Config\Resource\ResourceInterface;
+use JooosiIconDeps\Symfony\Component\Config\ResourceCheckerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * @author Maxime Steinhausser <maxime.steinhausser@gmail.com>
  */

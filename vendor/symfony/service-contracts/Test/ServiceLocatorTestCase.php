@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\Service\Test;
+namespace JooosiIconDeps\Symfony\Contracts\Service\Test;
 
-use OmniIconDeps\PHPUnit\Framework\TestCase;
-use OmniIconDeps\Psr\Container\ContainerExceptionInterface;
-use OmniIconDeps\Psr\Container\ContainerInterface;
-use OmniIconDeps\Psr\Container\NotFoundExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ServiceLocatorTrait;
+use JooosiIconDeps\PHPUnit\Framework\TestCase;
+use JooosiIconDeps\Psr\Container\ContainerExceptionInterface;
+use JooosiIconDeps\Psr\Container\ContainerInterface;
+use JooosiIconDeps\Psr\Container\NotFoundExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ServiceLocatorTrait;
 abstract class ServiceLocatorTestCase extends TestCase
 {
     /**

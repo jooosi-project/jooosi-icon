@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Container;
+namespace JooosiIcon\Core\Container;
 
 use ReflectionClass;
 use ReflectionNamedType;
@@ -13,7 +13,7 @@ use RuntimeException;
  */
 final class DependencyResolver
 {
-    public function __construct(private \OmniIcon\Core\Container\Container $container)
+    public function __construct(private \JooosiIcon\Core\Container\Container $container)
     {
     }
     /**

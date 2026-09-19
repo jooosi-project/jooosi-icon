@@ -1,25 +1,27 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
-use OmniIcon\Core\Logger\DiscoveryLogger;
-use OmniIconDeps\Psr\Log\LoggerInterface;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Logger\DiscoveryLogger;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use OmniIconDeps\Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use OmniIconDeps\Symfony\Contracts\Cache\ItemInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use JooosiIconDeps\Symfony\Contracts\Cache\ItemInterface;
 use Throwable;
 final class DiscoveryCache
 {
     private FilesystemAdapter $cache;
     private LoggerInterface $logger;
-    public function __construct(private \OmniIcon\Core\Discovery\DiscoveryCacheStrategy $discoveryCacheStrategy)
+    public function __construct(private \JooosiIcon\Core\Discovery\DiscoveryCacheStrategy $discoveryCacheStrategy)
     {
         $uploadDir = wp_upload_dir();
-        $cacheDir = $uploadDir['basedir'] . '/omni-icon/cache/discovery/';
+        $storage = JOOOSI_ICON::resolve_upload_location($uploadDir);
+        $cacheDir = $storage['basedir'] . 'cache/discovery/';
         $this->cache = new FilesystemAdapter(
-            namespace: 'OMNI_ICON_discovery',
+            namespace: 'JOOOSI_ICON_discovery',
             defaultLifetime: 0,
             // No expiration, manual invalidation only
             directory: $cacheDir
@@ -28,7 +30,7 @@ final class DiscoveryCache
     }
     public function isEnabled(): bool
     {
-        return $this->discoveryCacheStrategy !== \OmniIcon\Core\Discovery\DiscoveryCacheStrategy::NONE;
+        return $this->discoveryCacheStrategy !== \JooosiIcon\Core\Discovery\DiscoveryCacheStrategy::NONE;
     }
     /**
      * Store discoveries in cache based on source type
@@ -36,13 +38,13 @@ final class DiscoveryCache
      * @param array<Discovery> $discoveries
      * @param string $source 'composer' or 'directory'
      */
-    public function store(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, array $discoveries, string $source): void
+    public function store(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, array $discoveries, string $source): void
     {
         if (!$this->isEnabled()) {
             return;
         }
         // In PARTIAL mode, only cache composer-scanned items
-        if ($this->discoveryCacheStrategy === \OmniIcon\Core\Discovery\DiscoveryCacheStrategy::PARTIAL && $source !== 'composer') {
+        if ($this->discoveryCacheStrategy === \JooosiIcon\Core\Discovery\DiscoveryCacheStrategy::PARTIAL && $source !== 'composer') {
             return;
         }
         $data = [];
@@ -66,13 +68,13 @@ final class DiscoveryCache
      * @param string $source 'composer' or 'directory'
      * @return array<string, mixed>|null
      */
-    public function restore(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, string $source): ?array
+    public function restore(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, string $source): ?array
     {
         if (!$this->isEnabled()) {
             return null;
         }
         // In PARTIAL mode, only restore composer-scanned items
-        if ($this->discoveryCacheStrategy === \OmniIcon\Core\Discovery\DiscoveryCacheStrategy::PARTIAL && $source !== 'composer') {
+        if ($this->discoveryCacheStrategy === \JooosiIcon\Core\Discovery\DiscoveryCacheStrategy::PARTIAL && $source !== 'composer') {
             return null;
         }
         $cacheKey = $this->getCacheKey($discoveryLocation, $source);
@@ -110,7 +112,7 @@ final class DiscoveryCache
             $this->logger->error('Failed to clear cache', ['component' => 'DiscoveryCache', 'exception' => $e]);
         }
     }
-    private function getCacheKey(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, string $source): string
+    private function getCacheKey(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, string $source): string
     {
         $hash = md5($discoveryLocation->namespace . $discoveryLocation->path);
         return sprintf('%s_%s', $hash, $source);
@@ -120,7 +122,7 @@ final class DiscoveryCache
      * 
      * @return array{files: array<string, int>, count: int}
      */
-    private function createManifest(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation): array
+    private function createManifest(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation): array
     {
         $files = [];
         if (!is_dir($discoveryLocation->path)) {
@@ -143,7 +145,7 @@ final class DiscoveryCache
      * 
      * @param array{files: array<string, int>, count: int} $cachedManifest
      */
-    private function isManifestStale(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, array $cachedManifest): bool
+    private function isManifestStale(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, array $cachedManifest): bool
     {
         if (!is_dir($discoveryLocation->path)) {
             return \false;

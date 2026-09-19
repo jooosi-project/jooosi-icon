@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter\Internal;
+namespace JooosiIconDeps\Symfony\Component\VarExporter\Internal;
 
-use OmniIconDeps\Symfony\Component\VarExporter\Exception\ClassNotFoundException;
+use JooosiIconDeps\Symfony\Component\VarExporter\Exception\ClassNotFoundException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *

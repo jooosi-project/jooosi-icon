@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Traits;
+namespace JooosiIconDeps\Symfony\Component\Cache\Traits;
 
-use OmniIconDeps\Symfony\Component\VarExporter\LazyObjectInterface;
-use OmniIconDeps\Symfony\Component\VarExporter\LazyProxyTrait;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Symfony\Component\VarExporter\LazyObjectInterface;
+use JooosiIconDeps\Symfony\Component\VarExporter\LazyProxyTrait;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 // Help opcache.preload discover always-needed symbols
-class_exists(\OmniIconDeps\Symfony\Component\VarExporter\Internal\Hydrator::class);
-class_exists(\OmniIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectRegistry::class);
-class_exists(\OmniIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectState::class);
+class_exists(\JooosiIconDeps\Symfony\Component\VarExporter\Internal\Hydrator::class);
+class_exists(\JooosiIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectRegistry::class);
+class_exists(\JooosiIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectState::class);
 /**
  * @internal
  */
@@ -29,9 +29,18 @@ class RedisCluster6Proxy extends \RedisCluster implements ResetInterface, LazyOb
         resetLazyObject as reset;
     }
     private const LAZY_OBJECT_PROPERTY_SCOPES = [];
-    public function __construct($name, $seeds = null, $timeout = 0, $read_timeout = 0, $persistent = \false, #[\SensitiveParameter] $auth = null, $context = null)
+    public function __construct(
+        $name,
+        $seeds = null,
+        $timeout = 0,
+        $read_timeout = 0,
+        $persistent = \false,
+        #[\SensitiveParameter]
+        $auth = null,
+        $context = null
+    )
     {
-        return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->__construct(...\func_get_args());
+        ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->__construct(...\func_get_args());
     }
     public function _compress($value): string
     {

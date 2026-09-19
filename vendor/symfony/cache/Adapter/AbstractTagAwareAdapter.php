@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Psr\Log\LoggerAwareInterface;
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\ResettableInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\AbstractAdapterTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
-use OmniIconDeps\Symfony\Contracts\Cache\TagAwareCacheInterface;
+use JooosiIconDeps\Psr\Log\LoggerAwareInterface;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\ResettableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\AbstractAdapterTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
+use JooosiIconDeps\Symfony\Contracts\Cache\TagAwareCacheInterface;
 /**
  * Abstract for native TagAware adapters.
  *

@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache;
+namespace JooosiIconDeps\Symfony\Component\Cache;
 
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Contracts\Cache\CacheInterface;
-use OmniIconDeps\Symfony\Contracts\Cache\ItemInterface;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Contracts\Cache\CacheInterface;
+use JooosiIconDeps\Symfony\Contracts\Cache\ItemInterface;
 /**
  * LockRegistry is used internally by existing adapters to protect against cache stampede.
  *
@@ -62,7 +62,7 @@ final class LockRegistry
         if ($key < 0 || self::$lockedFiles || !$lock = self::open($key)) {
             return $callback($item, $save);
         }
-        self::$signalingException ??= unserialize("O:9:\"Exception\":1:{s:16:\"\x00Exception\x00trace\";a:0:{}}");
+        self::$signalingException ??= unserialize("O:9:\"Exception\":1:{s:16:\"\x00Exception\x00trace\";a:0:{}}", ['allowed_classes' => [\Exception::class]]);
         self::$signalingCallback ??= static fn() => throw self::$signalingException;
         while (\true) {
             try {

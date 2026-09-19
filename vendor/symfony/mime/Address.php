@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime;
+namespace JooosiIconDeps\Symfony\Component\Mime;
 
-use OmniIconDeps\Egulias\EmailValidator\EmailValidator;
-use OmniIconDeps\Egulias\EmailValidator\Validation\MessageIDValidation;
-use OmniIconDeps\Egulias\EmailValidator\Validation\RFCValidation;
-use OmniIconDeps\Symfony\Component\Mime\Encoder\IdnAddressEncoder;
-use OmniIconDeps\Symfony\Component\Mime\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Mime\Exception\LogicException;
-use OmniIconDeps\Symfony\Component\Mime\Exception\RfcComplianceException;
+use JooosiIconDeps\Egulias\EmailValidator\EmailValidator;
+use JooosiIconDeps\Egulias\EmailValidator\Validation\MessageIDValidation;
+use JooosiIconDeps\Egulias\EmailValidator\Validation\RFCValidation;
+use JooosiIconDeps\Symfony\Component\Mime\Encoder\IdnAddressEncoder;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\Mime\Exception\RfcComplianceException;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
@@ -45,7 +45,7 @@ final class Address
         if (preg_match('/[\x00-\x1F\x7F]/', $this->address)) {
             throw new InvalidArgumentException('Email address contains control characters.');
         }
-        if (!self::$validator->isValid($this->address, class_exists(MessageIDValidation::class) ? new MessageIDValidation() : new RFCValidation())) {
+        if (!self::isValidAddrSpec($this->address)) {
             throw new RfcComplianceException(\sprintf('Email "%s" does not comply with addr-spec of RFC 2822.', $address));
         }
     }
@@ -71,7 +71,7 @@ final class Address
         if ('' === $this->getName()) {
             return '';
         }
-        return \sprintf('"%s"', preg_replace('/"/u', '\"', $this->getName()));
+        return \sprintf('"%s"', preg_replace('/["\\\\]/', '\\\\$0', $this->getName()));
     }
     public static function create(self|string $address): self
     {
@@ -98,5 +98,17 @@ final class Address
             $addrs[] = self::create($address);
         }
         return $addrs;
+    }
+    private static function isValidAddrSpec(string $address): bool
+    {
+        // the message id validation is needed as this class also holds the ids of the Message-ID,
+        // In-Reply-To and References headers, but it accepts an unquoted "@" in the local part
+        if (!self::$validator->isValid($address, class_exists(MessageIDValidation::class) ? new MessageIDValidation() : new RFCValidation())) {
+            return \false;
+        }
+        if (substr_count($address, '@') < 2) {
+            return \true;
+        }
+        return self::$validator->isValid(substr($address, 0, strrpos($address, '@')) . '@example.com', new RFCValidation());
     }
 }

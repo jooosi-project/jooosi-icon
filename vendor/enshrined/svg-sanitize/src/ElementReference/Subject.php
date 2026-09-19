@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\enshrined\svgSanitize\ElementReference;
+namespace JooosiIconDeps\enshrined\svgSanitize\ElementReference;
 
 class Subject
 {
@@ -54,7 +54,7 @@ class Subject
     public function hasInfiniteLoop(array $subjects = [], $level = 1)
     {
         if ($level > $this->useNestingLimit) {
-            throw new \OmniIconDeps\enshrined\svgSanitize\Exceptions\NestingException('Nesting level too high, aborting', 1570713498, null, $this->getElement());
+            throw new \JooosiIconDeps\enshrined\svgSanitize\Exceptions\NestingException('Nesting level too high, aborting', 1570713498, null, $this->getElement());
         }
         if (in_array($this, $subjects, \true)) {
             return \true;

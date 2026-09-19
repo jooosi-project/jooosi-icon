@@ -1,9 +1,9 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
-use OmniIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
 use Throwable;
 final class DirectoryScanner
 {
@@ -17,7 +17,7 @@ final class DirectoryScanner
     /**
      * Recursively scan a directory and apply discoveries to all files
      */
-    public function scan(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, string $path): void
+    public function scan(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, string $path): void
     {
         $input = realpath($path);
         // Make sure the path is valid
@@ -72,13 +72,13 @@ final class DirectoryScanner
                     require_once $input;
                 }
                 if (class_exists($className)) {
-                    $classReflector = new \OmniIcon\Core\Discovery\ClassReflector($className);
+                    $classReflector = new \JooosiIcon\Core\Discovery\ClassReflector($className);
                 }
             } catch (Throwable $e) {
                 $this->logger->error('Discovery error for class', ['component' => 'DirectoryScanner', 'className' => $className, 'file' => $input, 'exception' => $e]);
             }
             // Pass to discoveries
-            if ($classReflector instanceof \OmniIcon\Core\Discovery\ClassReflector) {
+            if ($classReflector instanceof \JooosiIcon\Core\Discovery\ClassReflector) {
                 foreach ($this->discoveries as $discovery) {
                     $discovery->discover($discoveryLocation, $classReflector);
                 }
@@ -87,7 +87,7 @@ final class DirectoryScanner
         }
         // If not a class, check if any discovery can handle paths
         foreach ($this->discoveries as $discovery) {
-            if ($discovery instanceof \OmniIcon\Core\Discovery\DiscoversPath) {
+            if ($discovery instanceof \JooosiIcon\Core\Discovery\DiscoversPath) {
                 $discovery->discoverPath($discoveryLocation, $input);
             }
         }

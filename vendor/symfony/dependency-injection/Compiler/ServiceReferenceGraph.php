@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
 /**
  * This is a directed graph of your services.
  *
@@ -66,14 +66,14 @@ class ServiceReferenceGraph
     /**
      * Connects 2 nodes together in the Graph.
      */
-    public function connect(?string $sourceId, mixed $sourceValue, ?string $destId, mixed $destValue = null, ?Reference $reference = null, bool $lazy = \false, bool $weak = \false, bool $byConstructor = \false, bool $byMultiUseArgument = \false): void
+    public function connect(?string $sourceId, mixed $sourceValue, ?string $destId, mixed $destValue = null, ?Reference $reference = null, bool $lazy = \false, bool $weak = \false, bool $byConstructor = \false, bool $byMultiUseArgument = \false, bool $fromExpression = \false): void
     {
         if (null === $sourceId || null === $destId) {
             return;
         }
         $sourceNode = $this->createNode($sourceId, $sourceValue);
         $destNode = $this->createNode($destId, $destValue);
-        $edge = new ServiceReferenceGraphEdge($sourceNode, $destNode, $reference, $lazy, $weak, $byConstructor, $byMultiUseArgument);
+        $edge = new ServiceReferenceGraphEdge($sourceNode, $destNode, $reference, $lazy, $weak, $byConstructor, $byMultiUseArgument, $fromExpression);
         $sourceNode->addOutEdge($edge);
         $destNode->addInEdge($edge);
     }

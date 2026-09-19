@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\ErrorChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\FirstChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\ClientState;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\ErrorChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\FirstChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\ClientState;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * A test-friendly response.
  *

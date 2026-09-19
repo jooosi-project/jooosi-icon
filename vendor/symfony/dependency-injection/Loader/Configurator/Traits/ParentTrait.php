@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\Traits;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ChildDefinition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 trait ParentTrait
 {
     /**
@@ -31,9 +31,9 @@ trait ParentTrait
         } else {
             // cast Definition to ChildDefinition
             $definition = serialize($this->definition);
-            $definition = substr_replace($definition, '66', 2, 2);
-            $definition = substr_replace($definition, 'Child', 57, 0);
-            $definition = unserialize($definition);
+            $definition = substr_replace($definition, '68', 2, 2);
+            $definition = substr_replace($definition, 'Child', 59, 0);
+            $definition = unserialize($definition, ['allowed_classes' => \true]);
             $this->definition = $definition->setParent($parent);
         }
         return $this;

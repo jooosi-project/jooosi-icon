@@ -8,28 +8,28 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Http\Discovery\Psr17Factory;
-use OmniIconDeps\Http\Discovery\Psr17FactoryDiscovery;
-use OmniIconDeps\Nyholm\Psr7\Factory\Psr17Factory as NyholmPsr17Factory;
-use OmniIconDeps\Nyholm\Psr7\Request;
-use OmniIconDeps\Nyholm\Psr7\Uri;
-use OmniIconDeps\Psr\Http\Client\ClientInterface;
-use OmniIconDeps\Psr\Http\Client\NetworkExceptionInterface;
-use OmniIconDeps\Psr\Http\Client\RequestExceptionInterface;
-use OmniIconDeps\Psr\Http\Message\RequestFactoryInterface;
-use OmniIconDeps\Psr\Http\Message\RequestInterface;
-use OmniIconDeps\Psr\Http\Message\ResponseFactoryInterface;
-use OmniIconDeps\Psr\Http\Message\ResponseInterface;
-use OmniIconDeps\Psr\Http\Message\StreamFactoryInterface;
-use OmniIconDeps\Psr\Http\Message\StreamInterface;
-use OmniIconDeps\Psr\Http\Message\UriFactoryInterface;
-use OmniIconDeps\Psr\Http\Message\UriInterface;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\HttplugWaitLoop;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Http\Discovery\Psr17Factory;
+use JooosiIconDeps\Http\Discovery\Psr17FactoryDiscovery;
+use JooosiIconDeps\Nyholm\Psr7\Factory\Psr17Factory as NyholmPsr17Factory;
+use JooosiIconDeps\Nyholm\Psr7\Request;
+use JooosiIconDeps\Nyholm\Psr7\Uri;
+use JooosiIconDeps\Psr\Http\Client\ClientInterface;
+use JooosiIconDeps\Psr\Http\Client\NetworkExceptionInterface;
+use JooosiIconDeps\Psr\Http\Client\RequestExceptionInterface;
+use JooosiIconDeps\Psr\Http\Message\RequestFactoryInterface;
+use JooosiIconDeps\Psr\Http\Message\RequestInterface;
+use JooosiIconDeps\Psr\Http\Message\ResponseFactoryInterface;
+use JooosiIconDeps\Psr\Http\Message\ResponseInterface;
+use JooosiIconDeps\Psr\Http\Message\StreamFactoryInterface;
+use JooosiIconDeps\Psr\Http\Message\StreamInterface;
+use JooosiIconDeps\Psr\Http\Message\UriFactoryInterface;
+use JooosiIconDeps\Psr\Http\Message\UriInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\HttplugWaitLoop;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 if (!interface_exists(ClientInterface::class)) {
     throw new \LogicException('You cannot use the "Symfony\Component\HttpClient\Psr18Client" as the "psr/http-client" package is not installed. Try running "composer require php-http/discovery psr/http-client-implementation:*".');
 }

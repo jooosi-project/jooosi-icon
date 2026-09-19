@@ -1,10 +1,10 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Logger;
+namespace JooosiIcon\Core\Logger;
 
-use OmniIconDeps\Psr\Log\AbstractLogger;
-use OmniIconDeps\Psr\Log\LogLevel;
+use JooosiIconDeps\Psr\Log\AbstractLogger;
+use JooosiIconDeps\Psr\Log\LogLevel;
 use Stringable;
 use Throwable;
 /**
@@ -45,7 +45,7 @@ final class DiscoveryLogger extends AbstractLogger
     private function formatMessage($level, string $message, array $context): string
     {
         $levelStr = is_string($level) ? strtoupper($level) : 'INFO';
-        $parts = ['[OmniIcon Discovery]', "[{$levelStr}]"];
+        $parts = ['[JooosiIcon Discovery]', "[{$levelStr}]"];
         // Add context prefix if provided
         if (isset($context['component']) && is_string($context['component'])) {
             $parts[] = '[' . $context['component'] . ']';

@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Attribute;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute;
 
 trigger_deprecation('symfony/dependency-injection', '6.3', 'The "%s" class is deprecated, use "%s" instead.', MapDecorated::class, AutowireDecorated::class);
 /**

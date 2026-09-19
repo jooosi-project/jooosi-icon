@@ -8,29 +8,29 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\Amp\ByteStream\StreamException;
-use OmniIconDeps\Amp\CancellationTokenSource;
-use OmniIconDeps\Amp\Coroutine;
-use OmniIconDeps\Amp\Deferred;
-use OmniIconDeps\Amp\Http\Client\HttpException;
-use OmniIconDeps\Amp\Http\Client\Request;
-use OmniIconDeps\Amp\Http\Client\Response;
-use OmniIconDeps\Amp\Loop;
-use OmniIconDeps\Amp\Promise;
-use OmniIconDeps\Amp\Success;
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\FirstChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Chunk\InformationalChunk;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
-use OmniIconDeps\Symfony\Component\HttpClient\HttpClientTrait;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\AmpBody;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\AmpClientState;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\Canary;
-use OmniIconDeps\Symfony\Component\HttpClient\Internal\ClientState;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Amp\ByteStream\StreamException;
+use JooosiIconDeps\Amp\CancellationTokenSource;
+use JooosiIconDeps\Amp\Coroutine;
+use JooosiIconDeps\Amp\Deferred;
+use JooosiIconDeps\Amp\Http\Client\HttpException;
+use JooosiIconDeps\Amp\Http\Client\Request;
+use JooosiIconDeps\Amp\Http\Client\Response;
+use JooosiIconDeps\Amp\Loop;
+use JooosiIconDeps\Amp\Promise;
+use JooosiIconDeps\Amp\Success;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\FirstChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Chunk\InformationalChunk;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\TransportException;
+use JooosiIconDeps\Symfony\Component\HttpClient\HttpClientTrait;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\AmpBody;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\AmpClientState;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\Canary;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\ClientState;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *

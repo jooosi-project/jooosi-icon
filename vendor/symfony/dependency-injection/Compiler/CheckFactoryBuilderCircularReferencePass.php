@@ -8,15 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
 /**
- * Detects cycles where a service's factory is `[Definition $b, $method]` and $b's
- * own properties/method calls/configurator transitively require that same service
+ * Detects cycles where a service's factory is `[$b, $method]`, with $b either an
+ * inlined definition or a reference to another service, and $b's own
+ * properties/method calls/configurator transitively require that same service
  * through constructor references.
  *
  * The soft-circular instantiation pattern relies on storing the service's instance
@@ -38,16 +39,30 @@ class CheckFactoryBuilderCircularReferencePass implements CompilerPassInterface
         try {
             foreach ($container->getDefinitions() as $id => $definition) {
                 $factory = $definition->getFactory();
-                if (!\is_array($factory) || !$factory[0] instanceof Definition) {
+                if (!\is_array($factory)) {
                     continue;
                 }
-                $builder = $factory[0];
+                $builderId = null;
+                if ($factory[0] instanceof Reference) {
+                    $builderId = (string) $factory[0];
+                    while ($container->hasAlias($builderId)) {
+                        $builderId = (string) $container->getAlias($builderId);
+                    }
+                    if (!$container->hasDefinition($builderId)) {
+                        continue;
+                    }
+                    $builder = $container->getDefinition($builderId);
+                } elseif ($factory[0] instanceof Definition) {
+                    $builder = $factory[0];
+                } else {
+                    continue;
+                }
                 if (!$builder->getMethodCalls() && !$builder->getProperties() && null === $builder->getConfigurator()) {
                     continue;
                 }
                 $this->currentId = $id;
                 $this->visited = [$id => \true];
-                $this->path = [$id];
+                $this->path = null === $builderId ? [$id] : [$id, $builderId];
                 $setup = [$builder->getProperties(), $builder->getMethodCalls(), $builder->getConfigurator()];
                 if ($this->setupReferencesCurrent($setup)) {
                     $this->path[] = $id;

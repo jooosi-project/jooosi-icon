@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection;
 
-use OmniIconDeps\Psr\Container\ContainerExceptionInterface;
-use OmniIconDeps\Psr\Container\NotFoundExceptionInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
-use OmniIconDeps\Symfony\Contracts\Service\ServiceLocatorTrait;
-use OmniIconDeps\Symfony\Contracts\Service\ServiceProviderInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ServiceSubscriberInterface;
+use JooosiIconDeps\Psr\Container\ContainerExceptionInterface;
+use JooosiIconDeps\Psr\Container\NotFoundExceptionInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use JooosiIconDeps\Symfony\Contracts\Service\ServiceLocatorTrait;
+use JooosiIconDeps\Symfony\Contracts\Service\ServiceProviderInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ServiceSubscriberInterface;
 /**
  * @author Robin Chalas <robin.chalas@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>

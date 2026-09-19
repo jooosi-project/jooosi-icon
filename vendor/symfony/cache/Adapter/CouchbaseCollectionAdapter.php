@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
 use Couchbase\Bucket;
 use Couchbase\Cluster;
@@ -16,10 +16,10 @@ use Couchbase\ClusterOptions;
 use Couchbase\Collection;
 use Couchbase\DocumentNotFoundException;
 use Couchbase\UpsertOptions;
-use OmniIconDeps\Symfony\Component\Cache\Exception\CacheException;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\DefaultMarshaller;
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\CacheException;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\DefaultMarshaller;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
 /**
  * @author Antonio Jose Cerezo Aranda <aj.cerezo@gmail.com>
  */
@@ -39,7 +39,11 @@ class CouchbaseCollectionAdapter extends AbstractAdapter
         $this->enableVersioning();
         $this->marshaller = $marshaller ?? new DefaultMarshaller();
     }
-    public static function createConnection(#[\SensitiveParameter] array|string $dsn, array $options = []): Bucket|Collection
+    public static function createConnection(
+        #[\SensitiveParameter]
+        array|string $dsn,
+        array $options = []
+    ): Bucket|Collection
     {
         if (\is_string($dsn)) {
             $dsn = [$dsn];
@@ -134,7 +138,7 @@ class CouchbaseCollectionAdapter extends AbstractAdapter
             } catch (DocumentNotFoundException) {
             }
         }
-        return 0 === \count($idsErrors);
+        return !$idsErrors;
     }
     protected function doSave(array $values, $lifetime): array|bool
     {
@@ -151,6 +155,6 @@ class CouchbaseCollectionAdapter extends AbstractAdapter
                 $ko[$key] = '';
             }
         }
-        return [] === $ko ? \true : $ko;
+        return !$ko ? \true : $ko;
     }
 }

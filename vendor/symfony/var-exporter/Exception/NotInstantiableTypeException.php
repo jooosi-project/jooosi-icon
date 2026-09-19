@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter\Exception;
+namespace JooosiIconDeps\Symfony\Component\VarExporter\Exception;
 
 class NotInstantiableTypeException extends \Exception implements ExceptionInterface
 {

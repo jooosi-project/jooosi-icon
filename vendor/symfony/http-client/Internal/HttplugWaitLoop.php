@@ -8,19 +8,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Internal;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Internal;
 
-use OmniIconDeps\Http\Client\Exception\NetworkException;
-use OmniIconDeps\Http\Promise\Promise;
-use OmniIconDeps\Psr\Http\Message\RequestInterface as Psr7RequestInterface;
-use OmniIconDeps\Psr\Http\Message\ResponseFactoryInterface;
-use OmniIconDeps\Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
-use OmniIconDeps\Psr\Http\Message\StreamFactoryInterface;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\StreamableInterface;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\StreamWrapper;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Http\Client\Exception\NetworkException;
+use JooosiIconDeps\Http\Promise\Promise;
+use JooosiIconDeps\Psr\Http\Message\RequestInterface as Psr7RequestInterface;
+use JooosiIconDeps\Psr\Http\Message\ResponseFactoryInterface;
+use JooosiIconDeps\Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
+use JooosiIconDeps\Psr\Http\Message\StreamFactoryInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\StreamableInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\StreamWrapper;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *
@@ -47,7 +47,7 @@ final class HttplugWaitLoop
         if (!$this->promisePool) {
             return 0;
         }
-        $guzzleQueue = \OmniIconDeps\GuzzleHttp\Promise\Utils::queue();
+        $guzzleQueue = \JooosiIconDeps\GuzzleHttp\Promise\Utils::queue();
         if (0.0 === $remainingDuration = $maxDuration) {
             $idleTimeout = 0.0;
         } elseif (null !== $maxDuration) {

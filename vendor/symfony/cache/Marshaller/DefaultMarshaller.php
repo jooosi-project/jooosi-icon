@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Marshaller;
+namespace JooosiIconDeps\Symfony\Component\Cache\Marshaller;
 
-use OmniIconDeps\Symfony\Component\Cache\Exception\CacheException;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\CacheException;
 /**
  * Serializes/unserializes values using igbinary_serialize() if available, serialize() otherwise.
  *
@@ -64,7 +64,7 @@ class DefaultMarshaller implements MarshallerInterface
         $unserializeCallbackHandler = ini_set('unserialize_callback_func', __CLASS__ . '::handleUnserializeCallback');
         try {
             if (':' === ($value[1] ?? ':')) {
-                if (\false !== $value = unserialize($value)) {
+                if (\false !== $value = unserialize($value, ['allowed_classes' => \true])) {
                     return $value;
                 }
             } elseif (\false === $igbinaryNull) {

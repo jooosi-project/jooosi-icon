@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Psr\Log\LoggerAwareInterface;
-use OmniIconDeps\Psr\Log\LoggerInterface;
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\ResettableInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\AbstractAdapterTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
-use OmniIconDeps\Symfony\Contracts\Cache\CacheInterface;
+use JooosiIconDeps\Psr\Log\LoggerAwareInterface;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\ResettableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\AbstractAdapterTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
+use JooosiIconDeps\Symfony\Contracts\Cache\CacheInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
@@ -87,7 +87,11 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
         }
         return new ChainAdapter([$apcu, $opcache]);
     }
-    public static function createConnection(#[\SensitiveParameter] string $dsn, array $options = []): mixed
+    public static function createConnection(
+        #[\SensitiveParameter]
+        string $dsn,
+        array $options = []
+    ): mixed
     {
         if (str_starts_with($dsn, 'redis:') || str_starts_with($dsn, 'rediss:')) {
             return RedisAdapter::createConnection($dsn, $options);

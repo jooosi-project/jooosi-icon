@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Exception;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Exception;
 
-use OmniIconDeps\Psr\Container\NotFoundExceptionInterface;
+use JooosiIconDeps\Psr\Container\NotFoundExceptionInterface;
 /**
  * This exception is thrown when a non-existent parameter is used.
  *

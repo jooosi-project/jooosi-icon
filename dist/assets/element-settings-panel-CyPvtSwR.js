@@ -1,0 +1,9 @@
+var e=()=>window.jooosiIconPicker;async function t(t){let n=t.querySelector(`input[type="text"]`);if(!n)return;let r=document.createRange().createContextualFragment(`
+		<button id="jooosi-icon-picker-action" title="[Jooosi Icon] Pick Icon" type="button" class="etch-builder-button etch-builder-button--icon-placement-before etch-builder-button--variant-icon" style="--button-font-size: 13px; --e-icon-padding: 0; margin-left: auto;">
+			<div class="icon-wrapper">
+				<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="etch-icon iconify iconify--jooosi-icon" width="12px" height="12px" viewBox="0 0 400 400">
+					<path fill="currentColor" fill-rule="evenodd" d="M 0 0 H 400 V 400 H 0 Z M 195 61 L 158 99 L 400 333 L 400 259 Z M 0 75 L 0 149 L 195 339 L 232 301 Z" />
+				</svg>
+			</div>
+		</button>
+	`).querySelector(`#jooosi-icon-picker-action`),i=t.querySelector(`:scope > span`);i instanceof HTMLElement&&r&&(i.style.display=`flex`,i.appendChild(r),r.querySelector(`div.icon-wrapper`)?.addEventListener(`click`,()=>{let t=e();if(!t){console.error(`[Jooosi Icon] Icon picker API not available`);return}t.open(n.value||``,e=>{e&&(n.value=e,n.dispatchEvent(new Event(`input`,{bubbles:!0})))})})),t.dataset.jooosiIconInjected=`true`}new MutationObserver(()=>{let e=document.evaluate(`//div[contains(@class, 'etch-html-block-properties-wrapper')]//label[contains(@class, 'etch-label')]/span[text()='name']`,document,null,XPathResult.FIRST_ORDERED_NODE_TYPE,null).singleNodeValue?.parentElement;e&&!e.dataset.jooosiIconInjected&&Array.from(document.querySelectorAll(`.etch-element__title`)).find(e=>{let t=e.textContent?.toLowerCase()??``;return t.includes(`jooosi-icon`)||t.includes(`omni-icon`)})&&setTimeout(()=>{e.dataset.jooosiIconInjected||(console.log(`[Jooosi Icon] Injecting icon picker button for name field`),t(e))},100)}).observe(document,{subtree:!0,childList:!0}),console.log(`[Jooosi Icon] Element settings panel module loaded`);

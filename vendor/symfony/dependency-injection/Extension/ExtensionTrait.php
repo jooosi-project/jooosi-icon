@@ -8,21 +8,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Extension;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Extension;
 
-use OmniIconDeps\Symfony\Component\Config\Builder\ConfigBuilderGenerator;
-use OmniIconDeps\Symfony\Component\Config\FileLocator;
-use OmniIconDeps\Symfony\Component\Config\Loader\DelegatingLoader;
-use OmniIconDeps\Symfony\Component\Config\Loader\LoaderResolver;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\ClosureLoader;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\DirectoryLoader;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\GlobFileLoader;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\IniFileLoader;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use JooosiIconDeps\Symfony\Component\Config\Builder\ConfigBuilderGenerator;
+use JooosiIconDeps\Symfony\Component\Config\FileLocator;
+use JooosiIconDeps\Symfony\Component\Config\Loader\DelegatingLoader;
+use JooosiIconDeps\Symfony\Component\Config\Loader\LoaderResolver;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\ClosureLoader;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\DirectoryLoader;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\GlobFileLoader;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\IniFileLoader;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 /**
  * @author Yonel Ceruto <yonelceruto@gmail.com>
  */

@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Extension;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Extension;
 
-use OmniIconDeps\Symfony\Component\Config\Definition\ConfigurationInterface;
-use OmniIconDeps\Symfony\Component\Config\Definition\Processor;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Container;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
+use JooosiIconDeps\Symfony\Component\Config\Definition\ConfigurationInterface;
+use JooosiIconDeps\Symfony\Component\Config\Definition\Processor;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Container;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerBuilder;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\LogicException;
 /**
  * Provides useful features shared by many extensions.
  *

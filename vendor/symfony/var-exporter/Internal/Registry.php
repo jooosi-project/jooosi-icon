@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter\Internal;
+namespace JooosiIconDeps\Symfony\Component\VarExporter\Internal;
 
-use OmniIconDeps\Symfony\Component\VarExporter\Exception\ClassNotFoundException;
-use OmniIconDeps\Symfony\Component\VarExporter\Exception\NotInstantiableTypeException;
+use JooosiIconDeps\Symfony\Component\VarExporter\Exception\ClassNotFoundException;
+use JooosiIconDeps\Symfony\Component\VarExporter\Exception\NotInstantiableTypeException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *
@@ -34,7 +34,7 @@ class Registry
         $unserializeCallback = ini_set('unserialize_callback_func', __CLASS__ . '::getClassReflector');
         try {
             foreach ($serializables as $k => $v) {
-                $objects[$k] = unserialize($v);
+                $objects[$k] = unserialize($v, ['allowed_classes' => \true]);
             }
         } finally {
             ini_set('unserialize_callback_func', $unserializeCallback);
@@ -77,15 +77,23 @@ class Registry
                     $proto = null;
                 } else {
                     try {
-                        $proto = @unserialize($proto . \strlen($class) . ':"' . $class . '":0:{}');
+                        $proto = @unserialize($proto . \strlen($class) . ':"' . $class . '":0:{}', ['allowed_classes' => \true]);
                     } catch (\Exception $e) {
-                        if (__FILE__ !== $e->getFile()) {
+                        if (method_exists($class, '__unserialize')) {
+                            // The class cannot be instantiated empty but defines __serialize()/__unserialize();
+                            // it'll be reconstructed by serializing the whole value.
+                            $proto = null;
+                        } elseif (__FILE__ !== $e->getFile()) {
                             throw $e;
+                        } else {
+                            throw new NotInstantiableTypeException($class, $e);
                         }
-                        throw new NotInstantiableTypeException($class, $e);
                     }
                     if (\false === $proto) {
-                        throw new NotInstantiableTypeException($class);
+                        if (!method_exists($class, '__unserialize')) {
+                            throw new NotInstantiableTypeException($class);
+                        }
+                        $proto = null;
                     }
                 }
             }

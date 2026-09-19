@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Contracts\Cache;
+namespace JooosiIconDeps\Symfony\Contracts\Cache;
 
-use OmniIconDeps\Psr\Cache\CacheException;
-use OmniIconDeps\Psr\Cache\CacheItemInterface;
-use OmniIconDeps\Psr\Cache\InvalidArgumentException;
+use JooosiIconDeps\Psr\Cache\CacheException;
+use JooosiIconDeps\Psr\Cache\CacheItemInterface;
+use JooosiIconDeps\Psr\Cache\InvalidArgumentException;
 /**
  * Augments PSR-6's CacheItemInterface with support for tags and metadata.
  *

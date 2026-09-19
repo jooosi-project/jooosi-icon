@@ -8,18 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Response\MockResponse;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\ResponseStream;
-use OmniIconDeps\Symfony\Component\HttpFoundation\Request;
-use OmniIconDeps\Symfony\Component\HttpKernel\HttpCache\HttpCache;
-use OmniIconDeps\Symfony\Component\HttpKernel\HttpCache\StoreInterface;
-use OmniIconDeps\Symfony\Component\HttpKernel\HttpClientKernel;
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Internal\OutgoingRequest;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\MockResponse;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\ResponseStream;
+use JooosiIconDeps\Symfony\Component\HttpKernel\HttpCache\HttpCache;
+use JooosiIconDeps\Symfony\Component\HttpKernel\HttpCache\StoreInterface;
+use JooosiIconDeps\Symfony\Component\HttpKernel\HttpClientKernel;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 /**
  * Adds caching on top of an HTTP client.
  *
@@ -64,7 +64,7 @@ class CachingHttpClient implements HttpClientInterface, ResetInterface
         if (!empty($options['body']) || !empty($options['extra']['no_cache']) || !\in_array($method, ['GET', 'HEAD', 'OPTIONS'])) {
             return $this->client->request($method, $url, $options);
         }
-        $request = Request::create($url, $method);
+        $request = OutgoingRequest::create($url, $method);
         $request->attributes->set('http_client_options', $options);
         foreach ($options['normalized_headers'] as $name => $values) {
             if ('cookie' !== $name) {

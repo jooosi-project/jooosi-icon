@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIconDeps\Nabasa\VitePlus;
+namespace JooosiIconDeps\Nabasa\VitePlus;
 
 use Exception;
 use WP_HTML_Tag_Processor;

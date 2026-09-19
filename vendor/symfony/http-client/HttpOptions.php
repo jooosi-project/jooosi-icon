@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * A helper providing autocompletion for available options.
  *
@@ -28,7 +28,11 @@ class HttpOptions
     /**
      * @return $this
      */
-    public function setAuthBasic(string $user, #[\SensitiveParameter] string $password = ''): static
+    public function setAuthBasic(
+        string $user,
+        #[\SensitiveParameter]
+        string $password = ''
+    ): static
     {
         $this->options['auth_basic'] = $user;
         if ('' !== $password) {
@@ -39,7 +43,10 @@ class HttpOptions
     /**
      * @return $this
      */
-    public function setAuthBearer(#[\SensitiveParameter] string $token): static
+    public function setAuthBearer(
+        #[\SensitiveParameter]
+        string $token
+    ): static
     {
         $this->options['auth_bearer'] = $token;
         return $this;

@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\GuzzleHttp\Promise\Create;
-use OmniIconDeps\GuzzleHttp\Promise\PromiseInterface as GuzzlePromiseInterface;
-use OmniIconDeps\Http\Promise\Promise as HttplugPromiseInterface;
-use OmniIconDeps\Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
+use JooosiIconDeps\GuzzleHttp\Promise\Create;
+use JooosiIconDeps\GuzzleHttp\Promise\PromiseInterface as GuzzlePromiseInterface;
+use JooosiIconDeps\Http\Promise\Promise as HttplugPromiseInterface;
+use JooosiIconDeps\Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  *

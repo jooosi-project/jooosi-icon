@@ -8,19 +8,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Psr\Cache\CacheItemInterface;
-use OmniIconDeps\Psr\Cache\CacheItemPoolInterface;
-use OmniIconDeps\Symfony\Component\Cache\CacheItem;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\PruneableInterface;
-use OmniIconDeps\Symfony\Component\Cache\ResettableInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\CachedValueInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
-use OmniIconDeps\Symfony\Component\Cache\Traits\ProxyTrait;
-use OmniIconDeps\Symfony\Component\VarExporter\VarExporter;
-use OmniIconDeps\Symfony\Contracts\Cache\CacheInterface;
+use JooosiIconDeps\Psr\Cache\CacheItemInterface;
+use JooosiIconDeps\Psr\Cache\CacheItemPoolInterface;
+use JooosiIconDeps\Symfony\Component\Cache\CacheItem;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\PruneableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\ResettableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\CachedValueInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\ContractsTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\ProxyTrait;
+use JooosiIconDeps\Symfony\Component\VarExporter\VarExporter;
+use JooosiIconDeps\Symfony\Contracts\Cache\CacheInterface;
 /**
  * Caches items at warm up time using a PHP array that is stored in shared memory by OPCache since PHP 7.0.
  * Warmed up items are read-only and run-time discovered items are cached using a fallback adapter.
@@ -151,20 +151,22 @@ class PhpArrayAdapter implements AdapterInterface, CacheInterface, PruneableInte
     }
     public function deleteItems(array $keys): bool
     {
-        $deleted = \true;
-        $fallbackKeys = [];
         foreach ($keys as $key) {
             if (!\is_string($key)) {
                 throw new InvalidArgumentException(\sprintf('Cache key must be string, "%s" given.', get_debug_type($key)));
             }
+        }
+        if (!isset($this->values)) {
+            $this->initialize();
+        }
+        $deleted = \true;
+        $fallbackKeys = [];
+        foreach ($keys as $key) {
             if (isset($this->keys[$key])) {
                 $deleted = \false;
             } else {
                 $fallbackKeys[] = $key;
             }
-        }
-        if (!isset($this->values)) {
-            $this->initialize();
         }
         if ($fallbackKeys) {
             $deleted = $this->pool->deleteItems($fallbackKeys) && $deleted;

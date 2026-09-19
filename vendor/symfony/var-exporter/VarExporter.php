@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\VarExporter;
+namespace JooosiIconDeps\Symfony\Component\VarExporter;
 
-use OmniIconDeps\Symfony\Component\VarExporter\Exception\ExceptionInterface;
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\Exporter;
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\Hydrator;
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\Registry;
-use OmniIconDeps\Symfony\Component\VarExporter\Internal\Values;
+use JooosiIconDeps\Symfony\Component\VarExporter\Exception\ExceptionInterface;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\Exporter;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\Hydrator;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\Registry;
+use JooosiIconDeps\Symfony\Component\VarExporter\Internal\Values;
 /**
  * Exports serializable PHP values to PHP code.
  *

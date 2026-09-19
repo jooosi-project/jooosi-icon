@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */

@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection;
 
-use OmniIconDeps\Psr\Container\ContainerInterface as PsrContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use JooosiIconDeps\Psr\Container\ContainerInterface as PsrContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 /**
  * ContainerInterface is the interface implemented by service container classes.
  *

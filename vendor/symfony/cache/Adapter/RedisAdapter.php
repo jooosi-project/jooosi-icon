@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\RedisTrait;
+use JooosiIconDeps\Symfony\Component\Cache\Marshaller\MarshallerInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\RedisTrait;
 class RedisAdapter extends AbstractAdapter
 {
     use RedisTrait;
-    public function __construct(\Redis|\RedisArray|\RedisCluster|\OmniIconDeps\Predis\ClientInterface|\Relay\Relay $redis, string $namespace = '', int $defaultLifetime = 0, ?MarshallerInterface $marshaller = null)
+    public function __construct(\Redis|\RedisArray|\RedisCluster|\JooosiIconDeps\Predis\ClientInterface|\Relay\Relay $redis, string $namespace = '', int $defaultLifetime = 0, ?MarshallerInterface $marshaller = null)
     {
         $this->init($redis, $namespace, $defaultLifetime, $marshaller);
     }

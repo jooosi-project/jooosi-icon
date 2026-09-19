@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\Header;
+namespace JooosiIconDeps\Symfony\Component\Mime\Header;
 
-use OmniIconDeps\Symfony\Component\Mime\Encoder\Rfc2231Encoder;
+use JooosiIconDeps\Symfony\Component\Mime\Encoder\Rfc2231Encoder;
 /**
  * @author Chris Corbyn
  */

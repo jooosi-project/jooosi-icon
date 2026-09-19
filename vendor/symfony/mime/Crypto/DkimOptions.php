@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Mime\Crypto;
+namespace JooosiIconDeps\Symfony\Component\Mime\Crypto;
 
 /**
  * A helper providing autocompletion for available DkimSigner options.

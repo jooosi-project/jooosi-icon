@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Adapter;
+namespace JooosiIconDeps\Symfony\Component\Cache\Adapter;
 
-use OmniIconDeps\Symfony\Component\Cache\Exception\CacheException;
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\Cache\PruneableInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\CachedValueInterface;
-use OmniIconDeps\Symfony\Component\Cache\Traits\FilesystemCommonTrait;
-use OmniIconDeps\Symfony\Component\VarExporter\VarExporter;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\CacheException;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\PruneableInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\CachedValueInterface;
+use JooosiIconDeps\Symfony\Component\Cache\Traits\FilesystemCommonTrait;
+use JooosiIconDeps\Symfony\Component\VarExporter\VarExporter;
 /**
  * @author Piotr Stankowski <git@trakos.pl>
  * @author Nicolas Grekas <p@tchwork.com>

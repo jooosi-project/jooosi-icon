@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Traits;
+namespace JooosiIconDeps\Symfony\Component\Cache\Traits;
 
-use OmniIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\Cache\Exception\InvalidArgumentException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *
@@ -155,9 +155,7 @@ trait FilesystemCommonTrait
     }
     public function __destruct()
     {
-        if (method_exists(parent::class, '__destruct')) {
-            parent::__destruct();
-        }
+        parent::__destruct();
         if (isset($this->tmpSuffix) && is_file($this->directory . $this->tmpSuffix)) {
             unlink($this->directory . $this->tmpSuffix);
         }

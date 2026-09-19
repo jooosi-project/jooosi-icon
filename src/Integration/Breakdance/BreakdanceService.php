@@ -1,12 +1,12 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Integration\Breakdance;
+namespace JooosiIcon\Integration\Breakdance;
 
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Hook;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIcon\Services\ViteService;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Services\ViteService;
 use function Breakdance\ElementStudio\registerSaveLocation;
 use function Breakdance\Util\getDirectoryPathRelativeToPluginFolder;
 /**
@@ -24,7 +24,7 @@ class BreakdanceService
      * Uses the unofficial action hook to ensure assets are loaded in Breakdance builder
      * @see wp-content/plugins/breakdance/plugin/loader/loader.php
      */
-    #[Hook('unofficial_i_am_kevin_geary_master_of_all_things_css_and_html', priority: 1000001)]
+    #[Hook('breakdance_builder_footer', priority: 1000001)]
     public function editor_assets(): void
     {
         // Check if we're in Breakdance builder mode
@@ -37,18 +37,18 @@ class BreakdanceService
         if (!defined('__BREAKDANCE_VERSION')) {
             return;
         }
-        // Enqueue omni-icon web component for the editor
-        $this->viteService->enqueue_asset('resources/webcomponents/omni-icon.ts', ['handle' => OMNI_ICON::TEXT_DOMAIN . ':web-component:omni-icon', 'in_footer' => \true]);
+        // Enqueue jooosi-icon web component for the editor
+        $this->viteService->enqueue_asset('resources/webcomponents/jooosi-icon.ts', ['handle' => JOOOSI_ICON::TEXT_DOMAIN . ':web-component:jooosi-icon', 'in_footer' => \true]);
         // Enqueue Gutenberg icon block styles (reuse for Breakdance)
-        $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/editor.css', ['handle' => OMNI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles']);
+        $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/editor.css', ['handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles']);
         // Enqueue Breakdance editor integration script
-        $handle = OMNI_ICON::TEXT_DOMAIN . ':integration-breakdance-editor';
+        $handle = JOOOSI_ICON::TEXT_DOMAIN . ':integration-breakdance-editor';
         $this->viteService->enqueue_asset('resources/integration/breakdance/editor.ts', ['handle' => $handle, 'in_footer' => \true, 'dependencies' => ['wp-element', 'wp-components', 'wp-i18n', 'wp-data', 'react', 'react-dom']]);
         // Manually output the enqueued scripts since Breakdance doesn't use wp_head
         $wp_scripts = wp_scripts();
         $queue = $wp_scripts->queue;
         foreach ($queue as $handle) {
-            if (strpos($handle, OMNI_ICON::TEXT_DOMAIN . ':') !== 0) {
+            if (strpos($handle, JOOOSI_ICON::TEXT_DOMAIN . ':') !== 0) {
                 continue;
             }
             $wp_scripts->do_items($handle);
@@ -57,7 +57,7 @@ class BreakdanceService
         $wp_styles = wp_styles();
         $queue = $wp_styles->queue;
         foreach ($queue as $handle) {
-            if (strpos($handle, OMNI_ICON::TEXT_DOMAIN . ':') !== 0) {
+            if (strpos($handle, JOOOSI_ICON::TEXT_DOMAIN . ':') !== 0) {
                 continue;
             }
             $wp_styles->do_items($handle);
@@ -66,8 +66,8 @@ class BreakdanceService
     #[Hook('breakdance_loaded')]
     public function on_breakdance_loaded(): void
     {
-        // Register omni-icon as a Breakdance icon source
-        registerSaveLocation(getDirectoryPathRelativeToPluginFolder(__DIR__) . '/Elements', 'OmniIcon\Integration\Breakdance\Elements', 'element', 'Omni Icon Elements', \false);
-        require_once __DIR__ . '/Elements/OmniIcon/element.php';
+        // Register jooosi-icon as a Breakdance icon source
+        registerSaveLocation(getDirectoryPathRelativeToPluginFolder(__DIR__) . '/Elements', 'JooosiIcon\Integration\Breakdance\Elements', 'element', 'Jooosi Icon Elements', \false);
+        require_once __DIR__ . '/Elements/JooosiIcon/element.php';
     }
 }

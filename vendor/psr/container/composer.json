@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OmniIconDeps\\Psr\\Container\\": "src\/"
+            "JooosiIconDeps\\Psr\\Container\\": "src\/"
         }
     },
     "extra": {

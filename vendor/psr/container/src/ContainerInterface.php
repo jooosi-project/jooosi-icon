@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIconDeps\Psr\Container;
+namespace JooosiIconDeps\Psr\Container;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

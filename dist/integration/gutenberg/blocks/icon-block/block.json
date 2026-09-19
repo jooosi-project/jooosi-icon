@@ -1,18 +1,18 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
-    "name": "omni-icon/icon-block",
+    "name": "jooosi-icon/icon-block",
     "version": "2.0.0",
-    "title": "Omni Icon",
+    "title": "Jooosi Icon",
     "category": "design",
     "description": "The Icon block",
     "keywords": [
         "icon",
         "iconify",
         "svg",
-        "omni"
+        "jooosi"
     ],
-    "textdomain": "omni-icon",
+    "textdomain": "jooosi-icon",
     "editorScript": "file:./index.js",
     "attributes": {
         "name": {
@@ -40,10 +40,7 @@
         "className": true
     },
     "example": {},
-    "script": [
-        "omni-icon:web-component:omni-icon",
-        "omni-icon:gutenberg-icon-block:iframe"
-    ],
+    "viewScript": "jooosi-icon:web-component:jooosi-icon",
     "editorStyle": [
     ]
 }

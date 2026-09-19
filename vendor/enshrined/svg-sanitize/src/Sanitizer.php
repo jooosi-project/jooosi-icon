@@ -1,13 +1,13 @@
 <?php
 
-namespace OmniIconDeps\enshrined\svgSanitize;
+namespace JooosiIconDeps\enshrined\svgSanitize;
 
-use OmniIconDeps\enshrined\svgSanitize\data\AllowedAttributes;
-use OmniIconDeps\enshrined\svgSanitize\data\AllowedTags;
-use OmniIconDeps\enshrined\svgSanitize\data\AttributeInterface;
-use OmniIconDeps\enshrined\svgSanitize\data\TagInterface;
-use OmniIconDeps\enshrined\svgSanitize\data\XPath;
-use OmniIconDeps\enshrined\svgSanitize\ElementReference\Resolver;
+use JooosiIconDeps\enshrined\svgSanitize\data\AllowedAttributes;
+use JooosiIconDeps\enshrined\svgSanitize\data\AllowedTags;
+use JooosiIconDeps\enshrined\svgSanitize\data\AttributeInterface;
+use JooosiIconDeps\enshrined\svgSanitize\data\TagInterface;
+use JooosiIconDeps\enshrined\svgSanitize\data\XPath;
+use JooosiIconDeps\enshrined\svgSanitize\ElementReference\Resolver;
 /**
  * Class Sanitizer
  *

@@ -1,23 +1,23 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIconDeps\Psr\Log\LoggerAwareInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-final class ServiceDiscovery implements \OmniIcon\Core\Discovery\Discovery
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIconDeps\Psr\Log\LoggerAwareInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+final class ServiceDiscovery implements \JooosiIcon\Core\Discovery\Discovery
 {
-    use \OmniIcon\Core\Discovery\IsDiscovery;
+    use \JooosiIcon\Core\Discovery\IsDiscovery;
     public function __construct(private Container $container)
     {
-        $this->discoveryItems = new \OmniIcon\Core\Discovery\DiscoveryItems();
+        $this->discoveryItems = new \JooosiIcon\Core\Discovery\DiscoveryItems();
     }
     /**
      * @param ClassReflector $classReflector
      */
-    public function discover(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \OmniIcon\Core\Discovery\ClassReflector $classReflector): void
+    public function discover(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \JooosiIcon\Core\Discovery\ClassReflector $classReflector): void
     {
         $serviceAttribute = $classReflector->getAttribute(Service::class);
         if (null === $serviceAttribute) {

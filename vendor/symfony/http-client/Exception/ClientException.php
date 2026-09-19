@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Exception;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Exception;
 
-use OmniIconDeps\Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 /**
  * Represents a 4xx response.
  *

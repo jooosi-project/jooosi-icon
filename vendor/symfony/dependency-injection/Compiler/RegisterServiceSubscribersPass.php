@@ -8,21 +8,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Psr\Container\ContainerInterface as PsrContainerInterface;
-use OmniIconDeps\Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\BoundArgument;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\Autowire;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Reference;
-use OmniIconDeps\Symfony\Component\DependencyInjection\TypedReference;
-use OmniIconDeps\Symfony\Component\HttpFoundation\Session\SessionInterface;
-use OmniIconDeps\Symfony\Contracts\Service\Attribute\SubscribedService;
-use OmniIconDeps\Symfony\Contracts\Service\ServiceProviderInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ServiceSubscriberInterface;
+use JooosiIconDeps\Psr\Container\ContainerInterface as PsrContainerInterface;
+use JooosiIconDeps\Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\BoundArgument;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\Autowire;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Reference;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\TypedReference;
+use JooosiIconDeps\Symfony\Component\HttpFoundation\Session\SessionInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\Attribute\SubscribedService;
+use JooosiIconDeps\Symfony\Contracts\Service\ServiceProviderInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ServiceSubscriberInterface;
 /**
  * Compiler pass to register tagged services that require a service locator.
  *
@@ -44,7 +44,7 @@ class RegisterServiceSubscribersPass extends AbstractRecursivePass
                 continue;
             }
             ksort($attributes);
-            if ([] !== array_diff(array_keys($attributes), ['id', 'key'])) {
+            if (array_diff(array_keys($attributes), ['id', 'key'])) {
                 throw new InvalidArgumentException(\sprintf('The "container.service_subscriber" tag accepts only the "key" and "id" attributes, "%s" given for service "%s".', implode('", "', array_keys($attributes)), $this->currentId));
             }
             if (!\array_key_exists('id', $attributes)) {
@@ -119,7 +119,7 @@ class RegisterServiceSubscribersPass extends AbstractRecursivePass
         }
         if ($serviceMap = array_keys($serviceMap)) {
             $message = \sprintf(1 < \count($serviceMap) ? 'keys "%s" do' : 'key "%s" does', str_replace('%', '%%', implode('", "', $serviceMap)));
-            throw new InvalidArgumentException(\sprintf('Service %s not exist in the map returned by "%s::getSubscribedServices()" for service "%s".', $message, $class, $this->currentId));
+            throw new InvalidArgumentException('Service ' . $message . \sprintf(' not exist in the map returned by "%s::getSubscribedServices()" for service "%s".', $class, $this->currentId));
         }
         $locatorRef = ServiceLocatorTagPass::register($this->container, $subscriberMap, $this->currentId);
         $value->addTag('container.service_subscriber.locator', ['id' => (string) $locatorRef]);

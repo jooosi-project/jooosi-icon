@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\Psr\Cache;
+namespace JooosiIconDeps\Psr\Cache;
 
 /**
  * Exception interface for invalid cache arguments.

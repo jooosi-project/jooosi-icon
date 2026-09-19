@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\Cache\Traits;
+namespace JooosiIconDeps\Symfony\Component\Cache\Traits;
 
-use OmniIconDeps\Symfony\Component\VarExporter\LazyObjectInterface;
-use OmniIconDeps\Symfony\Component\VarExporter\LazyProxyTrait;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Symfony\Component\VarExporter\LazyObjectInterface;
+use JooosiIconDeps\Symfony\Component\VarExporter\LazyProxyTrait;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 // Help opcache.preload discover always-needed symbols
-class_exists(\OmniIconDeps\Symfony\Component\VarExporter\Internal\Hydrator::class);
-class_exists(\OmniIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectRegistry::class);
-class_exists(\OmniIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectState::class);
+class_exists(\JooosiIconDeps\Symfony\Component\VarExporter\Internal\Hydrator::class);
+class_exists(\JooosiIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectRegistry::class);
+class_exists(\JooosiIconDeps\Symfony\Component\VarExporter\Internal\LazyObjectState::class);
 /**
  * @internal
  */
@@ -31,7 +31,7 @@ class Redis6Proxy extends \Redis implements ResetInterface, LazyObjectInterface
     private const LAZY_OBJECT_PROPERTY_SCOPES = [];
     public function __construct($options = null)
     {
-        return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->__construct(...\func_get_args());
+        ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->__construct(...\func_get_args());
     }
     public function _compress($value): string
     {
@@ -69,7 +69,10 @@ class Redis6Proxy extends \Redis implements ResetInterface, LazyObjectInterface
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->append(...\func_get_args());
     }
-    public function auth(#[\SensitiveParameter] $credentials): \Redis|bool
+    public function auth(
+        #[\SensitiveParameter]
+        $credentials
+    ): \Redis|bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->auth(...\func_get_args());
     }
@@ -513,7 +516,17 @@ class Redis6Proxy extends \Redis implements ResetInterface, LazyObjectInterface
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->ltrim(...\func_get_args());
     }
-    public function migrate($host, $port, $key, $dstdb, $timeout, $copy = \false, $replace = \false, #[\SensitiveParameter] $credentials = null): \Redis|bool
+    public function migrate(
+        $host,
+        $port,
+        $key,
+        $dstdb,
+        $timeout,
+        $copy = \false,
+        $replace = \false,
+        #[\SensitiveParameter]
+        $credentials = null
+    ): \Redis|bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->migrate(...\func_get_args());
     }

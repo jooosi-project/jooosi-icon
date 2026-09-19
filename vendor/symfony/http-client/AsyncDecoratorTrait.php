@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient;
+namespace JooosiIconDeps\Symfony\Component\HttpClient;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Response\AsyncResponse;
-use OmniIconDeps\Symfony\Component\HttpClient\Response\ResponseStream;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
-use OmniIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\AsyncResponse;
+use JooosiIconDeps\Symfony\Component\HttpClient\Response\ResponseStream;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseInterface;
+use JooosiIconDeps\Symfony\Contracts\HttpClient\ResponseStreamInterface;
 /**
  * Eases with processing responses while streaming them.
  *

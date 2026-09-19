@@ -8,22 +8,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\RewindableGenerator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocator as ArgumentServiceLocator;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\EnvNotFoundException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterCircularReferenceException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\EnvPlaceholderParameterBag;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use OmniIconDeps\Symfony\Contracts\Service\ResetInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\RewindableGenerator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Argument\ServiceLocator as ArgumentServiceLocator;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\EnvNotFoundException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterCircularReferenceException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\EnvPlaceholderParameterBag;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use JooosiIconDeps\Symfony\Contracts\Service\ResetInterface;
 // Help opcache.preload discover always-needed symbols
 class_exists(RewindableGenerator::class);
 class_exists(ArgumentServiceLocator::class);
@@ -198,8 +198,8 @@ class Container implements ContainerInterface, ResetInterface
             } elseif (isset($container->methodMap[$id])) {
                 return 4 === $invalidBehavior ? null : $container->{$container->methodMap[$id]}($container);
             }
-        } catch (\Exception $e) {
-            unset($container->services[$id]);
+        } catch (\Throwable $e) {
+            unset($container->services[$id], $container->privates[$id]);
             throw $e;
         } finally {
             unset($container->loading[$id]);

@@ -52,7 +52,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OmniIconDeps\\Symfony\\Component\\HttpClient\\": ""
+            "JooosiIconDeps\\Symfony\\Component\\HttpClient\\": ""
         },
         "exclude-from-classmap": [
             "\/Tests\/"

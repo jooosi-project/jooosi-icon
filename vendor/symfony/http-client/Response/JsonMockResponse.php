@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Response;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Response;
 
-use OmniIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
+use JooosiIconDeps\Symfony\Component\HttpClient\Exception\InvalidArgumentException;
 class JsonMockResponse extends MockResponse
 {
     /**

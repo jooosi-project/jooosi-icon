@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\Psr\Log;
+namespace JooosiIconDeps\Psr\Log;
 
 /**
  * Describes a logger instance.

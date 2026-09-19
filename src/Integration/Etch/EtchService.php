@@ -1,12 +1,12 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Integration\Etch;
+namespace JooosiIcon\Integration\Etch;
 
-use OMNI_ICON;
-use OmniIcon\Core\Discovery\Attributes\Hook;
-use OmniIcon\Core\Discovery\Attributes\Service;
-use OmniIcon\Services\ViteService;
+use JOOOSI_ICON;
+use JooosiIcon\Core\Discovery\Attributes\Hook;
+use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Services\ViteService;
 /**
  * Service for registering and managing Etch editor integration
  * 
@@ -44,18 +44,18 @@ class EtchService
         if (!$this->is_etch_active() || !$this->is_etch_editor()) {
             return;
         }
-        $handle = OMNI_ICON::TEXT_DOMAIN . ':integration-etch-editor';
-        // Enqueue omni-icon web component for the editor
-        $this->viteService->enqueue_asset('resources/webcomponents/omni-icon.ts', ['handle' => OMNI_ICON::TEXT_DOMAIN . ':web-component:omni-icon', 'in_footer' => \true]);
+        $handle = JOOOSI_ICON::TEXT_DOMAIN . ':integration-etch-editor';
+        // Enqueue jooosi-icon web component for the editor
+        $this->viteService->enqueue_asset('resources/webcomponents/jooosi-icon.ts', ['handle' => JOOOSI_ICON::TEXT_DOMAIN . ':web-component:jooosi-icon', 'in_footer' => \true]);
         // Enqueue Gutenberg icon block styles (reuse for Etch)
-        $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/editor.css', ['handle' => OMNI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles']);
+        $this->viteService->enqueue_asset('resources/integration/gutenberg/blocks/icon-block/editor.css', ['handle' => JOOOSI_ICON::TEXT_DOMAIN . ':gutenberg-icon-block-editor-styles']);
         // Enqueue Etch editor integration script
         $this->viteService->enqueue_asset('resources/integration/etch/editor.ts', ['handle' => $handle, 'in_footer' => \true, 'dependencies' => ['wp-element', 'wp-components', 'wp-i18n', 'wp-data', 'wp-hooks', 'react', 'react-dom']]);
         // Add inline script to set up global variables
         wp_add_inline_script($handle, <<<JS
-    // Initialize omniIconEtch global object
-    if (typeof window.omniIconEtch === 'undefined') {
-        window.omniIconEtch = {
+    // Initialize jooosiIconEtch global object
+    if (typeof window.jooosiIconEtch === 'undefined') {
+        window.jooosiIconEtch = {
             _version: '{$this->get_version()}',
             restUrl: '{$this->get_rest_url()}',
             nonce: '{$this->get_nonce()}'
@@ -69,14 +69,14 @@ JS
      */
     private function get_version(): string
     {
-        return OMNI_ICON::VERSION;
+        return JOOOSI_ICON::VERSION;
     }
     /**
      * Get REST API URL
      */
     private function get_rest_url(): string
     {
-        return esc_url_raw(rest_url(OMNI_ICON::REST_NAMESPACE));
+        return esc_url_raw(rest_url(JOOOSI_ICON::REST_NAMESPACE));
     }
     /**
      * Get REST API nonce

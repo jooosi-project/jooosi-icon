@@ -8,28 +8,28 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\HttpClient\Internal;
+namespace JooosiIconDeps\Symfony\Component\HttpClient\Internal;
 
-use OmniIconDeps\Amp\CancellationToken;
-use OmniIconDeps\Amp\Deferred;
-use OmniIconDeps\Amp\Http\Client\Connection\ConnectionLimitingPool;
-use OmniIconDeps\Amp\Http\Client\Connection\DefaultConnectionFactory;
-use OmniIconDeps\Amp\Http\Client\InterceptedHttpClient;
-use OmniIconDeps\Amp\Http\Client\Interceptor\RetryRequests;
-use OmniIconDeps\Amp\Http\Client\PooledHttpClient;
-use OmniIconDeps\Amp\Http\Client\Request;
-use OmniIconDeps\Amp\Http\Client\Response;
-use OmniIconDeps\Amp\Http\Tunnel\Http1TunnelConnector;
-use OmniIconDeps\Amp\Http\Tunnel\Https1TunnelConnector;
-use OmniIconDeps\Amp\Promise;
+use JooosiIconDeps\Amp\CancellationToken;
+use JooosiIconDeps\Amp\Deferred;
+use JooosiIconDeps\Amp\Http\Client\Connection\ConnectionLimitingPool;
+use JooosiIconDeps\Amp\Http\Client\Connection\DefaultConnectionFactory;
+use JooosiIconDeps\Amp\Http\Client\InterceptedHttpClient;
+use JooosiIconDeps\Amp\Http\Client\Interceptor\RetryRequests;
+use JooosiIconDeps\Amp\Http\Client\PooledHttpClient;
+use JooosiIconDeps\Amp\Http\Client\Request;
+use JooosiIconDeps\Amp\Http\Client\Response;
+use JooosiIconDeps\Amp\Http\Tunnel\Http1TunnelConnector;
+use JooosiIconDeps\Amp\Http\Tunnel\Https1TunnelConnector;
+use JooosiIconDeps\Amp\Promise;
 use Amp\Socket\Certificate;
 use Amp\Socket\ClientTlsContext;
 use Amp\Socket\ConnectContext;
 use Amp\Socket\Connector;
 use Amp\Socket\DnsConnector;
 use Amp\Socket\SocketAddress;
-use OmniIconDeps\Amp\Success;
-use OmniIconDeps\Psr\Log\LoggerInterface;
+use JooosiIconDeps\Amp\Success;
+use JooosiIconDeps\Psr\Log\LoggerInterface;
 /**
  * Internal representation of the Amp client's state.
  *

@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OmniIconDeps\\Psr\\Log\\": "src"
+            "JooosiIconDeps\\Psr\\Log\\": "src"
         }
     },
     "extra": {

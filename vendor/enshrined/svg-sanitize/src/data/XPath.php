@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\enshrined\svgSanitize\data;
+namespace JooosiIconDeps\enshrined\svgSanitize\data;
 
 class XPath extends \DOMXPath
 {

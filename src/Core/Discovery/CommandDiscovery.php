@@ -1,30 +1,30 @@
 <?php
 
 declare (strict_types=1);
-namespace OmniIcon\Core\Discovery;
+namespace JooosiIcon\Core\Discovery;
 
-use OmniIcon\Core\Container\Container;
-use OmniIcon\Core\Container\DependencyResolver;
-use OmniIcon\Core\Discovery\Attributes\Command;
-use OmniIcon\Core\Logger\LogComponent;
-use OmniIcon\Core\Logger\LoggerService;
+use JooosiIcon\Core\Container\Container;
+use JooosiIcon\Core\Container\DependencyResolver;
+use JooosiIcon\Core\Discovery\Attributes\Command;
+use JooosiIcon\Core\Logger\LogComponent;
+use JooosiIcon\Core\Logger\LoggerService;
 use Throwable;
 use WP_CLI;
-final class CommandDiscovery implements \OmniIcon\Core\Discovery\Discovery
+final class CommandDiscovery implements \JooosiIcon\Core\Discovery\Discovery
 {
-    use \OmniIcon\Core\Discovery\IsDiscovery;
+    use \JooosiIcon\Core\Discovery\IsDiscovery;
     /** @var array<array<string, mixed>> */
     private array $commands = [];
     private DependencyResolver $dependencyResolver;
     public function __construct(private Container $container, private LoggerService $logger)
     {
-        $this->discoveryItems = new \OmniIcon\Core\Discovery\DiscoveryItems();
+        $this->discoveryItems = new \JooosiIcon\Core\Discovery\DiscoveryItems();
         $this->dependencyResolver = new DependencyResolver($container);
     }
     /**
      * @param ClassReflector $classReflector
      */
-    public function discover(\OmniIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \OmniIcon\Core\Discovery\ClassReflector $classReflector): void
+    public function discover(\JooosiIcon\Core\Discovery\DiscoveryLocation $discoveryLocation, \JooosiIcon\Core\Discovery\ClassReflector $classReflector): void
     {
         // Check for class-level Command attribute (invokable command)
         $classCommandAttribute = $classReflector->getAttribute(Command::class);
@@ -126,7 +126,7 @@ final class CommandDiscovery implements \OmniIcon\Core\Discovery\Discovery
     private function generateCommandName(string $className): string
     {
         // Convert class name to command name
-        // e.g., "OmniIcon\Commands\EmailCommand" -> "omni-icon email"
+        // e.g., "JooosiIcon\Commands\EmailCommand" -> "jooosi-icon email"
         $parts = explode('\\', $className);
         $commandClass = end($parts);
         // end() on explode result will return string since class names are not empty
@@ -136,7 +136,7 @@ final class CommandDiscovery implements \OmniIcon\Core\Discovery\Discovery
         }
         // Convert PascalCase to kebab-case
         $commandName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $commandClass) ?? '');
-        return 'omni-icon ' . $commandName;
+        return 'jooosi-icon ' . $commandName;
     }
     private function generateMethodCommandName(string $className, string $methodName): string
     {
@@ -150,6 +150,6 @@ final class CommandDiscovery implements \OmniIcon\Core\Discovery\Discovery
         // Convert PascalCase to kebab-case for both class and method
         $classCommand = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $commandClass) ?? '');
         $methodCommand = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $methodName) ?? '');
-        return sprintf('omni-icon %s %s', $classCommand, $methodCommand);
+        return sprintf('jooosi-icon %s %s', $classCommand, $methodCommand);
     }
 }

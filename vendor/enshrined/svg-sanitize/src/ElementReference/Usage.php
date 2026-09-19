@@ -1,6 +1,6 @@
 <?php
 
-namespace OmniIconDeps\enshrined\svgSanitize\ElementReference;
+namespace JooosiIconDeps\enshrined\svgSanitize\ElementReference;
 
 class Usage
 {

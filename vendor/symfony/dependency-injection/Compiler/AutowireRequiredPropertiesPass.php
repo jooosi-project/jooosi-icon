@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace OmniIconDeps\Symfony\Component\DependencyInjection\Compiler;
+namespace JooosiIconDeps\Symfony\Component\DependencyInjection\Compiler;
 
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\Autowire;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Attribute\Target;
-use OmniIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
-use OmniIconDeps\Symfony\Component\DependencyInjection\Definition;
-use OmniIconDeps\Symfony\Component\DependencyInjection\TypedReference;
-use OmniIconDeps\Symfony\Contracts\Service\Attribute\Required;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\Autowire;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Attribute\Target;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\ContainerInterface;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\Definition;
+use JooosiIconDeps\Symfony\Component\DependencyInjection\TypedReference;
+use JooosiIconDeps\Symfony\Contracts\Service\Attribute\Required;
 /**
  * Looks for definitions with autowiring enabled and registers their corresponding "#[Required]" properties.
  *
