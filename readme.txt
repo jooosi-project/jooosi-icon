@@ -4,7 +4,7 @@ Donate link: https://ko-fi.com/Q5Q75XSF7
 Tags: icons, iconify, gutenberg, svg, icon block
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 1.0.20
+Stable tag: 1.0.21
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -197,6 +197,12 @@ Jooosi Icon uses the Iconify API to fetch icons from their extensive icon collec
 The complete source code, including uncompiled versions of all JavaScript and CSS files in the `dist/` directory, is publicly available on [GitHub](https://github.com/jooosi-project/jooosi-icon/)
 
 == Changelog ==
+
+= 1.0.21 - 2026-09-19 =
+
+**Fixed**
+
+* Include `composer.json` in release packages for runtime discovery.
 
 = 1.0.20 - 2026-09-19 =
 
