@@ -7,6 +7,8 @@ use Bricks\Elements;
 use JOOOSI_ICON;
 use JooosiIcon\Core\Discovery\Attributes\Hook;
 use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Integration\Bricks\Elements\IconElement;
+use JooosiIcon\Integration\Bricks\Elements\OmniIconElement;
 use JooosiIcon\Services\ViteService;
 /**
  * Service for registering and managing Bricks integration
@@ -29,8 +31,10 @@ class BricksService
         if (!defined('BRICKS_VERSION')) {
             return;
         }
-        // Register the Jooosi Icon element
-        Elements::register_element(__DIR__ . '/Elements/IconElement.php', JOOOSI_ICON::TEXT_DOMAIN);
+        // Register the current Jooosi Icon element type.
+        Elements::register_element(__DIR__ . '/Elements/IconElement.php', IconElement::ELEMENT_NAME, IconElement::class);
+        // Keep the legacy type available for saved Bricks layouts.
+        Elements::register_element(__DIR__ . '/Elements/OmniIconElement.php', OmniIconElement::ELEMENT_NAME, OmniIconElement::class);
     }
     #[Hook('wp_enqueue_scripts', priority: 1000000)]
     public function editor_assets()

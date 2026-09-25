@@ -652,6 +652,7 @@ class ComposerStaticInitf6c4c5a63a8b2597c2f63ac2ddfeb2fa
         'JooosiIcon\\Integration\\Breakdance\\BreakdanceService' => __DIR__ . '/../..' . '/src/Integration/Breakdance/BreakdanceService.php',
         'JooosiIcon\\Integration\\Bricks\\BricksService' => __DIR__ . '/../..' . '/src/Integration/Bricks/BricksService.php',
         'JooosiIcon\\Integration\\Bricks\\Elements\\IconElement' => __DIR__ . '/../..' . '/src/Integration/Bricks/Elements/IconElement.php',
+        'JooosiIcon\\Integration\\Bricks\\Elements\\OmniIconElement' => __DIR__ . '/../..' . '/src/Integration/Bricks/Elements/OmniIconElement.php',
         'JooosiIcon\\Integration\\Divi\\DiviService' => __DIR__ . '/../..' . '/src/Integration/Divi/DiviService.php',
         'JooosiIcon\\Integration\\Elementor\\ElementorService' => __DIR__ . '/../..' . '/src/Integration/Elementor/ElementorService.php',
         'JooosiIcon\\Integration\\Elementor\\Widgets\\IconWidget' => __DIR__ . '/../..' . '/src/Integration/Elementor/Widgets/IconWidget.php',

@@ -544,6 +544,7 @@ return array(
     'JooosiIcon\\Integration\\Breakdance\\BreakdanceService' => $baseDir . '/src/Integration/Breakdance/BreakdanceService.php',
     'JooosiIcon\\Integration\\Bricks\\BricksService' => $baseDir . '/src/Integration/Bricks/BricksService.php',
     'JooosiIcon\\Integration\\Bricks\\Elements\\IconElement' => $baseDir . '/src/Integration/Bricks/Elements/IconElement.php',
+    'JooosiIcon\\Integration\\Bricks\\Elements\\OmniIconElement' => $baseDir . '/src/Integration/Bricks/Elements/OmniIconElement.php',
     'JooosiIcon\\Integration\\Divi\\DiviService' => $baseDir . '/src/Integration/Divi/DiviService.php',
     'JooosiIcon\\Integration\\Elementor\\ElementorService' => $baseDir . '/src/Integration/Elementor/ElementorService.php',
     'JooosiIcon\\Integration\\Elementor\\Widgets\\IconWidget' => $baseDir . '/src/Integration/Elementor/Widgets/IconWidget.php',

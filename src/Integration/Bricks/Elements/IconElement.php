@@ -4,7 +4,6 @@ declare (strict_types=1);
 namespace JooosiIcon\Integration\Bricks\Elements;
 
 use Bricks\Element;
-use JOOOSI_ICON;
 use JooosiIcon\Plugin;
 use JooosiIcon\Services\IconService;
 use function bricks_render_dynamic_data;
@@ -23,11 +22,12 @@ use function bricks_render_dynamic_data;
  */
 class IconElement extends Element
 {
+    public const ELEMENT_NAME = 'jooosi-icon';
     /**
      * Element properties
      */
     public $category = 'general';
-    public $name = 'jooosi-icon';
+    public $name = self::ELEMENT_NAME;
     public $icon = 'ti-star';
     public $scripts = ['jooosiIcon'];
     /**
