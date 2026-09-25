@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.22] - 2026-09-25
+
 ### Changed
 - Refresh the browser's persisted SVG cache when the icon cache is cleared or icons change.
 
@@ -133,7 +135,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🐣 Initial release.
 
-[unreleased]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.21...HEAD
+[unreleased]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.22...HEAD
+[1.0.22]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.21...1.0.22
 [1.0.21]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.20...1.0.21
 [1.0.20]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.19...1.0.20
 [1.0.19]: https://github.com/jooosi-project/jooosi-icon/compare/1.0.18...1.0.19
