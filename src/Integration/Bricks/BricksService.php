@@ -8,6 +8,8 @@ use Bricks\Elements;
 use JOOOSI_ICON;
 use JooosiIcon\Core\Discovery\Attributes\Hook;
 use JooosiIcon\Core\Discovery\Attributes\Service;
+use JooosiIcon\Integration\Bricks\Elements\IconElement;
+use JooosiIcon\Integration\Bricks\Elements\OmniIconElement;
 use JooosiIcon\Services\ViteService;
 
 /**
@@ -33,10 +35,18 @@ class BricksService
             return;
         }
 
-        // Register the Jooosi Icon element
+        // Register the current Jooosi Icon element type.
         Elements::register_element(
             __DIR__ . '/Elements/IconElement.php',
-            JOOOSI_ICON::TEXT_DOMAIN,
+            IconElement::ELEMENT_NAME,
+            IconElement::class,
+        );
+
+        // Keep the legacy type available for saved Bricks layouts.
+        Elements::register_element(
+            __DIR__ . '/Elements/OmniIconElement.php',
+            OmniIconElement::ELEMENT_NAME,
+            OmniIconElement::class,
         );
     }
 
