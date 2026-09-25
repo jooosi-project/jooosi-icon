@@ -8,6 +8,7 @@
     "dev": "vp dev",
     "build": "vp build",
     "preview": "vp preview",
+    "test:webcomponents": "vp test run --config tests/webcomponents.config.ts",
     "release": "node deploy/release.mjs"
   },
   "keywords": [
@@ -27,6 +28,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "@vitejs/plugin-vue": "^6.0.9",
     "@vitejs/plugin-vue-jsx": "^5.1.6",
+    "@vitest/browser-preview": "4.1.11",
     "rollup-plugin-external-globals": "^0.13.0",
     "sass-embedded": "^1.104.1",
     "unplugin-icons": "^24.0.0",
@@ -34,7 +36,8 @@
     "vite-plugin-node-polyfills": "^0.28.0",
     "vite-plugin-static-copy": "^4.1.1",
     "vite-plugin-svgr": "^5.2.0",
-    "vite-plus": "^0.3.2"
+    "vite-plus": "^0.3.2",
+    "vitest": "4.1.11"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.8.0",

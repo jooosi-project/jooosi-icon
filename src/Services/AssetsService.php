@@ -15,7 +15,7 @@ use JooosiIcon\Core\Discovery\Attributes\Service;
 class AssetsService
 {
     public function __construct(
-        private ViteService $viteService
+        private ViteService $viteService,
     ) {
     }
     /**
@@ -35,5 +35,6 @@ class AssetsService
                 'in_footer' => false,
             ]
         );
+
     }
 }

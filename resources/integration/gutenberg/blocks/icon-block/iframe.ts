@@ -35,9 +35,8 @@ function loadStyles(): void {
 }
 
 /**
- * The iframe body can be replaced after the entry script has run. Reattach
- * the shared observer to the new body without adding editor logic to the
- * web-component entry used by the frontend.
+ * Native custom elements reconnect automatically when the iframe body changes.
+ * Reattach the compatibility observer for browsers without custom elements.
  */
 function initializeGutenbergCanvas(): void {
 	loadStyles();

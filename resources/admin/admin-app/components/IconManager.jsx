@@ -515,12 +515,27 @@ const IconManager = ({ refreshTrigger }) => {
 	const handleRefresh = useCallback(async () => {
 		try {
 			// Clear cache first
-			await fetch(`${window.jooosiIconAdmin.apiUrl}/cache/clear`, {
+			const response = await fetch(`${window.jooosiIconAdmin.apiUrl}/cache/clear`, {
 				method: 'POST',
 				headers: {
 					'X-WP-Nonce': window.jooosiIconAdmin.nonce,
 				},
 			});
+			if (!response.ok) {
+				throw new Error(`Cache refresh failed: ${response.status}`);
+			}
+
+			const data = await response.json();
+			if (typeof data.cache_key === 'string') {
+				let cacheKeyMeta = document.head.querySelector('meta[name="jooosi-icon-cache-key"]');
+				if (!cacheKeyMeta) {
+					cacheKeyMeta = document.createElement('meta');
+					cacheKeyMeta.name = 'jooosi-icon-cache-key';
+					document.head.append(cacheKeyMeta);
+				}
+				cacheKeyMeta.content = data.cache_key;
+				await window.IconRegistry?.refreshCache?.();
+			}
 		} catch (err) {
 			// Silently fail cache clear, still continue with refresh
 			console.warn('Failed to clear cache:', err);

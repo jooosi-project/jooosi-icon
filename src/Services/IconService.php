@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace JooosiIcon\Services;
 
-use enshrined\svgSanitize\Sanitizer;
 use JOOOSI_ICON;
 use JooosiIcon\Core\Discovery\Attributes\Service;
 use JooosiIcon\Core\Logger\LogComponent;
@@ -30,19 +29,14 @@ use JooosiIcon\Core\Icon\Registry\ChainIconRegistry;
 class IconService
 {
     private ?IconRegistryInterface $registry = null;
-    private Sanitizer $sanitizer;
 
     public function __construct(
         private LocalIconService $localIconService,
         private IconSourceService $iconSourceService,
         private IconifyService $iconifyService,
         private LoggerService $logger,
+        private SvgSanitizer $svgSanitizer,
     ) {
-        // Initialize SVG sanitizer for render-time sanitization
-        $this->sanitizer = new Sanitizer();
-        // SVG is embedded as HTML, so do not emit an XML declaration that
-        // browsers would turn into a bogus comment during client rendering.
-        $this->sanitizer->removeXMLTag(true);
     }
 
     /**
@@ -111,7 +105,7 @@ class IconService
 
             // Apply SVG sanitization at render time for defense-in-depth security
             // This ensures all SVG output is safe, even from remote sources (Iconify API)
-            $sanitized = $this->sanitizer->sanitize($svg);
+            $sanitized = $this->svgSanitizer->sanitize($svg);
             
             if ($sanitized === false || empty($sanitized)) {
                 $this->logger->warning('SVG sanitization failed at render time', [

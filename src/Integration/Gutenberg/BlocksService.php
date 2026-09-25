@@ -10,6 +10,7 @@ use JOOOSI_ICON;
 use JooosiIcon\Core\Discovery\Attributes\Hook;
 use JooosiIcon\Core\Discovery\Attributes\Service;
 use JooosiIcon\Services\IconService;
+use JooosiIcon\Services\IconCacheKeyService;
 use JooosiIcon\Services\ViteService;
 
 /**
@@ -33,6 +34,7 @@ class BlocksService
     public function __construct(
         private IconService $iconService,
         private ViteService $viteService,
+        private IconCacheKeyService $iconCacheKeyService,
     ) {}
 
     /**
@@ -133,6 +135,8 @@ class BlocksService
         if (!is_admin()) {
             return;
         }
+
+        $this->iconCacheKeyService->add_inline_meta($this->registered_block_assets['iframe_scripts']);
 
         foreach ($this->registered_block_assets['iframe_scripts'] as $handle) {
             wp_enqueue_script($handle);

@@ -1,3 +1,5 @@
+import './ErrorObserver.css';
+
 interface IconErrorDetail {
 	type: string;
 	message: string;
@@ -23,21 +25,10 @@ export class ErrorObserver {
 	private repositionHandler: (() => void) | null = null;
 	private errorHandlers = new WeakMap<HTMLElement, ErrorHandlers>();
 	private errorDetails = new WeakMap<HTMLElement, IconErrorDetail>();
-	private cssLoaded = false;
 
 	constructor() {
 		document.addEventListener('jooosi-icon:error', this.handleErrorEvent);
 		document.addEventListener('jooosi-icon:loaded', this.handleLoadedEvent);
-	}
-
-	private async loadCSS(): Promise<void> {
-		if (this.cssLoaded) return;
-		
-		this.cssLoaded = true;
-		const link = document.createElement('link');
-		link.rel = 'stylesheet';
-		link.href = new URL('./ErrorObserver.css', import.meta.url).href;
-		document.head.appendChild(link);
 	}
 
 	private handleErrorEvent = (event: Event): void => {
@@ -65,9 +56,6 @@ export class ErrorObserver {
 		if (this.errorHandlers.has(iconElement)) {
 			return;
 		}
-
-		// Lazy load CSS only when first error occurs
-		this.loadCSS();
 
 		iconElement.style.cursor = 'pointer';
 		iconElement.setAttribute('role', 'button');

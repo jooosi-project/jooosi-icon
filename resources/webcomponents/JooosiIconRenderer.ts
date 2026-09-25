@@ -36,7 +36,6 @@ export class JooosiIconRenderer {
 	
 	// Lazy load ErrorObserver only when first error occurs
 	private static errorObserverPromise: Promise<void> | null = null;
-	private static errorObserverLoaded = false;
 
 	private getState(element: Element): IconRendererState {
 		let state = this.states.get(element);
@@ -74,22 +73,9 @@ export class JooosiIconRenderer {
 	}
 
 	detachRenderer(element: Element): void {
-		const state = this.getState(element);
-		
-		state.renderAbortController?.abort();
-		state.renderAbortController = null;
-		state.activeIconName = null;
-		state.originalWidth = null;
-		state.originalHeight = null;
-		state.cachedSvgElement = null;
-		state.sourceSvgAttributes.clear();
-		state.mirroredSvgAttributes.clear();
-
-		if (state.mutationObserver) {
-			state.mutationObserver.disconnect();
-			state.mutationObserver = null;
-		}
-
+		const state = this.states.get(element);
+		state?.renderAbortController?.abort();
+		state?.mutationObserver?.disconnect();
 		this.states.delete(element);
 	}
 
@@ -113,41 +99,25 @@ export class JooosiIconRenderer {
 			return;
 		}
 
-		// Watch for all attribute changes
+		// MutationObserver already batches changes. Synchronize the final values once.
 		state.mutationObserver = new MutationObserver((mutations) => {
-			mutations.forEach((mutation) => {
-				if (mutation.type === 'attributes') {
-					const attributeName = mutation.attributeName;
-
-					// If data-prerendered is added, stop observing and preserve content
-					if (attributeName === 'data-prerendered' && element.hasAttribute('data-prerendered')) {
-						state.renderAbortController?.abort();
-						state.renderStatus = 'rendered';
-						return;
-					}
-
-					// If data-prerendered is removed, start rendering
-					if (attributeName === 'data-prerendered' && !element.hasAttribute('data-prerendered')) {
-						this.renderIcon(element);
-						return;
-					}
-
-					// Skip all updates if data-prerendered is present
-					if (element.hasAttribute('data-prerendered')) {
-						return;
-					}
-
-					// If name changed, re-fetch the icon
-					if (attributeName === 'name') {
-						this.renderIcon(element);
-					}
-
-					// For other attributes, just update the SVG if already rendered
-					else if (state.renderStatus === 'rendered') {
-						this.updateSvgAttributes(element);
-					}
+			const prerenderedChanged = mutations.some(({ attributeName }) => attributeName === 'data-prerendered');
+			if (element.hasAttribute('data-prerendered')) {
+				if (prerenderedChanged) {
+					state.renderAbortController?.abort();
+					state.renderAbortController = null;
+					state.renderStatus = 'rendered';
 				}
-			});
+				return;
+			}
+
+			if (prerenderedChanged || mutations.some(({ attributeName }) => attributeName === 'name')) {
+				this.renderIcon(element);
+			} else if (state.renderStatus === 'rendered' && mutations.some(
+				({ attributeName }) => attributeName && !this.shouldSkipAttribute(attributeName)
+			)) {
+				this.updateSvgAttributes(element);
+			}
 		});
 
 		state.mutationObserver.observe(element, {
@@ -276,9 +246,7 @@ export class JooosiIconRenderer {
 	private renderSvg(element: Element, svg: string, config: IconConfig): void {
 		const state = this.getState(element);
 		const wasError = state.lastError !== null;
-
-		element.innerHTML = svg;
-		state.cachedSvgElement = element.querySelector('svg');
+		this.setSvgContent(element, svg);
 
 		if (state.cachedSvgElement) {
 			// Store original dimensions from SVG before modifying
@@ -289,14 +257,7 @@ export class JooosiIconRenderer {
 				state.originalHeight = state.cachedSvgElement.getAttribute('height');
 			}
 
-			state.cachedSvgElement.setAttribute('aria-hidden', 'true');
-			state.cachedSvgElement.setAttribute('focusable', 'false');
-			state.sourceSvgAttributes = this.snapshotSvgAttributes(state.cachedSvgElement);
-			state.mirroredSvgAttributes.clear();
 			this.updateSvgAttributes(element);
-		} else {
-			state.sourceSvgAttributes.clear();
-			state.mirroredSvgAttributes.clear();
 		}
 
 		state.renderStatus = 'rendered';
@@ -345,33 +306,19 @@ export class JooosiIconRenderer {
 				return;
 			}
 
-			element.innerHTML = fallbackSvg;
-			const svgElement = element.querySelector('svg');
-			if (svgElement) {
-				state.cachedSvgElement = svgElement;
-				svgElement.setAttribute('aria-hidden', 'true');
-				svgElement.setAttribute('focusable', 'false');
-				state.sourceSvgAttributes = this.snapshotSvgAttributes(svgElement);
-				state.mirroredSvgAttributes.clear();
-				this.updateSvgAttributes(element);
-			} else {
-				state.cachedSvgElement = null;
-				state.sourceSvgAttributes.clear();
-				state.mirroredSvgAttributes.clear();
-			}
+			this.setSvgContent(element, fallbackSvg);
+			this.updateSvgAttributes(element);
 		} catch {
 			if (signal?.aborted) {
 				return;
 			}
 
-			element.innerHTML = '';
-			state.cachedSvgElement = null;
-			state.sourceSvgAttributes.clear();
-			state.mirroredSvgAttributes.clear();
+			this.setSvgContent(element, '');
 		}
 
 		// Lazy load ErrorObserver on first error
 		await this.ensureErrorObserver();
+		if (signal?.aborted) return;
 
 		const detail = {
 			type: error.type,
@@ -390,14 +337,23 @@ export class JooosiIconRenderer {
 
 	}
 
-	private async ensureErrorObserver(): Promise<void> {
-		if (!JooosiIconRenderer.errorObserverLoaded && !JooosiIconRenderer.errorObserverPromise) {
-			JooosiIconRenderer.errorObserverPromise = import('./ErrorObserver').then(({ ErrorObserver }) => {
-				new ErrorObserver();
-				JooosiIconRenderer.errorObserverLoaded = true;
-			});
+	private ensureErrorObserver(): Promise<void> {
+		return JooosiIconRenderer.errorObserverPromise ??= import('./ErrorObserver').then(({ ErrorObserver }) => {
+			new ErrorObserver();
+		});
+	}
+
+	private setSvgContent(element: Element, svg: string): void {
+		const state = this.getState(element);
+		element.innerHTML = svg;
+		state.cachedSvgElement = element.querySelector('svg');
+		state.sourceSvgAttributes.clear();
+		state.mirroredSvgAttributes.clear();
+		if (state.cachedSvgElement) {
+			state.cachedSvgElement.setAttribute('aria-hidden', 'true');
+			state.cachedSvgElement.setAttribute('focusable', 'false');
+			state.sourceSvgAttributes = this.snapshotSvgAttributes(state.cachedSvgElement);
 		}
-		await JooosiIconRenderer.errorObserverPromise;
 	}
 
 	private shouldSkipAttribute(attrName: string): boolean {
@@ -411,31 +367,11 @@ export class JooosiIconRenderer {
 	private snapshotSvgAttributes(svgElement: SVGSVGElement): Map<string, string> {
 		const attributes = new Map<string, string>();
 
-		Array.from(svgElement.attributes).forEach((attr) => {
-			attributes.set(attr.name, attr.value);
-		});
+		for (const { name, value } of svgElement.attributes) {
+			attributes.set(name, value);
+		}
 
 		return attributes;
-	}
-
-	private getHostAttributes(element: Element): Map<string, string> {
-		const hostAttrs = new Map<string, string>();
-
-		Array.from(element.attributes).forEach((attr) => {
-			if (this.shouldSkipAttribute(attr.name)) {
-				return;
-			}
-
-			// Renderer-owned inline dimensions are cleared after rendering. An empty
-			// style attribute should not overwrite a source SVG style attribute.
-			if (attr.name === 'style' && attr.value === '') {
-				return;
-			}
-
-			hostAttrs.set(attr.name, attr.value);
-		});
-
-		return hostAttrs;
 	}
 
 	private updateSvgAttributes(element: Element): void {
@@ -447,29 +383,32 @@ export class JooosiIconRenderer {
 		}
 		state.cachedSvgElement = svgElement;
 
-		const hostAttrs = this.getHostAttributes(element);
+		const mirroredAttributes = new Set<string>();
+		for (const { name, value } of element.attributes) {
+			// Empty renderer-owned styles must not overwrite source SVG styles.
+			if (this.shouldSkipAttribute(name) || (name === 'style' && value === '')) continue;
+			mirroredAttributes.add(name);
+			if (svgElement.getAttribute(name) !== value) {
+				svgElement.setAttribute(name, value);
+			}
+		}
 
 		// Remove only attributes that were previously mirrored from the host.
 		// Source SVG attributes must remain untouched.
 		state.mirroredSvgAttributes.forEach((attrName) => {
-			if (hostAttrs.has(attrName)) {
+			if (mirroredAttributes.has(attrName)) {
 				return;
 			}
 
 			const sourceValue = state.sourceSvgAttributes.get(attrName);
 			if (sourceValue === undefined) {
 				svgElement.removeAttribute(attrName);
-			} else {
+			} else if (svgElement.getAttribute(attrName) !== sourceValue) {
 				svgElement.setAttribute(attrName, sourceValue);
 			}
 		});
 
-		// Add/update current attributes from the host.
-		hostAttrs.forEach((value, name) => {
-			svgElement.setAttribute(name, value);
-		});
-
-		state.mirroredSvgAttributes = new Set(hostAttrs.keys());
+		state.mirroredSvgAttributes = mirroredAttributes;
 	}
 
 	private async fetchIcon(iconName: string, signal?: AbortSignal, priority = 0): Promise<string> {

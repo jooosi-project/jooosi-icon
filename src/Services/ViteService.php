@@ -61,6 +61,7 @@ class ViteService
         foreach ($assets['styles'] as $handle) {
             wp_enqueue_style($handle);
         }
+
     }
 
     /**

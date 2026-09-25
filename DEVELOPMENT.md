@@ -376,6 +376,15 @@ Error state management:
 - Visual error indicators
 - Graceful fallback
 
+### Web Component Regression Tests
+
+Run `pnpm test:webcomponents` to open the Vitest browser runner. The suite uses
+real custom elements, MutationObserver, and IndexedDB in the browser, with mocked
+icon API responses. It covers attribute batching and restoration, shared cache
+lookups, request cancellation and priority, prerendered content, legacy elements,
+error recovery, iframe body replacement, and the fallback without custom elements.
+These tests do not require a running WordPress installation.
+
 ### React Components (Gutenberg)
 
 **Location**: `resources/integration/gutenberg/blocks/icon-block/components/`

@@ -1,15 +1,21 @@
 import './jooosi-icon.scss';
-import { getRenderer, clearSeenElement } from './JooosiIconObserver';
+import { connectElement, disconnectElement } from './JooosiIconObserver';
 
 class JooosiIcon extends HTMLElement {
-	disconnectedCallback(): void {
-		getRenderer()?.detachRenderer(this);
-		clearSeenElement(this);
+	static observedAttributes = ['data-prerendered'];
+
+	connectedCallback(): void {
+		connectElement(this);
 	}
 
-	// restartAnimation(): void {
-	// 	getRenderer()?.restartAnimation(this);
-	// }
+	disconnectedCallback(): void {
+		disconnectElement(this);
+	}
+
+	attributeChangedCallback(): void {
+		// Begin client rendering if server-rendered content is released by an editor.
+		connectElement(this);
+	}
 }
 
 class LegacyJooosiIcon extends JooosiIcon {}

@@ -1,5 +1,5 @@
 // Import only what we need for lighter bundle
-import { createStore, get as getIdb, set as setIdb } from 'idb-keyval';
+import { clear as clearIdb, createStore, get as getIdb, set as setIdb } from 'idb-keyval';
 
 export interface IconApiResponse {
 	svg: string;
@@ -38,7 +38,6 @@ interface QueueItem {
 	resolve: (svg: string) => void;
 	reject: (error: Error) => void;
 	abortController: AbortController;
-	cleanup: () => void;
 	started: boolean;
 }
 
@@ -47,7 +46,8 @@ interface InflightEntry {
 	promise: Promise<string>;
 	abortController: AbortController;
 	consumers: Set<ConsumerEntry>;
-	queueItem: QueueItem;
+	priority: number;
+	queueItem: QueueItem | null;
 }
 
 export interface IconRegistryStats {
@@ -63,6 +63,7 @@ export interface IconFetchOptions {
 
 const API_BASE_PATH = '/wp-json/jooosi-icon/v1/icon/item';
 const IDB_KEY = 'oiwc-cache';
+const IDB_CACHE_KEY = `${IDB_KEY}.key`;
 const IDB_DB_NAME = 'jooosi-icon';
 const IDB_STORE_NAME = 'icon-cache';
 const MAX_CONCURRENT_REQUESTS = 16;
@@ -72,6 +73,9 @@ const iconCache = new Map<string, string>();
 const inflightRequests = new Map<string, InflightEntry>();
 const requestQueue: QueueItem[] = [];
 let activeRequests = 0;
+let pageCacheKey: string | null = null;
+let cacheKeyPromise: Promise<boolean> | null = null;
+let persistentCacheReady = true;
 
 export async function fetchIcon(
 	iconName: string,
@@ -80,16 +84,13 @@ export async function fetchIcon(
 	options?: IconFetchOptions
 ): Promise<string> {
 	const { signal, priority = 0 } = options ?? {};
+	if (signal?.aborted) throw abortedRequest(iconName);
+	await ensureCacheKey();
+	if (signal?.aborted) throw abortedRequest(iconName);
 
 	const cached = iconCache.get(iconName);
 	if (cached) {
 		return cached;
-	}
-
-	const stored = await readFromIndexedDb(iconName);
-	if (stored) {
-		iconCache.set(iconName, stored);
-		return stored;
 	}
 
 	const entry = ensureInflightEntry(iconName, prefix, name, priority);
@@ -97,14 +98,22 @@ export async function fetchIcon(
 	return entry.promise;
 }
 
+/** Synchronize browser storage after a user requests a cache refresh. */
+export async function refreshCache(): Promise<void> {
+	await ensureCacheKey();
+}
+
 function ensureInflightEntry(iconName: string, prefix: string, name: string, priority: number): InflightEntry {
 	let entry = inflightRequests.get(iconName);
-	if (!entry) {
+	if (!entry || entry.abortController.signal.aborted) {
 		entry = createInflightEntry(iconName, prefix, name, priority);
 		inflightRequests.set(iconName, entry);
-	} else if (!entry.queueItem.started && priority > entry.queueItem.priority) {
-		entry.queueItem.priority = priority;
-		sortQueue();
+	} else if (!entry.queueItem?.started && priority > entry.priority) {
+		entry.priority = priority;
+		if (entry.queueItem) {
+			entry.queueItem.priority = priority;
+			sortQueue();
+		}
 	}
 
 	return entry;
@@ -112,47 +121,53 @@ function ensureInflightEntry(iconName: string, prefix: string, name: string, pri
 
 function createInflightEntry(iconName: string, prefix: string, name: string, priority: number): InflightEntry {
 	const abortController = new AbortController();
-	const consumers = new Set<ConsumerEntry>();
-	let queueItem!: QueueItem;
 
-	const entry: InflightEntry = {
-		iconName,
-		abortController,
-		consumers,
-		queueItem: {} as QueueItem,
-		promise: Promise.resolve(''),
-	};
+	// Share the database lookup as well as the queued network request.
+	const promise = readFromIndexedDb(iconName)
+		.then((stored) => {
+			if (abortController.signal.aborted) throw abortedRequest(iconName);
+			if (stored) return stored;
 
-	const basePromise = new Promise<string>((resolve, reject) => {
-		queueItem = {
-			iconName,
-			prefix,
-			name,
-			priority,
-			resolve,
-			reject,
-			abortController,
-			cleanup: () => detachAllConsumers(entry),
-			started: false,
-		};
-
-		entry.queueItem = queueItem;
-		insertIntoQueue(queueItem);
-		processQueue();
-	});
-
-	entry.promise = basePromise
+			return new Promise<string>((resolve, reject) => {
+				entry.queueItem = {
+					iconName,
+					prefix,
+					name,
+					priority: entry.priority,
+					resolve,
+					reject,
+					abortController,
+					started: false,
+				};
+				insertIntoQueue(entry.queueItem);
+				processQueue();
+			});
+		})
 		.then((svg) => {
 			iconCache.set(iconName, svg);
-			saveToIndexedDb(iconName, svg);
 			return svg;
 		})
 		.finally(() => {
 			detachAllConsumers(entry);
-			inflightRequests.delete(iconName);
+			// An aborted request may already have been replaced by a new caller.
+			if (inflightRequests.get(iconName) === entry) {
+				inflightRequests.delete(iconName);
+			}
 		});
 
+	const entry: InflightEntry = {
+		iconName,
+		promise,
+		abortController,
+		priority,
+		consumers: new Set(),
+		queueItem: null,
+	};
 	return entry;
+}
+
+function abortedRequest(iconName: string): IconError {
+	return new IconError(IconErrorType.FETCH_FAILED, `Icon request aborted for "${iconName}"`);
 }
 
 function attachConsumer(entry: InflightEntry, signal?: AbortSignal): void {
@@ -187,19 +202,11 @@ function handleConsumerAbort(entry: InflightEntry, consumer: ConsumerEntry): voi
 		return;
 	}
 
-	if (!entry.queueItem.started) {
-		removeFromQueue(entry.queueItem);
-		entry.queueItem.cleanup();
-		entry.queueItem.reject(
-			new IconError(
-				IconErrorType.FETCH_FAILED,
-				`Icon request aborted before start for "${entry.iconName}"`
-			)
-		);
-		return;
-	}
-
 	entry.abortController.abort();
+	if (entry.queueItem && !entry.queueItem.started) {
+		removeFromQueue(entry.queueItem);
+		entry.queueItem.reject(abortedRequest(entry.iconName));
+	}
 }
 
 function detachAllConsumers(entry: InflightEntry): void {
@@ -239,11 +246,7 @@ function processQueue(): void {
 
 		processQueueItem(item)
 			.finally(() => {
-				// Decrement first to update the queue state before cleanup
 				activeRequests--;
-				// Cleanup consumers after decrementing to avoid triggering new requests mid-cleanup
-				item.cleanup();
-				// Process next items in queue
 				processQueue();
 			});
 	}
@@ -252,15 +255,11 @@ function processQueue(): void {
 async function processQueueItem(item: QueueItem): Promise<void> {
 	try {
 		const svg = await performFetch(item.iconName, item.prefix, item.name, item.abortController);
+		saveToIndexedDb(item.iconName, svg);
 		item.resolve(svg);
 	} catch (error) {
 		if (error instanceof DOMException && error.name === 'AbortError') {
-			item.reject(
-				new IconError(
-					IconErrorType.FETCH_FAILED,
-					`Icon request aborted for "${item.iconName}"`
-				)
-			);
+			item.reject(abortedRequest(item.iconName));
 			return;
 		}
 
@@ -269,6 +268,8 @@ async function processQueueItem(item: QueueItem): Promise<void> {
 }
 
 async function readFromIndexedDb(iconName: string): Promise<string | undefined> {
+	if (!persistentCacheReady) return undefined;
+
 	try {
 		const stored = await getIdb(`${IDB_KEY}.${iconName}`, idbStore);
 		return typeof stored === 'string' ? stored : undefined;
@@ -279,10 +280,51 @@ async function readFromIndexedDb(iconName: string): Promise<string | undefined> 
 }
 
 async function saveToIndexedDb(iconName: string, svg: string): Promise<void> {
+	if (!persistentCacheReady) return;
+
 	try {
 		await setIdb(`${IDB_KEY}.${iconName}`, svg, idbStore);
 	} catch {
 		// Silent fail - icon will be fetched from network next time
+	}
+}
+
+/**
+ * Clear persisted icons when the page key changes, before any cache lookup.
+ * Icon keys keep their existing format; the random key is stored separately.
+ */
+function ensureCacheKey(): Promise<boolean> {
+	const currentKey = typeof document !== 'undefined'
+		? document.head?.querySelector<HTMLMetaElement>('meta[name="jooosi-icon-cache-key"]')?.content
+		: undefined;
+	if (typeof currentKey !== 'string' || currentKey.length === 0) {
+		return Promise.resolve(true);
+	}
+
+	if (currentKey === pageCacheKey && cacheKeyPromise) {
+		return cacheKeyPromise;
+	}
+
+	pageCacheKey = currentKey;
+	cacheKeyPromise = syncCacheKey(currentKey);
+	return cacheKeyPromise;
+}
+
+async function syncCacheKey(currentKey: string): Promise<boolean> {
+	try {
+		const storedKey = await getIdb(IDB_CACHE_KEY, idbStore);
+		if (storedKey !== currentKey) {
+			// This object store is dedicated to Jooosi Icon's cached SVGs.
+			await clearIdb(idbStore);
+			await setIdb(IDB_CACHE_KEY, currentKey, idbStore);
+			iconCache.clear();
+		}
+		persistentCacheReady = true;
+		return true;
+	} catch {
+		// Don't trust persisted icon entries if their key couldn't be checked.
+		persistentCacheReady = false;
+		return false;
 	}
 }
 
@@ -332,6 +374,7 @@ async function performFetch(
 
 const IconRegistry = {
 	fetchIcon,
+	refreshCache,
 };
 
 declare global {
