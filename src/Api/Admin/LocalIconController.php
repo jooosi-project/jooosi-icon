@@ -5,6 +5,7 @@ namespace JooosiIcon\Api\Admin;
 
 use JooosiIcon\Core\Discovery\Attributes\Controller;
 use JooosiIcon\Core\Discovery\Attributes\Route;
+use JooosiIcon\Services\IconCacheKeyService;
 use JooosiIcon\Services\LocalIconService;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -16,9 +17,11 @@ final class LocalIconController
      * @var LocalIconService
      */
     private LocalIconService $localIconService;
-    public function __construct(LocalIconService $localIconService)
+    private IconCacheKeyService $iconCacheKeyService;
+    public function __construct(LocalIconService $localIconService, IconCacheKeyService $iconCacheKeyService)
     {
         $this->localIconService = $localIconService;
+        $this->iconCacheKeyService = $iconCacheKeyService;
     }
     /**
      * Upload custom SVG icon(s)
@@ -195,7 +198,7 @@ final class LocalIconController
     public function clear_cache(WP_REST_Request $request): WP_REST_Response|WP_Error
     {
         $this->localIconService->clear_cache();
-        return new WP_REST_Response(['success' => \true, 'message' => __('Cache cleared successfully', 'jooosi-icon')]);
+        return new WP_REST_Response(['success' => \true, 'message' => __('Cache cleared successfully', 'jooosi-icon'), 'cache_key' => $this->iconCacheKeyService->get_key()]);
     }
     /**
      * Delete a custom icon

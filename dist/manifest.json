@@ -31,7 +31,7 @@
     "name": "refresh"
   },
   "resources/admin/admin-app/index.jsx": {
-    "file": "assets/admin/admin-app/index-CuBDlKI5.js",
+    "file": "assets/admin/admin-app/index-DgtAmUBG.js",
     "name": "admin/admin-app/index",
     "src": "resources/admin/admin-app/index.jsx",
     "isEntry": true,
@@ -57,7 +57,7 @@
     ]
   },
   "resources/integration/breakdance/editor.ts": {
-    "file": "assets/integration/breakdance/editor-7OikeN7V.js",
+    "file": "assets/integration/breakdance/editor-BE3pLGTo.js",
     "name": "integration/breakdance/editor",
     "src": "resources/integration/breakdance/editor.ts",
     "isEntry": true,
@@ -167,7 +167,7 @@
     "isEntry": true
   },
   "resources/integration/gutenberg/blocks/icon-block/iframe.ts": {
-    "file": "assets/integration/gutenberg/blocks/icon-block/iframe-DKqebT4o.js",
+    "file": "assets/integration/gutenberg/blocks/icon-block/iframe-BJWY73IS.js",
     "name": "integration/gutenberg/blocks/icon-block/iframe",
     "src": "resources/integration/gutenberg/blocks/icon-block/iframe.ts",
     "isEntry": true,
@@ -206,21 +206,26 @@
       "assets/editor-CSLb0PXh.css"
     ]
   },
-  "resources/webcomponents/ErrorObserver.css": {
-    "file": "assets/ErrorObserver-Crdoy1Pv.css",
-    "src": "resources/webcomponents/ErrorObserver.css"
+  "resources/webcomponents/DocumentIconObserver.ts": {
+    "file": "assets/DocumentIconObserver-DHXa1A_z.js",
+    "name": "DocumentIconObserver",
+    "src": "resources/webcomponents/DocumentIconObserver.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/webcomponents/jooosi-icon.ts"
+    ]
   },
   "resources/webcomponents/ErrorObserver.ts": {
-    "file": "assets/ErrorObserver-Db9zrwLv.js",
+    "file": "assets/ErrorObserver-D2b7DlZx.js",
     "name": "ErrorObserver",
     "src": "resources/webcomponents/ErrorObserver.ts",
     "isDynamicEntry": true,
-    "assets": [
-      "assets/ErrorObserver-Crdoy1Pv.css"
+    "css": [
+      "assets/ErrorObserver-DAKCI8Fj.css"
     ]
   },
   "resources/webcomponents/JooosiIconRenderer.ts": {
-    "file": "assets/JooosiIconRenderer-Bky0MSHK.js",
+    "file": "assets/JooosiIconRenderer-BNX8POLv.js",
     "name": "JooosiIconRenderer",
     "src": "resources/webcomponents/JooosiIconRenderer.ts",
     "isDynamicEntry": true,
@@ -232,7 +237,7 @@
     ]
   },
   "resources/webcomponents/jooosi-icon.ts": {
-    "file": "assets/webcomponents/jooosi-icon-BXl09LM4.js",
+    "file": "assets/webcomponents/jooosi-icon-CcMP-jFB.js",
     "name": "webcomponents/jooosi-icon",
     "src": "resources/webcomponents/jooosi-icon.ts",
     "isEntry": true,
@@ -240,7 +245,8 @@
       "_preload-helper-BAlEavIC.js"
     ],
     "dynamicImports": [
-      "resources/webcomponents/JooosiIconRenderer.ts"
+      "resources/webcomponents/JooosiIconRenderer.ts",
+      "resources/webcomponents/DocumentIconObserver.ts"
     ],
     "css": [
       "assets/jooosi-icon-F-REsgnc.css"

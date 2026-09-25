@@ -8,6 +8,7 @@ use JOOOSI_ICON;
 use JooosiIcon\Core\Discovery\Attributes\Hook;
 use JooosiIcon\Core\Discovery\Attributes\Service;
 use JooosiIcon\Services\IconService;
+use JooosiIcon\Services\IconCacheKeyService;
 use JooosiIcon\Services\ViteService;
 /**
  * Service for registering and managing Gutenberg blocks
@@ -21,7 +22,7 @@ class BlocksService
      * @var array{view_scripts: list<string>, iframe_scripts: list<string>, styles: list<string>, editor_styles: list<string>}
      */
     private array $registered_block_assets = ['view_scripts' => [], 'iframe_scripts' => [], 'styles' => [], 'editor_styles' => []];
-    public function __construct(private IconService $iconService, private ViteService $viteService)
+    public function __construct(private IconService $iconService, private ViteService $viteService, private IconCacheKeyService $iconCacheKeyService)
     {
     }
     /**
@@ -75,6 +76,7 @@ class BlocksService
         if (!is_admin()) {
             return;
         }
+        $this->iconCacheKeyService->add_inline_meta($this->registered_block_assets['iframe_scripts']);
         foreach ($this->registered_block_assets['iframe_scripts'] as $handle) {
             wp_enqueue_script($handle);
         }

@@ -3,7 +3,6 @@
 declare (strict_types=1);
 namespace JooosiIcon\Services;
 
-use JooosiIconDeps\enshrined\svgSanitize\Sanitizer;
 use JOOOSI_ICON;
 use JooosiIcon\Core\Discovery\Attributes\Service;
 use JooosiIconDeps\Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -33,17 +32,12 @@ use JooosiIcon\Core\Icon\IconRegistryInterface;
 #[Service]
 class LocalIconService
 {
-    private Sanitizer $sanitizer;
     private string $upload_dir;
     private string $upload_url;
     private IconRegistryInterface $registry;
     private FilesystemAdapter $cache;
-    public function __construct()
+    public function __construct(private \JooosiIcon\Services\SvgSanitizer $sanitizer, private \JooosiIcon\Services\IconCacheKeyService $iconCacheKeyService)
     {
-        $this->sanitizer = new Sanitizer();
-        // SVG is embedded as HTML, so an XML declaration would be parsed as a
-        // bogus comment when the markup is inserted with innerHTML.
-        $this->sanitizer->removeXMLTag(\true);
         // Set up local upload directory
         $wp_upload_dir = wp_upload_dir();
         $storage = JOOOSI_ICON::resolve_upload_location($wp_upload_dir);
@@ -91,6 +85,7 @@ class LocalIconService
     public function clear_cache(): void
     {
         $this->cache->clear();
+        $this->iconCacheKeyService->regenerate();
     }
     /**
      * Get cache key based on directory modification time for auto-invalidation
