@@ -36,7 +36,7 @@ class ViteService
         // vp-wp does not return handles when an asset was already registered.
         // Reuse the handles cached by register_asset() so repeated calls still
         // enqueue the script and extracted styles.
-        if (is_array($assets) && empty($assets) && isset($this->registered_assets[$key])) {
+        if (is_array($assets) && empty($assets['scripts']) && empty($assets['styles']) && isset($this->registered_assets[$key])) {
             $assets = $this->registered_assets[$key];
         }
         if (!is_array($assets)) {
