@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Restore cached asset handles when an already-registered web component is enqueued.
+
 ## [1.0.23] - 2026-09-25
 
 ### Fixed
